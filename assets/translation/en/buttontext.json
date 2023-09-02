@@ -1,0 +1,22 @@
+{
+    "Login": "Login",
+	"forgot-password": "Forgot ",
+	"title": "Tit",
+	"Detail": "Detail",
+	"Scan": "Scan",
+	"Register": "Register",
+	"Log out": "Log out",
+	"list": "List",
+
+	"follow-system": "Follow system",
+	"submit": "Submit",
+	"cancel": "Cancel",
+	"password-reset-email-sended": "重置账号密码邮件已发送至该邮箱",
+	"fill-field-alert":"Please fill in all the field",
+	"Record": "记录",
+	"List": "列表",
+	"Product": "产品",
+	"Enterprise": "企业",
+	"Jump to scan": "前往扫描",
+	"Password mismatch": "两个密码不一致"
+}

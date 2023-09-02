@@ -1,0 +1,13 @@
+@startuml
+class useMapStorage<<ReactHook>>{
+  -string storageKey
+  +getItem(): string[]
+  +addItem(newItem: string): void
+  +void removeItem(removedItem)
+  
+}
+@enduml
+
+abstract class alias as "longName" <<(X,#ADD1B2) stereotype>>{
+ 
+}

@@ -1,0 +1,1000 @@
+  534  sudo chown  $USER ../DoChat
+  535  sudo ./dochat.sh 
+  536  sudo chown  -R $USER ../DoChat
+  537  sudo ./dochat.sh 
+  538  ./dochat.sh
+  539  cat dochat.sh 
+  540  ./dochat.sh DOCHAT_DEBUG=true
+  541  code .
+  542  ./dochat.sh DOCHAT_DEBUG=true
+  543  shutdown 0
+  544  ./dochat/dochat.sh DOCHAT_DEBUG=true
+  545  npm run dev
+  546  npm run dev
+  547  shutdown 0
+  548  npm run dev
+  549  npm run dev
+  550  shutdown 0
+  551  npm run start
+  552  npm run dev
+  553  shutdown 0
+  554  npm run dev
+  555  npm run start
+  556  xkill
+  557  npm run start
+  558  nemo
+  559  nemo .
+  560  chmod -R 777 /media/share/essay-code/my-qrcode
+  561  sudo chmod -R 777 /media/share/essay-code/my-qrcode
+  562  npm run dev
+  563  node
+  564  git clone https://github.com/vercel-labs/nextgram.git
+  565  yarn install 
+  566  npm run dev
+  567  npm install 
+  568  yarn
+  569  code ./nextgram/
+  570  yarn 
+  571  yarn dev
+  572  shutdown 0
+  573  yarn dev
+  574  npm run dev
+  575  yarn install 
+  576  xkill
+  577  cd /media/share/essay-code/
+  578  git clone https://github.com/VenomProtocol/frontend.git
+  579  code ./frontend/
+  580  yarn build
+  581  yarn start
+  582  npm run dev
+  583  xkill
+  584  ./flipper/flipper 
+  585  npm run de
+  586  yarn start
+  587  npm run dev
+  588  npm run watch
+  589  rm -r mongodb-realm/
+  590  npm run dev
+  591  npm run dev
+  592  shutdown 0
+  593  code .
+  594  shutdown 0
+  595  npm run dev
+  596  npm start
+  597  git init
+  598  shutdown 0
+  599  npm run start
+  600  npm run dev
+  601  shutdown 0
+  602  npm run dev
+  603  mongodump --archive --db=qrcodeTraceability --collection=catgory | mongorestore --archive  --nsFrom='qrcodeTraceability.Catgory' --nsTo='qrcodeTraceability.Category'
+  604  shutdown 0
+  605  npm run edev
+  606  npm run dev
+  607  shutdown 0
+  608  npm run dev
+  609  cd app/[lng]/admin/(data)/product/postgres.sh
+  610  cd "app/[lng]/admin/(data)/product"
+  611  chmod +x ./postgres.sh 
+  612  ./postgres.sh 
+  613  systemctl status postgres
+  614  systemctl status postsql
+  615  history
+  616  systemctl status postgresql
+  617  sudo -u -i postgres
+  618  sudo -u postgres -i
+  619  sudo -i -u postgres
+  620  sudo systemctl start postgresql
+  621  psql
+  622  psql postgres://localhost/my-keystone
+  623  psql 
+  624  psql postgres://mate@localhost/my-keystone
+  625  tsc --init
+  626  npm search @type
+  627  npm search @types/*
+  628  npm search @types/keystonejs
+  629  npm install -D @keystonejs/fields
+  630  npm run create-tables
+  631  npm run start
+  632  npm run dev
+  633  shutdown 0
+  634  psql 
+  635  npm run dev
+  636  shutdown 0
+  637  npm run dev
+  638  cd /media/share/
+  639  rm -rf ./.Trash-1001
+  640  shutdown 0
+  641  xkill
+  642  shutdown 0
+  643  chmod 777 -R ..
+  644  sudo chmod 777 -R ..
+  645  ~/flipper/flipper 
+  646  shutdown 0
+  647  npm run dev
+  648  shutdown 0
+  649  npm run dev
+  650  npm search jquery
+  651  npm install jquery
+  652  xkill
+  653  shutdown 0
+  654  shutdown 300
+  655  shutdown 0
+  656  npm run dev
+  657  shutdown 0
+  658  shutown 0
+  659  shutdown 0
+  660  npm run dev
+  661  shutdown 0
+  662  npm run dev
+  663  xkill
+  664  npm run dev
+  665  shutdown 0
+  666  npm run dev
+  667  sudo add-apt-repository universe
+  668  sudo apt install libfuse2
+  669  shutdown 0
+  670  npm run dev
+  671  shutdown 0
+  672  npm run dev
+  673  cd /media/mint/data
+  674  cd ./slash/
+  675  mkdir semantic
+  676  sudo mkdir semantic && chmod -R 777 semantic
+  677  sudo chmod -R 777 semantic
+  678  code ./semantic/
+  679  npm init -y
+  680  npm install semantic-ui
+  681  npm install -g gulp
+  682  npm install semantic-ui
+  683  node --version
+  684  shutdown 0
+  685  git clone https://github.com/aydinterzi/nextjs13-intercepting-routes.git
+  686  npm run dev
+  687  rm ./app/index.html 
+  688  npm uninstall jquery
+  689  rm app/lib/formTemplate.tsx 
+  690  npm run dev
+  691  shutdown 0
+  692  sudo ./xampp-linux-x64-8.2.4-0-installer.run 
+  693  apt search php
+  694  sudo apt install php
+  695  systemctl status php
+  696  php8.1 --help
+  697  which php8.1 
+  698  php --version
+  699  sudo /opt/lampp/lampp start
+  700  sudo /opt/lampp/manager-linux.run
+  701  ls /opt/lampp
+  702  sudo /opt/lampp/manager-linux-x64.run
+  703  systemctl status apache
+  704  apache2 --help
+  705  shutdown 0
+  706  ls /var/www
+  707  ls /var/www/html/
+  708  code  /var/www/html/
+  709  chmod 777 -R   /var/www/html/
+  710  sudo chmod 777 -R   /var/www/html/
+  711  ls /opt/lampp
+  712  cat /opt/lampp/README.md 
+  713  cd /opt/lampp/docs/
+  714  ls
+  715  mkdir Demo
+  716  sudo mkdir Demo
+  717  sudo chmod 777 -R  Demo
+  718  code ./Demo/
+  719  npm run test
+  720  gulp
+  721  gulp --help
+  722  gulp -d
+  723  npm install semantic-ui
+  724  npm install 
+  725  code .
+  726  npm run test
+  727  npm install semantic-ui
+  728  npm install semantic-ui --save
+  729  cd ..
+  730  npm init -y
+  731  ls
+  732  npm init -y semantic-bare
+  733  npm init -y --name semantic-bare
+  734  mkdir ./semantic-bare
+  735  code ./semantic-bare
+  736  npm run dev
+  737  npm init -y
+  738  gulp -v
+  739  npm install fomantic-ui --save
+  740  npm install
+  741  npx gulp install 
+  742  npm install semantic-ui --save
+  743  gulp --help
+  744  shutdown 0
+  745  npm run dev
+  746  npm install -g docpad@6.83.2
+  747  docpad install 
+  748  npm info
+  749  npm install 
+  750  docpad install 
+  751  npx docpad install 
+  752  npm uninstall --help
+  753  npm uninstall docpad
+  754  cd /media/share/testReact/
+  755  mkdir temp
+  756  git clone https://github.com/fomantic/Fomantic-UI-Docs.git
+  757  code ./Fomantic-UI-Docs/
+  758  npm info
+  759  cd ..
+  760  rm -r semantic-bare/
+  761  npm run dev
+  762  cd ..
+  763  npm install -g docpad@6.83.2
+  764  npx docpad install 
+  765  npx docpad install 
+  766  npm install -g docpad@latest
+  767  ifconfig -a
+  768  npm run dev
+  769  shutdown 0
+  770  shutdown
+  771  shutdown 0
+  772  npm install  i18next@23.0.1
+  773  npm run dev
+  774  git clone https://github.com/vercel-labs/nextgram.git
+  775  code ./nextgram/
+  776  mkdir "./(group)"
+  777  npm run start
+  778  npm run dev
+  779  shutdown 0
+  780  rm ./app/components/form/related/temp.tsx 
+  781  npm run dev
+  782  rm ./app/components/admin/AdminSideBar.tsx 
+  783  npm run dev
+  784  shutdown 0
+  785  npm run dev
+  786  shutdown 0
+  787  npm run dev
+  788  npm run dev
+  789  shutdown 0
+  790  npm run dev
+  791  npm update nextjs
+  792  npm update next
+  793  npm update next --legacy-peer-deps
+  794  npm install 
+  795  npm run dev
+  796  shutdown 0
+  797  npm run dev
+  798  npm reinstall react-i18next
+  799  npm install react-i18next
+  800  npm install react-i18next  --legacy-peer-deps
+  801  npm run dev
+  802  rm -r node_modules
+  803  npm install 
+  804  npm install i18next --save
+  805  shutdown 5
+  806  shutdown 8
+  807  npm run dev
+  808  npm install i18next react-i18next i18next-resources-to-backend
+  809  npm run dev
+  810  shutdown 0
+  811  npm run dev
+  812  shutdown 0
+  813  npm run dev
+  814  npm run dev
+  815  rm -r node_modules/
+  816  npm install 
+  817  npm run dev
+  818  shutdown 0
+  819  npm run dev
+  820  npm remove react-table
+  821  npm install  react-table
+  822  npm install @tanstack/react-table
+  823  npm install --save @types/react-table
+  824  npm run dev
+  825  shutdown 0
+  826  npm run dev
+  827  npm remove @tanstack/react-table
+  828  expo install react-native-use-sound
+  829  npx expo install react-native-use-sound
+  830  npm run build:android
+  831  /media/mint/data/Android/Sdk/emulator/emulator @Pixel_API_31
+  832  npm run start
+  833  npm run dev暖名如年dev
+  834  npm run dev
+  835  npm run start
+  836  nemo .
+  837  rm -r /home/mate/.npm/_cacache
+  838  rm -rf  /home/mate/.npm/_cacache
+  839  npm run dev
+  840  shutdown 0
+  841  npm run dev
+  842  npm run start
+  843  shutdown 0
+  844  dpkg --configure -a
+  845  sudo dpkg --configure -a
+  846  npm run start
+  847  npm run dev
+  848  shutdown 0
+  849  npx expo start
+  850  npm run start
+  851  npx expo start
+  852  npx expo install typescript@4.9.4 -- -D
+  853  npx expo install react-native@0.71.8
+  854  rm -r /media/share/essay-code/my-qrcode/node_modules/.react-native-4FwkLyea
+  855  rm -r /media/share/essay-code/my-qrcode/node_modules/react-native
+  856  npx expo install react-native@0.71.8
+  857  shutdown 5
+  858  xkill
+  859  ./flipper/flipper 
+  860  npx expo install react-native@0.71.8
+  861  shutdown 0
+  862  npm install react-native
+  863  rm -r node_modules/
+  864  npm install
+  865  npx expo install 
+  866  shutdown 0
+  867  code Dockerfile
+  868  docker build -t docker_nextjs:developement
+  869  docker build --help
+  870  docker build -t docker_nextjs:developement .
+  871  docker --help
+  872  docker history
+  873  docker list
+  874  docker --list
+  875  docker container
+  876  docker container ls
+  877  docker container ls -a
+  878  docker ps -a
+  879  modprobe kvm
+  880  kvm --help
+  881  lsmod | grep kvm
+  882  modprobe kvm_intel
+  883  lsmod | grep kvm
+  884  vim clean-old.sh
+  885  chmod +x clean-old.sh  | ./clean-old.sh
+  886  vim clean-old.sh
+  887  chmod +x ./clean-old.sh 
+  888  ./clean-old.sh 
+  889  dochat.sh 
+  890  tsc init
+  891  npm init -y
+  892  tsc init
+  893  tsc init .
+  894  npx expo init
+  895  npx expo install
+  896  npm install expo
+  897  npm install @storybook
+  898  npm install @storybook/react
+  899  npx expo start
+  900  npx expo install 
+  901  npx expo start
+  902  npm install 
+  903  npx expo init --help
+  904  npx expo prebuild
+  905  npx expo start
+  906  npm run start
+  907  ./flipper/flipper 
+  908  shutdown 0
+  909  npm run start
+  910  npm install styled-components
+  911  npm run start
+  912  /media/mint/data/Android/Sdk/emulator/emulator @Pixel_API_31
+  913  resize2fs --help
+  914  sudo resize2fs /dev/mapper/vg--nvm-mint--root 
+  915  exit
+  916  sudo lvm
+  917  exit
+  918  npm run android
+  919  expo start
+  920  npx expo start
+  921  npx expo run:web
+  922  npx expo --help
+  923  npx expo start
+  924  npx expo install react-native-web@~0.19.6 @expo/webpack-config
+  925  npx expo install react-native-web@~0.19.6 @expo/webpack-config -- --legacy-peer-deps
+  926  npx expo start
+  927  npx expo install react-dom
+  928  npx expo install react-dom -- --legacy-peer-deps
+  929  npm install styled-components
+  930  npm install styled-components --force
+  931  npm run android
+  932  sudo resize2fs /dev/mapper/vg--nvm-mint--root 
+  933  sudo lvm
+  934  npx expo install '@react-navigation/drawer'
+  935  npx expo install '@react-navigation/native'
+  936  npx expo install react-native-gesture-handler react-native-reanimated
+  937  npx expo install react-native-screens react-native-safe-area-context
+  938  npx expo start
+  939  npm run start
+  940  npx expo install react-native-screens react-native-safe-area-context
+  941  shutdown 0
+  942  npx expo run:android
+  943  npx expo start
+  944  npx expo start --dev-client
+  945  npx expo build:android
+  946  npx eas-cli build -p android
+  947  npx expo start
+  948  npx expo start --dev-client
+  949  npx expo start
+  950  sudo rm -rf /tmp/metro-*
+  951  npm uninstall  "react-native-reanimated"
+  952  rm -r node_modules/
+  953  npx expo install react-native-screens react-native-safe-area-context
+  954  npx expo install '@react-navigation/native-stack
+  955  npx expo install @react-navigation/native-stack
+  956  npx expo start
+  957  npx expo install react-native-paper
+  958  npx expo install @realm/react
+  959  npx expo start
+  960  npm run start
+  961  npx expo install realm
+  962  npx expo install @react-navigation/bottom-tabs
+  963  npx expo install react-i18next
+  964  npm run start
+  965  ls
+  966  shutdown
+  967  shutdown 0
+  968  npm run start
+  969  ./flipper/flipper 
+  970  ./flipper/flipper 
+  971  shutdown 0
+  972  npm run start 
+  973  ./flipper/flipper 
+  974  npm run start
+  975  npx expo install expo-barcode-scanner
+  976  npm run dev
+  977  npm run start
+  978  flipper/flipper 
+  979  npm run start
+  980  ./flipper/flipper 
+  981  npm run dev
+  982  npm run start
+  983  npm run dev
+  984  npm run dev
+  985  npm update next
+  986  npm install -D typescript
+  987  npm run dev
+  988  npm run dev
+  989  npm run start
+  990  npm run start
+  991  npm run dev
+  992  rm -r .next
+  993  npm run dev
+  994  npm update realm-web
+  995  npm run start
+  996  curl https://data.mongodb-api.com/app/application-qrcode-ukplu/endpoint/product/?arg1=Product&arg2=name&arg3=Alpha
+  997  curl --help
+  998  curl https://data.mongodb-api./app/application-qrcode-ukplu/endpoint/product/?arg1=Product&arg2=name&arg3=Alp
+  999  curl https://data.mongodb-api.com/app/application-qrcode-ukplu/endpoint/product/?arg1=Product&arg2=name&arg3=Alpha
+ 1000  curl -v https://data.mongodb-api.com/app/application-qrcode-ukplu/endpoint/product/?arg1=Product&arg2=name&arg3=Alpha
+ 1001  curl -v "https://data.mongodb-api.com/app/application-qrcode-ukplu/endpoint/product/?arg1=Product&arg2=name&arg3=Alpha"
+ 1002  curl -H "Content-Type: application/json" "https://data.mongodb-api.com/app/application-qrcode-ukplu/endpoint/product/?arg1=Product&arg2=name&arg3=Alpha"
+ 1003  shutdown 0
+ 1004  npm run start
+ 1005  npm run dev
+ 1006  curl -H "Content-Type: application/json" "https://data.mongodb-api.com/app/application-qrcode-ukplu/endpoint/product/?arg1=Product&arg2=name&arg3=Alpha"
+ 1007  curl -H "Content-Type: application/json" https://data.mongodb-api.com/app/application-qrcode-ukplu/endpoint/product/?arg1=Product&arg2=name&arg3=Alpha
+ 1008  curl -H "Content-Type: application/json" "https://data.mongodb-api.com/app/application-qrcode-ukplu/endpoint/product/?arg1=Product&arg2=name&arg3=Alpha"
+ 1009  curl -H "Content-Type: application/json" 'https://data.mongodb-api.com/app/application-qrcode-ukplu/endpoint/product/?arg1=Product&arg2=name&arg3=Alpha'
+ 1010  ./flipper/flipper 
+ 1011  npm run start
+ 1012  rm ./src/lib/dataParse.ts 
+ 1013  mv ./src/data/product.json ./src/__test__/product.json
+ 1014  rm ./src/components/list/.RecordItem.tsx.swp 
+ 1015  flipper
+ 1016  ./flipper/flipper 
+ 1017  chmod +x ./genymotion-3.4.0-linux_x64.bin 
+ 1018  ./genymotion-3.4.0-linux_x64.bin 
+ 1019  ./genymotion-3.4.0-linux_x64.bin --help
+ 1020  ./genymotion-3.4.0-linux_x64.bin -y -d /home/mate/genymotion/
+ 1021  sudo ./genymotion-3.4.0-linux_x64.bin -y -d /home/mate/genymotion/
+ 1022  ./genymotion-3.4.0-linux_x64.bin -y -d /home/mate
+ 1023  genymotion --help
+ 1024  cd ~/genymotion/
+ 1025  genymotion-shell --help
+ 1026  genymotion --help
+ 1027  genyshell --help
+ 1028  npm run start
+ 1029  npm run dev
+ 1030  rm -r node_modules/next
+ 1031  npm install next
+ 1032  npm run dev
+ 1033  npm run start
+ 1034  ./flipper/flipper 
+ 1035  npm run start
+ 1036  npm run build:android
+ 1037  :dev
+ 1038  npm run build:android
+ 1039  npm run build:android:dev
+ 1040  npm run start
+ 1041  node
+ 1042  npm run start
+ 1043  npm run build:android:dev
+ 1044  npm run dev
+ 1045  npm run dev
+ 1046  npm run start
+ 1047  shutdown 0
+ 1048  git clone https://github.com/nirsky/react-native-size-matters.git
+ 1049  ./flipper/flipper 
+ 1050  npm run start
+ 1051  node
+ 1052  cd /media/mint/data
+ 1053  mkdir ./qemu/winxp
+ 1054  mkdir ./qemu
+ 1055  sudo mkdir ./qemu
+ 1056  sudo mkdir ./qemu/winxp
+ 1057  sudo chmod 777 -R ./qemu/
+ 1058  cd ./qemu/winxp/
+ 1059  qemu-system-i386 -m 512 -hda winxp.img -cdrom winxpsp2.iso -boot d
+ 1060  npm run build:android:dev
+ 1061  shutdown 0
+ 1062  rm -r .next/
+ 1063  rm -r node
+ 1064  rm -r node_modules/
+ 1065  npm run dev
+ 1066  npm install 
+ 1067  npm run dev
+ 1068  npm run start
+ 1069  npm update
+ 1070  npm run dev
+ 1071  node -v
+ 1072  xkill
+ 1073  npm run dev
+ 1074  git push origin main
+ 1075  npm update
+ 1076  npm run de3v
+ 1077  npm run dev
+ 1078  shutdown 0
+ 1079  apt search github
+ 1080  apt search github | grep desktop
+ 1081  shutdown 0
+ 1082  npm run dev
+ 1083  git push --help
+ 1084  git push origin main
+ 1085  git merge origin jsdoc-test
+ 1086  git pull origin jsdoc-test
+ 1087  git publish --help
+ 1088  git --help
+ 1089  git push remote jsdoc-test
+ 1090  git-commit -p
+ 1091  git commit -p
+ 1092  git commit --help
+ 1093  git commit -a
+ 1094  cp . ../nextjs-cp
+ 1095  cp -r . ../nextjs-cp
+ 1096  git --help
+ 1097  rm -rf .git*
+ 1098  git remote add origin https://github.com/ccb-github/nextjs-traceability-v2.git
+ 1099  git branch -M main
+ 1100  git push -u origin main
+ 1101  git merge --help
+ 1102  git checkout main
+ 1103  git pull
+ 1104  git pull origin 
+ 1105  git merge --help
+ 1106  git merge master --no-commit
+ 1107  git merge main --no-commit
+ 1108  git merge main
+ 1109  npm run build
+ 1110  shutdown 0
+ 1111  npx eslint --init
+ 1112  npx eslint --init  -- --legacy-peer-deps
+ 1113  npx eslint --init  --force
+ 1114  npm init @eslint/config
+ 1115  git pull ...
+ 1116  git pull remote
+ 1117  rm -r node_modules/
+ 1118  npm install 
+ 1119  git push -u origin main
+ 1120  rm -r node_modules/
+ 1121  git push -u origin main
+ 1122  rm .git*
+ 1123  git --help
+ 1124  git checkout -b temp
+ 1125  rm -r .git*
+ 1126  rm -ry .git*
+ 1127  rm -rf .git*
+ 1128  git init --help
+ 1129  npm install 
+ 1130  rm -r app
+ 1131  cp -r ../nextjs-traceability/app    ./
+ 1132  git push -u origin main
+ 1133  npx eas-cli build --profile preview --platform android
+ 1134  ls -al
+ 1135  sudo chown 1001 -R .
+ 1136  ls -al
+ 1137  sudo chown 1001 -R .
+ 1138  npx eas-cli build --profile preview --platform android
+ 1139  npm run build
+ 1140  npm run build:android
+ 1141  npm -v
+ 1142  rm ./src/screens/storage.ts 
+ 1143  npm run build:android
+ 1144  ls -al
+ 1145  nemo .
+ 1146  git checkout dev
+ 1147  git checkout --help
+ 1148  git checkout -b dev
+ 1149  xkill
+ 1150  npx pnpm lint
+ 1151  npx pnpm lint >> lint-check.log
+ 1152  npx pnpm lint
+ 1153  npm run build
+ 1154  git push -u origin main
+ 1155  mkdir public
+ 1156  npm run dev
+ 1157  npm run build
+ 1158  npm run start
+ 1159  npm run build:android
+ 1160  npm run start
+ 1161  git push -u origin main
+ 1162  git config pull.ff only
+ 1163  git pull
+ 1164  git config pull --help
+ 1165  git pull
+ 1166  git diff main..origin/main
+ 1167  git diff main..origin/main >> diff.md
+ 1168  git config --help
+ 1169  git config --get pull.ff 
+ 1170  git config --help
+ 1171  git config --unset pull.ff
+ 1172  git pull
+ 1173  git --no-rebase pull
+ 1174  git pull --no-rebase
+ 1175  npm run build
+ 1176  rm -r .next
+ 1177  npm run build
+ 1178  shutdown 0
+ 1179  npm run build:android
+ 1180  cd /media/share/essay-code/my-qrcode/
+ 1181  npm run build:android
+ 1182  xkill
+ 1183  ./flipper/flipper 
+ 1184  xkill
+ 1185  npm run start
+ 1186  npx pnpm lint
+ 1187  npx pnpm --help
+ 1188  npx eslint --init
+ 1189  npx eslint app/**
+ 1190  npx eslint app/admin
+ 1191  npx eslint ./app/**
+ 1192  npx eslint 'app/**'
+ 1193  npm install -D @typescript-eslint/parser
+ 1194  npm run dev
+ 1195  npm run start
+ 1196  xkill
+ 1197  ./flipper/flipper 
+ 1198  shutdown 0
+ 1199  npm run start
+ 1200  ./flipper/flipper 
+ 1201  npm run start
+ 1202  rm '**/middleware.ts' .
+ 1203  mv '*/middleware.ts' ./
+ 1204  cd ./app/lib/i18n/
+ 1205  mv middleware.ts  ../../../
+ 1206  npm run dev
+ 1207  sudo apt update
+ 1208  ./flipper/flipper 
+ 1209  npm run start
+ 1210  npx eslint './app/**'
+ 1211  npm init @eslint/config
+ 1212  npm install 
+ 1213  npm install --force
+ 1214  npx eslint './app'
+ 1215  npx eslint './app/*'
+ 1216  npx eslint './app/**'
+ 1217  npm install -D @typescript-eslint
+ 1218  npm install -D @typescript-eslint/parser
+ 1219  npx eslint './app/**'
+ 1220  npm rm eslint eslint-plugin-n eslint-plugin-import eslint-plugin-promise
+ 1221  npm rm eslint eslint-plugin-n eslint-plugin-import eslint-plugin-promise --force
+ 1222  npm rm  "eslint-config-next"
+ 1223  npm rm  "eslint-config-next" --force
+ 1224  npm rm  "@typescript-eslint/eslint-plugin"
+ 1225  npm rm  "@typescript-eslint/eslint-plugin" --force
+ 1226  npm rm  "@typescript-eslint/parser" --force
+ 1227  npm rm  "eslint-*" --force
+ 1228  npm rm  "eslint-plugin-react" --force
+ 1229  npm rm  "eslint-config-standard-with-typescript" --force
+ 1230  next lint
+ 1231  npm run lint
+ 1232  npm install --save-dev eslint-config-prettier
+ 1233  git remote add origin https://github.com/ccb-github/nextjs-app-copy.git
+ 1234  git push -u origin main
+ 1235  git checkout -b main
+ 1236  git push -u origin main
+ 1237  node_modules/.bin/eslint --init
+ 1238  npm run lint
+ 1239  npx eslint --help
+ 1240  rm .eslintrc.json 
+ 1241  npm init @eslint/config
+ 1242  npm run lint
+ 1243  next lint
+ 1244  npm run lint
+ 1245  npx eslint 'app/**'
+ 1246  curl https://nextjs-traceability-lj1s.vercel.app/
+ 1247  npm run dev
+ 1248  git remote show
+ 1249  git remote main
+ 1250  git push -u remote main
+ 1251  npm run start
+ 1252  npx pnpm install 
+ 1253  git checkout -b code-storage
+ 1254  git checkout main
+ 1255  rm -r "./app/admin/(data)/showgraph"
+ 1256  npx pnpm lint
+ 1257  npm install 
+ 1258  npm run build
+ 1259  npm run start
+ 1260  npm run dev
+ 1261  npm run build
+ 1262  xkill
+ 1263  xkill
+ 1264  curl cn.bing.com
+ 1265  curl https://nextjs-app-copy.vercel.app/
+ 1266  cd ..
+ 1267  npx create-next-app nextjs-docker --with-docker
+ 1268  npm run start
+ 1269  npm run dev
+ 1270  git push -u remote dev
+ 1271  npm run start
+ 1272  rm -rf .pcloud/ 
+ 1273  npm run build:android:preview 
+ 1274  nemo /media/share/Final\ essay/
+ 1275  npm run build:android:preview 
+ 1276  npm install -g eas-cli
+ 1277  npm run build:android:preview 
+ 1278  npm run start
+ 1279  ./flipper/flipper 
+ 1280  npm run start
+ 1281  npm run dev
+ 1282  code /home/mate/Downloads/追溯系统源/testgoldrock
+ 1283  npm run start
+ 1284  npm run build:android:preview 
+ 1285  npx eas-cli docter
+ 1286  npx eas-cli doctor
+ 1287  npx expo doctor
+ 1288  expo  doctor
+ 1289  cd /media/share/essay-code/my-qrcode/
+ 1290  sudo chmod 777 -R .
+ 1291  cd /media/share/Final\ essay
+ 1292  cd ..
+ 1293  cd ./essay-code/
+ 1294  git clone --help
+ 1295  git clone https://github.com/mongodb-developer/jumpstart-series.git
+ 1296  code ./jumpstart-series/
+ 1297  ./flipper/flipper 
+ 1298  xkill
+ 1299  npm run start
+ 1300  npm run build:android:preview
+ 1301  npm run dev
+ 1302  npm run build:android:preview 
+ 1303  git pull
+ 1304  git push -u test-expogo-supported remote
+ 1305  git pull remote
+ 1306  git pull main
+ 1307  git pull master
+ 1308  git list --help
+ 1309  git branch --help
+ 1310  git branch --list
+ 1311  npm run build:android:preview 
+ 1312  shutdown 0
+ 1313  eas init
+ 1314  ls 
+ 1315  eas build
+ 1316  cd ..
+ 1317  npx create-expo-app test-connreset
+ 1318  code test-connreset/
+ 1319  git push -u test-expogo-supported remote
+ 1320  git remote add origin https://github.com/ccb-github/my-qrcode.git
+ 1321  git push -u origin test-expogo-supported
+ 1322  git push -u origin master
+ 1323  shutdown 0
+ 1324  eas build --profile preview --platform android
+ 1325  eas build --profile preview --platform android --local
+ 1326  npm run start
+ 1327  npx expo start --dev-client
+ 1328  git push -u origin master
+ 1329  cd ..
+ 1330  git clone https://github.com/ccb-github/test-connection.git
+ 1331  git clone https://github.com/ccb-github/test-econnect.git
+ 1332  cd ./test-econnect/
+ 1333  code .
+ 1334  npm run build:androird:preview
+ 1335  cd ../my-qrcode/
+ 1336  npm run build:androird:preview
+ 1337  npm run build:android:preview
+ 1338  node --version
+ 1339  node --help
+ 1340  rm -r node_modules/
+ 1341  npm run start
+ 1342  npm install 
+ 1343  mv . /media/share/essay-code/nextjs-traceability/
+ 1344  mkdir .github
+ 1345  cd ./.github/
+ 1346  npm run start
+ 1347  npx expo start
+ 1348  npm install
+ 1349  npm run build:android:preview --local
+ 1350  npm run start
+ 1351  xkill
+ 1352  git checkout -b preview
+ 1353  git push -u remote/preview preview
+ 1354  git push --help
+ 1355  emulator --list
+ 1356  emulator list
+ 1357  emulator --help
+ 1358  npm run build:android:preview 
+ 1359  exit
+ 1360  emulator -list-avds
+ 1361  emulator @Pixel_API_31
+ 1362  npm run build:android:dev 
+ 1363  npm run build:android:dev  --local
+ 1364  npm run start
+ 1365  node
+ 1366  ./flipper/flipper 
+ 1367  npm run dev
+ 1368  npm run dev
+ 1369  npm run start
+ 1370  npm run dev
+ 1371  npm run dev
+ 1372  npm run start 
+ 1373  ./flipper/flipper 
+ 1374  npm run dev
+ 1375  npm run dev
+ 1376  npm run start
+ 1377  npm run dev
+ 1378  npm run start
+ 1379  npm run dev
+ 1380  shutdown 0
+ 1381  npm run build:android:preview 
+ 1382  npm run dev
+ 1383  npm run start
+ 1384  ./flipper/flipper 
+ 1385  npm run start
+ 1386  shutdown 0
+ 1387  xkill
+ 1388  npm run dev
+ 1389  npm run start
+ 1390  npm run dev
+ 1391  apt list --installed | grep pcl
+ 1392  npm run dev
+ 1393  rm file:///home/mate/Downloads/相关期刊/5-基于二维码的产品可追溯系统研究.pdf
+ 1394  rm /home/mate/Downloads/相关期刊/5-基于二维码的产品可追溯系统研究.pdf
+ 1395  npm run start
+ 1396  npm run build:android:dev
+ 1397  npm run dev
+ 1398  npm run dev
+ 1399  git add app/lib/api/gql
+ 1400  npx eslint
+ 1401  exit
+ 1402  npx eslint 
+ 1403  npx eslint ./app/**
+ 1404  npm run lint
+ 1405  npm run lint >> npm-lint-log
+ 1406  npm run lint >> ./npm-lint-log
+ 1407  npx eslint init --help
+ 1408  gnome-terminal .
+ 1409  npx eslint --help
+ 1410  npm run lint
+ 1411  npx eslint --fix ./app/[lng]/admin/(data)/device/page.tsx
+ 1412  npx eslint --fix "./app/[lng]/admin/(data)/device/page.tsx"
+ 1413  npm run dev
+ 1414  npx eslint --fix ./app/types/webContent.ts
+ 1415  npm run dev
+ 1416  cd ./app/lib/schema/
+ 1417  touch order.ts
+ 1418  sudo rm -rf /media/mate/UBUNTU-ROOT/var/log
+ 1419  sudo rm -rf /media/mate/UBUNTU-ROOT/home/dot/.npm
+ 1420  sudo ls  /media/mate/UBUNTU-ROOT/var/log
+ 1421  df
+ 1422  npx eslint ./app/lib/schema/order.ts
+ 1423  npm run dev
+ 1424  lsblk
+ 1425  npm run start
+ 1426  npm run dev
+ 1427  npx eslint ./app/lib/fieldConvert.ts 
+ 1428  npm run dev
+ 1429  shutdown 0
+ 1430  npm run dev
+ 1431  sudo nemo
+ 1432  npm run start
+ 1433  npm run dev
+ 1434  shutdown 0
+ 1435  npm run dev
+ 1436  npm run android
+ 1437  npm run start
+ 1438  sudo apt install  graphviz
+ 1439  npm run dev
+ 1440  npm install --save-dev @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint typescript
+ 1441  npm run dev
+ 1442  npm install -D @typescript-eslint/eslint-plugin-parser
+ 1443  npm install --save-dev @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint typescript
+ 1444  npm uninstall @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint typescript
+ 1445  npm install --save-dev @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint 
+ 1446  npm install -D --force  @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint 
+ 1447  next lint
+ 1448  npm run lint
+ 1449  npm install eslint-plugin-prettier
+ 1450  npm uninstall eslint-config-standard-with-typescript
+ 1451  npm run lint
+ 1452  npm run start
+ 1453  npm run dev
+ 1454  npm run lint
+ 1455  npm install eslint-plugin-prettier
+ 1456  npm install -D eslint-plugin-prettier
+ 1457  npm run lint
+ 1458  shutdown 0
+ 1459  npm run dev
+ 1460  npx eslint init
+ 1461  npm run dev
+ 1462  npm run start
+ 1463  xkill
+ 1464  npm run start
+ 1465  xreader
+ 1466  npm run dev
+ 1467  npm run dev
+ 1468  npm run dev
+ 1469  npm uninstall react-table @types/react-table
+ 1470  npm install @tanstack/react-table
+ 1471  npm run dev
+ 1472  npm install react-table
+ 1473  npm -D install @types/react-table
+ 1474  npm run dev
+ 1475  npm run start
+ 1476  npm run build:android:dev 
+ 1477  npm run dev
+ 1478  npm run start
+ 1479  apt search code
+ 1480  sudo apt install code
+ 1481  sudo apt install visual-studio-code
+ 1482  exit
+ 1483  cd /media/share/essay-code/my-qrcode/
+ 1484  npm run start
+ 1485  ~/flipper/flipper 
+ 1486  npm run dev
+ 1487  npm run dev
+ 1488  npm run start
+ 1489  npm run build
+ 1490  npm run dev
+ 1491  eslint --init
+ 1492  sudo rm -r /tmp/metro-*
+ 1493  rm -r node_modules/
+ 1494  npm install
+ 1495  npm install --save-dev eslint-plugin-react-native
+ 1496  git stage .history
+ 1497  git stage ".history/**"
+ 1498  git stage ".history/*"
+ 1499  git stage ".history/"
+ 1500  git stage ".history"
+ 1501  eslint --init
+ 1502  npx eslint --init
+ 1503  npm run start
+ 1504  npm run start
+ 1505  xkill
+ 1506  sudo mkdir ./data
+ 1507  sudo chmod 777 -R ./data
+ 1508  sudo lvm
+ 1509  ./android-studio/bin/studio.sh 
+ 1510  npm run start
+ 1511  emulator --lsit
+ 1512  emulator --list
+ 1513  emulator -l
+ 1514  emulator --help
+ 1515  emulator -list-avds
+ 1516  emulator --help
+ 1517  cat .bashrc 
+ 1518  npm run start 
+ 1519  ./android-studio/bin/studio.sh 
+ 1520  emulator --help
+ 1521  ./android-studio/bin/studio.sh 
+ 1522  npm run dev
+ 1523  npm run dev
+ 1524  git checkout -b ui-test
+ 1525  node
+ 1526  npm run start
+ 1527  ./flipper/flipper 
+ 1528  emulator -list-avds
+ 1529  emulator --help
+ 1530  adb --help
+ 1531  adb devices
+ 1532  git log
+ 1533  history >> history.txt

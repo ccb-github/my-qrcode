@@ -1,0 +1,33 @@
+{
+    "type": "Product",
+    "_id": "638ec8aa2cfb6f58c6fbf16e",
+    "name": "638ec8aa2cfb6f58c6fbf16e",
+    "category": "other",
+    "produceDay": "2022-12-06T04:44:26.264Z",
+    "status": false,
+    "shelfLife": 365,
+    "description": "Product a",
+    "standard": "0.944@domain.com",
+    "assemlePlace": "638ec8aa2cfb6f58c6fbf16e",
+    "producer": {
+        "_id": "642e89263747d5369f35a117",
+        "description": "Enterprise 642e89263747d5369f35a117",
+        "creditCode": "fakeCode",
+        "email": "enter267@domain.com",
+        "name": "Enterprise 0.565",
+        "registerPlace": "Place 0.737",
+        "createdAt": Date("2023-04-06T08:56:06.062Z"),
+        "tradeMark": "https://picsum.photos/200/300?random=66;",
+        "address": null,
+        "ownerId": "system"
+    },
+    "checker": {
+        "_id": "6394552425782866aa884c99",
+        "email": "0.562@domain.com",
+        "name": "Checker 1",
+        "address": "Address 2",
+        "belong": null,
+        "ownerId": "string"
+    },
+    "ownerId": "6385f8a488926b5774fbbfb3"
+}

@@ -1,0 +1,14 @@
+{
+    "password-reset-email-sended": "重置邮件已发送至邮箱",
+    "name": {
+      "Product": "产品",
+      "Enterprise": "厂家",
+      "Checker": "质检"
+    }, 
+    "Enterprise": {
+      "_id": "数据标识",
+			"description": "描述",
+			"creditCode": "信用代码"
+		
+    }
+}

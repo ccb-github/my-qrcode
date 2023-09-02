@@ -1,0 +1,14 @@
+
+const LogisticMainSchema = {
+  name: "Logistic",
+  primaryKey: "_id",
+  properties: {
+    _id: "objectId",
+    timeStamp: "date",
+    producer: "Enterprise",
+    
+  },
+  generate: () =>{
+
+  }
+} 

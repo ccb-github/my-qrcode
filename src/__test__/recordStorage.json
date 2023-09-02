@@ -1,0 +1,38 @@
+{
+    "product" :
+    {
+        "_id": "638ec8aa2cfb6f58c6fbf16e",
+        "assemblePlace": "638ec8aa2cfb6f58c6fbf16e",
+        "category": "other",
+        "checker": {
+            "_id": "6394552425782866aa884c99",
+            "address": null,
+            "belong": null,
+            "email": "0.562@domain.com",
+            "name": "B 检查",
+            "ownerId": "string"
+        },
+        "description": "Product a",
+        "name": "638ec8aa2cfb6f58c6fbf16e",
+        "ownerId": "6385f8a488926b5774fbbfb3",
+        "produceDay": "2022-12-06T04:44:26.264Z",
+        "producer": {
+            "_id": "642e89263747d5369f35a117",
+            "address": null,
+            "createdAt": "2023-04-06T08:56:06.062Z",
+            "creditCode": "fakeCode",
+            "description": "Enterprise 642e89263747d5369f35a117",
+            "email": "0.267@domain.com",
+            "name": "B 公司",
+            "ownerId": "system",
+            "registerPlace": "Place 0.737",
+            "tradeMark": "https://picsum.photos/200/300?random=66;"
+        },
+        "shelfLife": 365,
+        "standard": "0.944@domain.com",
+        "status": false,
+        "type": "Product"
+      
+    },
+    "fetchurl": "https://data.mongodb-api.com/app/application-qrcode-ukplu/endpoint/product/?arg1=Product&arg2=name&arg3=Alpha"
+}

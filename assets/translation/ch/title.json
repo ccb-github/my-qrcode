@@ -1,0 +1,26 @@
+{
+    "Record": "记录",
+		"Home": "主页",
+    "Profile": "资料",
+    "Setting": "设置",
+    "Image": "图片",
+    "Email": "邮箱",
+	"password": "密码",
+	"Forgot-password": "忘记密码?",
+
+	"Detail screen": "详细",
+	"Tap to scan again": "点击重新扫描!",
+	"signUp-button-text": "注册",
+	"logout": "登出",
+	"follow-system": "跟随系统",
+	"submit": "确认",
+	"cancel": "取消",
+	"password-reset-email-sended": "重置账号密码邮件已发送至该邮箱",
+	"fill-field-alert": "请填写所有项目",
+	"TabOne": "标签页1",
+	"List": "列表",
+	"Product": "产品",
+	"Enterprise": "企业",
+	"Jump to scan": "前往扫描",
+	"Password mismatch": "两个密码不一致"
+}

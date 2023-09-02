@@ -1,0 +1,19 @@
+{
+  "Email": "Email",
+	"Password": "Password",
+	"Forgot Password": "Forget password?",
+	"login-button-text": "Login",
+	"signup-prompt": "Sign up",
+	"logout": "Log out",
+	"follow-system": "Follow system",
+	"submit": "Submit",
+	"cancel": "Cancel",
+	"password-reset-email-sended": "Password reset email sended",
+	"Record": "Record",
+	"List": "List",
+	"Product": "Product",
+	"Enterprise": "Enterprise",
+	"No scan record": "No scan record",
+	"Jump to scan": "Jump to scan",
+	"Password mismatch": "Two password mismatch"
+}

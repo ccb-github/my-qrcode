@@ -1,0 +1,15 @@
+@startuml
+class BarcodeScanner {
+  +style
+  +scanned
+  +isFocused
+  +hasPermission
+  ----
+  +handleCodeScanned: () => any
+  +handleImagePicked: () => any
+  +askPermissionAsync: () => any
+  +addRecord: (scanRecord: string) => any 
+  +addImageHistory: (newImageHistory: string) => any
+  +scanFromImageAsync: async (uri: string) => void
+}
+@enduml
