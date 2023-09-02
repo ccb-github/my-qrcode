@@ -23,8 +23,6 @@
     "rules": {
         "@typescript-eslint/quotes": "off",
         "quotes": ["warn", "double"],
-        "@typescript-eslint/explicit-function-return-type": "off",
-        "@react/react-in-scope": "warn",
-        "@react/prop-types": "warn"
+        "@typescript-eslint/explicit-function-return-type": "off"
     }
 }
