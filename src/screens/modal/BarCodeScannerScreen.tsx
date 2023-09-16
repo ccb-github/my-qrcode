@@ -29,7 +29,8 @@ export default function BarCodeScannerScreen ({ navigation, route }: RootStackBa
 
   const realm = useRealm()
   const user = useUser()
-  const imageHistoryStorage = useAsyncMapStorage(imageHistory)
+  // TODO the user login check
+  const imageHistoryStorage = useAsyncMapStorage(`${scanHistory}-${user?.id}`)
   const scanHistoryStorage = useAsyncMapStorage(`${scanHistory}-${user?.id}`)
   const { t } = useTranslation("barcode")
   // const tabHeight = getTabBarHeight()
@@ -84,21 +85,21 @@ export default function BarCodeScannerScreen ({ navigation, route }: RootStackBa
     try {
       console.log("url provide by image" + url)
       const scanResult = await BarCodeScanner.scanFromURLAsync(url)
-      scanResult.push({
-        data: "https://data.mongodb-api.com/app/application-qrcode-ukplu/endpoint/product/?arg1=Product&arg2=name&arg3=Alpha",
-        type: "",
-        bounds: {
-          origin: {
-            x: 0,
-            y: 0
-          },
-          size: {
-            height: 0,
-            width: 0
-          }
-        },
-        cornerPoints: []
-      })
+      // scanResult.push({
+      //   data: "https://data.mongodb-api.com/app/application-qrcode-ukplu/endpoint/product/?arg1=Product&arg2=name&arg3=Alpha",
+      //   type: "",
+      //   bounds: {
+      //     origin: {
+      //       x: 0,
+      //       y: 0
+      //     },
+      //     size: {
+      //       height: 0,
+      //       width: 0
+      //     }
+      //   },
+      //   cornerPoints: []
+      // })
       if (scanResult.length === 0) {
         Alert.alert("QRCode doesn't contain valid data", "Message", [
           {
@@ -117,7 +118,19 @@ export default function BarCodeScannerScreen ({ navigation, route }: RootStackBa
           scanResult[0].data.split("?").length > 1
         ) {
           const { arg1, arg2, arg3 } = getQueryParams(scanResult[0].data)
-          dataResult = realm.objects(arg1).filter(item => item[arg2] === arg3)
+          const realmQueryResult = realm.objects(arg1).filter(item => item[arg2] === arg3)
+          switch(realmQueryResult.length) {
+            case 1:
+              dataResult = realmQueryResult[0]
+              type = arg1
+              break
+            case 0:
+              dataResult = "Can not get valid data from url"
+              type = "raw"
+            default:
+              dataResult = realmQueryResult
+              type = arg1
+          }
           // TODO the type we need
           type = arg1
         } else {
@@ -154,12 +167,11 @@ export default function BarCodeScannerScreen ({ navigation, route }: RootStackBa
     // If this was a system fetch uri
     // TODO split length could be bigger?
     if (typeof data === "string" &&
-        data.startsWith(fetchUrlPrefix) &&
+        data.startsWith(fetchUrlPrefix + "/schemaname_filter") &&
         data.split("?").length > 1
     ) {
       const { arg1 } = getQueryParams(data)
       // const matchResult = realm.objects(arg1).filter( item => item["assemblePlace"] === arg3).at(0)
-      console.log("The length", realm.objects(arg1).length)
       // TODO the type we need
       type = arg1
       // new URLSearchParams(data.split("?")[1]).get("arg1")
@@ -208,7 +220,7 @@ export default function BarCodeScannerScreen ({ navigation, route }: RootStackBa
               )}
           <BottomFloatToolbar
             afterPickCallBack={scanFromImageURLAsync}
-            style={{ height: 30 * scale, width: "100%" }}
+            style={{ ...styles.bottomToolBar, height: 30 * scale }}
           />
         </View>
           )
@@ -229,7 +241,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   bottomToolBar: {
-    // width: "100%",
+    width: "100%",
   },
   hintText: {
     position: "relative",

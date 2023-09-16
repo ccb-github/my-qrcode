@@ -1,4 +1,3 @@
-/* eslint-disable react/react-in-jsx-scope */
 import { StatusBar } from "expo-status-bar"
 import { useRef, useState } from "react"
 import {
@@ -16,16 +15,17 @@ import Dimensions from "../../style/Dimensions"
 import { useTranslation } from "react-i18next"
 import LanguagePicker from "../../components/LanguagePicker"
 import { Title } from "react-native-paper"
+import { type LoginStackLoginScreenProps } from "../../type/navigation"
 
 const { scale } = Dimensions
 
-export default function LoginScreen ({ navigation }) {
+export default function LoginScreen ({ navigation }: LoginStackLoginScreenProps) {
   const email = useRef("")
   const password = useRef("")
-  const [loading, setLoading] = useState(false)
+  const [loginLoading, setLoginLoading] = useState(false)
 
   const { t } = useTranslation("login")
- 
+
   const loginWithEmailAndPassword = async () => {
     if (email.current === "" || password.current === "") {
       console.log("loginEmpty")
@@ -33,30 +33,30 @@ export default function LoginScreen ({ navigation }) {
       return
     }
     try {
-      setLoading(true)
+      setLoginLoading(true)
       console.log("Cred create start")
       const emailPasswordCred = Realm.Credentials.emailPassword(email.current, password.current)
       const loginUser = await realmApp.logIn(emailPasswordCred)
       console.log(`Login with user ${loginUser.id}`)
     } catch (error) {
-      Alert.alert(t("error"), error?.message || "No specific message",
+      const { message } = error
+      Alert.alert(t("Error"), (typeof message === "string" ? message : "No specific message"),
         [{ text: t("Ok") }]
       )
-
       console.error("Login error", error)
       return
     } finally {
-      setLoading(false)
+      setLoginLoading(false)
     }
   }
 
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <View style={styles.inputView}>
-        <Title style={styles.textInput}>{`XX${t(
-          "Traceability system"
-        )}`}</Title>
+      <View style={styles.titleView}>
+        <Title style={styles.textInput}>
+         {`XX${t("Traceability system")}`}
+        </Title>
       </View>
       <Image
         source={require("../../../assets/favicon.png")}
@@ -69,7 +69,7 @@ export default function LoginScreen ({ navigation }) {
           placeholder={t("Email")}
           placeholderTextColor="#003f5c"
           onChangeText={(value) => {
-            email.current = value;
+            email.current = value
           }}
         />
       </View>
@@ -89,7 +89,7 @@ export default function LoginScreen ({ navigation }) {
       <View>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("Reset", { email })
+            navigation.navigate("Reset", { email: email.current })
           }}
         >
           <Text style={styles.forgotPasswordText}>{t("Forgot Password")}</Text>
@@ -97,20 +97,22 @@ export default function LoginScreen ({ navigation }) {
         <LanguagePicker />
       </View>
       <TouchableOpacity
-        style={styles.loginBtn}
+        style={styles.actionBtn}
         onPress={loginWithEmailAndPassword}
       >
-        <Text>{t("Login")}</Text>
-        {loading ? <ActivityIndicator size={"small"} /> : null}
+        <Text>{t("Log in")}</Text>
+        {loginLoading ? <ActivityIndicator size={"small"} /> : null}
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.loginBtn}
-        onPress={navigation.navigate("Reset", { email })}
+        style={styles.actionBtn}
+        onPress={() => {
+          navigation.navigate("Reset", { email: email.current })
+        }}
       >
         <Text>{t("Sign up")}</Text>
       </TouchableOpacity>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -135,6 +137,15 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
 
+  titleView: {
+    backgroundColor: "#FFC0CB",
+    borderRadius: 18 * scale,
+    width: "70%",
+    marginBottom: 8 * scale,
+
+    alignItems: "center"
+  },
+
   textInput: {
     flex: 1,
     padding: 4 * scale,
@@ -149,7 +160,7 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline"
   },
 
-  loginBtn: {
+  actionBtn: {
     width: "80%",
     borderRadius: 10 * scale,
     height: 20 * scale,

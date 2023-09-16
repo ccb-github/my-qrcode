@@ -1,6 +1,6 @@
 import { createRealmContext } from "@realm/react"
 
-import { OpenRealmBehaviorType, OpenRealmTimeOutBehavior } from "realm"
+import { OpenRealmBehaviorType } from "realm"
 import type { OpenRealmBehaviorConfiguration } from "realm"
 import OrderSchemaList from "./models/Customer/Order"
 import ProductSchemaList from "./models/Producer/Product"
@@ -9,10 +9,12 @@ import CheckerSchemaList from "./models/Regulatory/Checker"
 import RegulatorySchemaList from "./models/Regulatory/Regulatory"
 import EnterpriseSchemaList from "./models/Producer/EnterPrise"
 
+// TODO realm timeout behavior
 export const realmFileBehavior: OpenRealmBehaviorConfiguration = {
   type: OpenRealmBehaviorType.DownloadBeforeOpen,
   timeOut: 1000,
-  timeOutBehavior: OpenRealmTimeOutBehavior.OpenLocalRealm
+  //@ts-ignore
+  timeOutBehavior: "openLocalRealm"
 }
 
 export const config = {
