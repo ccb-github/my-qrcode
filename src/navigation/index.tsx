@@ -9,12 +9,17 @@ import ResetPasswordScreen from "../screens/login/ResetPasswordScreen"
 import RecordScreen from "../screens/modal/RecordScreen"
 import ResultScreen from "../screens/modal/ResultScreen"
 import { useEffect } from "react"
+import {
+  imageHistory as imageHistoryKey,
+  scanHistory as scanRecordKey
+} from "../utils/localStorageConfig.json"
 import { useAsyncStorage } from "@react-native-async-storage/async-storage"
 import { RouteNameLogin, RouteNameMain } from "./const"
 import RealmContext from "../realm/RealmContext"
 import FigmaSampleScreen from "../screens/FigmaSampleScreen"
 import AsyncStorageInspect from "../screens/__test__/AsyncStorageInspect"
 import { useTranslation } from "react-i18next"
+import { useUser } from "@realm/react"
 const { useRealm } = RealmContext
 
 /**
@@ -39,18 +44,19 @@ export function LoginNavigation (props: LoginNavigationProps = { initialRouteNam
 
 export function MainNavigation () {
   console.log("MainNavigation body")
-  const imageHistorysStorage = useAsyncStorage("imageHistorys")
-  const recordHistorysStorage = useAsyncStorage("records")
+  const user = useUser()
+  const imageHistorysStorage = useAsyncStorage(`${imageHistoryKey}-${user?.id ?? "NULL-id"}`)
+  const recordHistorysStorage = useAsyncStorage(`${scanRecordKey}-${user?.id ?? "NULL-id"}`)
   const { t } = useTranslation("title")
   const realm = useRealm()
   useEffect(() => {
     console.log(realm.path);
     (async () => {
       // 初始化记录方便使用
-
+      
       const imageHistorys = await imageHistorysStorage.getItem()
       const recordHistorys = await recordHistorysStorage.getItem()
-      console.log(imageHistorys, recordHistorys)
+      console.log("Index navigation",{imageHistorys}, {recordHistorys})
       if (imageHistorys === null) {
         await imageHistorysStorage.setItem("[]")
       }

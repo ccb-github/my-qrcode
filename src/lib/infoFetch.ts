@@ -1,8 +1,7 @@
 import { Alert } from "react-native";
-import { RouteNameMain } from "../navigation/const";
 
 
-export const  queryParamsregex = /[?&]([^=#]+)=([^&#]*)/g
+export const  queryParamsRegex = /[?&]([^=#]+)=([^&#]*)/g
 
 
 
@@ -29,7 +28,7 @@ export const fetchFromEndpoint = async (endpointUrl: string) => {
         if (res.ok) {
           return res ? res.json() : res;
         }
-        //TODO specific this errorres.text ? res.text
+        // TODO specific this error likeres.text ? res.text
         else{
           
           return (`Fetch failed with status ${res.status}`);

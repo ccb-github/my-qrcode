@@ -11,8 +11,8 @@ import type { App, SyncError } from "realm"
 
 const { RealmProvider } = RealmContext
 
-function AppWrapper () {
-  console.log("Appwrapper function body")
+function AppWrapper() {
+  console.log("App wrapper function body")
 
   return (
     <NavigationContainer>
@@ -26,10 +26,10 @@ function AppWrapper () {
                 existingRealmFileBehavior: realmFileBehavior,
                 newRealmFileBehavior: realmFileBehavior,
                 initialSubscriptions: {
-                  update (_subs, realm) {
+                  update(_subs, realm) {
                     customerRealmSub(realm)
-                  }
-                }
+                  },
+                },
               }}
             >
               <MainNavigation />
@@ -41,7 +41,7 @@ function AppWrapper () {
   )
 }
 
-function errorSync (session: App.Sync.Session, error: SyncError) {
+function errorSync(session: App.Sync.Session, error: SyncError) {
   console.log("Error sync is calling")
 
   console.error(error)

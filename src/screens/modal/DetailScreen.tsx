@@ -17,74 +17,87 @@ import { type EnterpriseMain } from "../../realm/models/Producer/EnterPrise"
 import { type Checker } from "../../realm/models/Regulatory/Checker"
 import { hintTextBySize } from "../../style/common"
 import type { Product } from "../../realm/models/Producer/Product"
-import { RootStackDetailScreenProps } from "../../type/RootStackDetailScreenProps"
+import { type RootStackDetailScreenProps } from "../../type/RootStackDetailScreenProps"
 const { getFontSize } = Dimensions
 
 // TODO intergrate data
 //
 
 // eslint-disable-next-line react/prop-types
-const ProductDetail = ({ data, linkAction, scale }: {
-  data: Product
-
-}) => {
+type DetailProps<DataType> = {
+  data: DataType,
+  linkAction: (linkedData: unknown) => void,
+  scale: number
+}
+const ProductDetail = ({ data, linkAction, scale }: DetailProps<Product>) => {
   console.log(`Data inside ProductDetail ${JSON.stringify(data)}`)
-
+  const { t } = useTranslation("product")
+  const dataIdInterpret = value => {
+    if (typeof value.toHexString === "function") {
+      return value.toHexString()
+    } else if (typeof value === "string") {
+      return value
+    } else {
+      return "This value does not appear to be string or ObjectId, check"
+    }
+  }
   return (
     <>
       {/* Main data section  {@id: productCard} */}
       <View style={{ backgroundColor: "white" }}>
-        <StringField
-          name={"Id"}
-          value={data._id?.toHexString ? data._id.toHexString() : data._id}
-        />
+        <StringField name={t("Id")} value={dataIdInterpret(data._id)} />
         <Divider />
-        <StringField name={t("Name")} value={data?.name} />
+        <StringField name={t("Name")} value={data.name} />
         <Divider style={{ borderStyle: "dashed" }} />
         <StringField
           name={t("Shelflife")}
-          value={`${data.shelfLife as number} ${t("days")}`}
+          value={`${data.shelfLife} ${t("days")}`}
         />
         <Divider />
-        <DateField name={"produceDay"} value={data?.createdAt} />
+        <DateField
+          name={t("Produce Day")}
+          value={
+            typeof data.produceDay === "string"
+              ? data.produceDay
+              : data.produceDay.toDateString()
+          }
+        />
       </View>
       <Divider style={{ height: 10 * scale }} />
 
       <View style={{ backgroundColor: "white" }}>
         <Text style={{ textAlign: "center" }}>Enterprise</Text>
-        {data.producer
-          ? (
+        {data.producer ?? false ? (
           <LinkObjectField
+            valueNameKey={"name"}
             name={t("Producer")}
             type={"Enterprise"}
             value={data.producer}
             onPressAction={linkAction}
           />
-            )
-          : (
+        ) : (
           <Text style={hintTextBySize({ size: 10 * scale })}>
             This area is empty yet
           </Text>
-            )}
+        )}
       </View>
       <Divider style={{ height: 10 * scale }} />
 
       <View style={{ backgroundColor: "white" }}>
-        <Text style={{ textAlign: "center" }}>Check Record</Text>
-        {data.producer !== undefined
-          ? (
+        <Text style={{ textAlign: "center" }}>{"Enterprise"}</Text>
+        {data.producer ?? false ? (
           <LinkObjectField
             name={t("Producer")}
             type={"Enterprise"}
+            valueNameKey=""
             value={data.producer}
             onPressAction={linkAction}
           />
-            )
-          : (
+        ) : (
           <Text style={hintTextBySize({ size: 10 * scale })}>
             This area is empty yet
           </Text>
-            )}
+        )}
       </View>
     </>
   )
@@ -98,16 +111,9 @@ const CheckerDetail = ({ data }: { data: Checker }) => {
       <StringField name={t("Check") + t("Id")} value={data._id}/>
       <StringField name={t("Check") + t("device")} value={"Random device"}/>
       <StringField name={t("Check") + t("time")} value={new Date().toISOString()}/>
-      <List.Section style={ { width: "100%" }} title={t("product list") + data.products?.length}>{
-        data.products?.map(
-          (item, index) =>
-            <List.Item title={item.name} key={index}/>
-        )
-      }</List.Section>
     </>
   )
 }
-
 
 /**
  * Description
@@ -122,8 +128,8 @@ const EnterpriseDetail = ({ data }: { data: EnterpriseMain }) => {
       <DateField name={t("createAt")} value={data.createdAt.toDateString()} />
       <StringField name={t("name")} value={data.name} />
       <StringField name={t("email")} value={data.email} />
-      <ImageField name={t("brand")} value={data?.tradeMark} />
-      <StringField name={t("register place")} value={data?.registerPlace} />
+      <ImageField name={t("brand")} value={data?.tradeMark || "空"} />
+      <StringField name={t("register place")} value={data.registerPlace} />
     </>
   )
 }
@@ -134,7 +140,7 @@ export default function DetailScreen ({ route }: RootStackDetailScreenProps) {
 
   const contentTabStackRef = useRef(new Set())
   const cacheDataRef = useRef({})
-  const [type, setType] = useState(null)
+  const [type, setType] = useState<string | null>(null)
 
   useEffect(() => {
     console.log("Detailscreen mounted")
@@ -174,7 +180,7 @@ export default function DetailScreen ({ route }: RootStackDetailScreenProps) {
             closeIcon="close"
             closeIconAccessibilityLabel="Custom Close icon accessibility label"
           >
-            {typeof tab}
+            {tab}
           </Chip>
         ))}
       </View>

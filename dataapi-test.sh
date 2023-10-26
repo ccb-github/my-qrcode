@@ -3,6 +3,7 @@ curl -s https://data.mongodb-api.com/app/application-qrcode-ukplu/endpoint/data/
   -H "Content-Type: application/ejson" \
   -H "Accept: application/json" \
   -H "apiKey: TpqAKQgvhZE4r6AOzpVydJ9a3tB1BLMrgDzLlBLbihKNDzSJWTAHMVbsMoIOpnM6" \
+  iVVHV8u9cUVQU776WAt331CNu0TSFxmjjIeyRQnbm9JJtPwWR46CMvf1AJQaAAyA
   -d '{
     "dataSource": "mongodb-atlas",
     "database": "learn-data-api",
@@ -27,6 +28,7 @@ curl -s https://data.mongodb-api.com/app/application-qrcode-ukplu/endpoint/data/
   -H "Content-Type: application/json" \
   -H "Accept: application/json" \
   --data '{
+
      "collectionName": "Product",
      "fieldName": "name", 
      "fieldValue": "Product a"

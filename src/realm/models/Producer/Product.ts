@@ -13,7 +13,7 @@ class Product extends Realm.Object {
   description: string
   standard: string
   assemblePlace?: string
-  producer: EnterpriseMain
+  producer?: EnterpriseMain
   checker?: Checker
   checkRecord: CheckRecord
   ownerId: string

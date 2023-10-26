@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import {
+  Alert,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -11,7 +12,7 @@ import { useTranslation } from "react-i18next"
 import { type StackScreenProps } from "@react-navigation/stack"
 import { RecordList } from "../../components/list/RecordList"
 import { RouteNameMain } from "../../navigation/const"
-import type { RootStackParamList } from "../../type/navigation"
+import type { MainStackParamList } from "../../type/navigation"
 import RealmContext from "../../realm/RealmContext"
 import Dimensions from "../../style/Dimensions"
 import {
@@ -23,6 +24,8 @@ import Photos from "../../components/list/Photos"
 import { type ScanRecord } from "../../type/data"
 import { useUser } from "@realm/react"
 import { useAsyncMapStorage } from "../../utils/localStorage"
+import { Product } from "../../realm/models/Producer/Product"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const { scale } = Dimensions
 
@@ -36,7 +39,7 @@ const { useRealm } = RealmContext
   setPagenumber: (num: number) => void
 } */
 
-type RecordScreenStackProps = StackScreenProps<RootStackParamList, RouteNameMain.record>
+type RecordScreenStackProps = StackScreenProps<MainStackParamList, RouteNameMain.record>
 
 export default function RecordScreen ({ navigation }: RecordScreenStackProps) {
   const [contentView, setContentView] = useState("list")
@@ -47,6 +50,13 @@ export default function RecordScreen ({ navigation }: RecordScreenStackProps) {
   const realm = useRealm()
   const user = useUser()
   const { t } = useTranslation()
+  if(user === null) {
+    return (
+      <Text>
+        User is null
+      </Text>
+    )
+  }
   const recordHistoryStorage = useAsyncMapStorage(
     `${scanRecordKey}-${user.id}`
   )
@@ -57,8 +67,11 @@ export default function RecordScreen ({ navigation }: RecordScreenStackProps) {
   useEffect(() => {
     (async () => {
       try {
-        imageHistory.current = await imageHistoryStorage.getMapItem()
-        recordHistory.current = await recordHistoryStorage.getMapItem("object")
+        await AsyncStorage.clear()
+        //imageHistory.current = await imageHistoryStorage.getMapItem()
+        recordHistory.current = (await recordHistoryStorage.getMapItem("object")).map(
+          item => JSON.parse(item ?? "{}")
+        )
 
         // let rawRecords = await recordHistoryStorage.getMapItem();
 
@@ -77,6 +90,13 @@ export default function RecordScreen ({ navigation }: RecordScreenStackProps) {
     })().catch(error => {
       throw error
     })
+    Alert.alert(`${realm.objects("Product").length}`)
+    // realm.write( () => {
+    //   for( const product of realm.objects(Product)) {
+    //     product.category ?? (product.category = "Other")
+    //   }
+      
+    // })
   }, [loading])
 
   const handleToggleRecordStatus = useCallback(

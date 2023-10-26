@@ -1,13 +1,13 @@
 import { useUser } from "@realm/react"
-import { useEffect, useRef } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import {
   Platform,
   ScrollView,
   Text,
   TouchableOpacity,
-  Pressable,
   View,
-  Switch
+  Switch,
+  ActivityIndicator,
 } from "react-native"
 import RealmContext from "../../realm/RealmContext"
 import Constants from "expo-constants"
@@ -18,9 +18,10 @@ import LanguagePicker from "../../components/LanguagePicker"
 import realmApp from "../../realm/app"
 import { FontAwesomeIconWrapper } from "../../components/Icon"
 import { type StackScreenProps } from "@react-navigation/stack"
-import { type RootStackParamList } from "../../type/navigation"
+import { type MainStackParamList } from "../../type/navigation"
 import { type RouteNameMain } from "../../navigation/const"
 import colors from "../../style/colors"
+import { Product } from "../../realm/models/Producer/Product"
 
 const { scale } = Dimensions
 const { useRealm } = RealmContext
@@ -41,21 +42,21 @@ const AccountList = () => {
               key={entry[1].profile.email}
               title={entry[1].profile.email}
               right={(color) => {
-                return entry[1].isLoggedIn
-                  ? (
+                return entry[1].isLoggedIn ? (
                   <Button
                     mode="contained"
                     onPress={() => {
-                      currentUser?.logOut().then(() => {
-                      }).catch(error => {
-                        throw error
-                      })
+                      currentUser
+                        ?.logOut()
+                        .then(() => {})
+                        .catch((error) => {
+                          throw error
+                        })
                     }}
                   >
                     {t("Log out")}
                   </Button>
-                    )
-                  : null
+                ) : null
               }}
             />
           )
@@ -65,74 +66,107 @@ const AccountList = () => {
     </>
   )
 }
-function SubscriptionList () {
+function SubscriptionList() {
   const realm = useRealm()
   const { t } = useTranslation("setting")
+  const [reloading, setReloading] = useState(0)
   const subscriptions = useRef([
-    "orderSubscription",
-    "enterpriseSubscription",
-    "productSubscription",
-    "checkerSubscription"
+    "Order-Subscription",
+    "Enterprise-Subscription",
+    "Product-Subscription",
+    "Checker-Subscription",
   ])
+  useEffect(() => {
+    console.log(realm.objects(Product).length)
+  }, [])
   const currentSubscriptions = realm.subscriptions
-  const subscriptionsState = useRef(
-    subscriptions.current.map(
-      (subscription) => currentSubscriptions.findByName(subscription) !== null
-    )
+  const subscriptionsState = useMemo(
+    () =>
+      subscriptions.current.map(
+        (subscription) =>
+          currentSubscriptions.findByName(subscription) !== null,
+      ),
+    [reloading],
   )
   // const subscriptions = useMemo(() => , [])
   return (
     <List.Section title={t("Subscription")}>
-      {subscriptions.current.length === 0
-        ? (
-            <View>
-              <Text>No subscription</Text>
-            </View>
-          )
-        : (
-            subscriptions.current.map((subscription, index) => {
-              return (
-                <List.Item
-                  key={subscription}
-                  title={subscription}
-                  right={({ color, style }) => (
-                    <Pressable
-                      style={[{ backgroundColor: "red" }, style]}
-                      onPress={() => {
-                        realm.subscriptions.update(
-                          (mutableSubs) => {
-                            mutableSubs.removeByName(subscription)
-                          }
-                        ).catch(
-                          error => {
-                            throw error
-                          }
-                        )
-                      }}
-                      onLongPress={() => {
-                        console.log(realm.objects("Product").length)
-                      }}
-                    >
-                      <Switch value={subscriptionsState[index]} />
-                    </Pressable>
-                  )}
+      {subscriptions.current.length === 0 ? (
+        <View>
+          <Text>No subscription</Text>
+        </View>
+      ) : (
+        subscriptions.current.map((subscription, index) => {
+          return (
+            <List.Item
+              key={subscription}
+              title={subscription}
+              right={({ color, style }) => (
+                // <Pressable
+                //   style={[{ backgroundColor: "red" }, style]}
+                //   onPress={() => {
+                //     realm.subscriptions.update(
+                //       (mutableSubs) => {
+                //         mutableSubs.removeByName(subscription)
+                //       }
+                //     ).catch(
+                //       error => {
+                //         throw error
+                //       }
+                //     )
+                //   }}
+                //   onLongPress={() => {
+                //     console.log(realm.objects("Product").length)
+                //   }}
+                // >
+                <Switch
+                  value={subscriptionsState[index]}
+                  style={style}
+                  onTouchEnd={() => {
+                    console.log(realm.objects("Product").length, "Length")
+                  }}
+                  onValueChange={(newValue) => {
+                    console.log(realm.subscriptions.length)
+                    realm.subscriptions
+                      .update((mutableSubs) => {
+                        if (newValue) {
+                          mutableSubs.add(
+                            realm.objects(subscription.split("-")[0]),
+                            {
+                              name: subscription,
+                            },
+                          )
+                        } else {
+                          mutableSubs.removeByName(subscription)
+                        }
+                        setReloading(reloading + 1)
+                      })
+                      .catch((error) => {
+                        throw error
+                      })
+                  }}
                 />
-              )
-            })
+                // </Pressable>
+              )}
+            />
           )
-      }
+        })
+      )}
     </List.Section>
   )
 }
 type SettingScreenStackProps = StackScreenProps<
-RootStackParamList,
-RouteNameMain.setting
+  MainStackParamList,
+  RouteNameMain.setting
 >
-function SettingScreen (props: SettingScreenStackProps) {
+function SettingScreen(props: SettingScreenStackProps) {
   const realm = useRealm()
 
   const { t } = useTranslation("settings")
   const connectState = useRef(realm.syncSession?.isConnected())
+  const [isSessionConnected, setIsSessionConnected] = useState(
+    realm.syncSession?.isConnected(),
+  )
   useEffect(() => {
     // console.log(realm.objects("Checker"))
     // realm.syncSession?.addProgressNotification(ProgressDirection["Download"],  ProgressMode["ForCurrentlyOutstandingWork"], (transfered, transferAble) => {
@@ -142,14 +176,21 @@ function SettingScreen (props: SettingScreenStackProps) {
     //   console.log(transferAble, transfered)
     // })
     // console.log(`Scale`, fontScale)
+    realm.syncSession?.addConnectionNotification((newConnectionState) => {
+      setIsSessionConnected(newConnectionState === "connected")
+    })
+
     console.log(realm.schema)
+    return () => {
+      realm.syncSession?.removeConnectionNotification(() => {})
+    }
   }, [realm.syncSession])
   return (
     <ScrollView
       style={{
         flex: 1,
         backgroundColor:
-          Platform.OS === "ios" ? colors.iosSettingBackground : colors.white
+          Platform.OS === "ios" ? colors.iosSettingBackground : colors.white,
       }}
     >
       <List.Section title="Status">
@@ -157,15 +198,20 @@ function SettingScreen (props: SettingScreenStackProps) {
           title={t("Connection state")}
           right={({ color }) => (
             <>
-              {(connectState.current ?? false)
-                ? <Text style={{ color }}>Connected</Text>
-                : <Text style={{ color }}>Disconnect</Text>
-              }
+              {connectState.current ?? false ? (
+                <Text style={{ color }}>Connected</Text>
+              ) : (
+                <Text style={{ color }}>Disconnect</Text>
+              )}
             </>
           )}
         />
       </List.Section>
-      <SubscriptionList />
+      {isSessionConnected ?? false ? (
+        <SubscriptionList />
+      ) : (
+        <ActivityIndicator size={"large"} />
+      )}
       <List.Section title="Customize">
         <List.Item
           title={t("Language switch")}

@@ -1,3 +1,4 @@
 {
-    "password-reset-email-sended": "Reset password email sent"
+    "password-reset-email-sended": "Reset password email sent",
+    "invalid username/password": "Invalid username password"
 }

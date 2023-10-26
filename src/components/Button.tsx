@@ -1,28 +1,17 @@
-import { TextStyle, ViewStyle, StyleSheet } from "react-native";
-import { Button as ButtonOri, Text } from "react-native-paper";
-
-export default function Button(
- {
-  style,
-  textStyle,
-  onPress,
-  children
- }:{ 
-  textStyle?: TextStyle
-  style?: ViewStyle
-  onPress: (url: any) => any
+import { StyleSheet } from "react-native"
+import { Button as ButtonOri, type Props } from "react-native-paper"
+type ButtonProps = {
   children: React.ReactNode
-}) {
-  return(
-    <ButtonOri style={[style, buttonStyle.button]}>
+} & Props
+
+export default function Button({ style, children, onPress }: ButtonProps) {
+  return (
+    <ButtonOri style={[style, buttonStyle.button]} onPress={onPress}>
       {children}
     </ButtonOri>
   )
 }
 
 const buttonStyle = StyleSheet.create({
-  button: {
-    
-  }
-
+  button: {},
 })
