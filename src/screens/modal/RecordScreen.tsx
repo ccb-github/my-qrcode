@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from "react-native"
 import { useTranslation } from "react-i18next"
 
@@ -17,15 +17,15 @@ import RealmContext from "../../realm/RealmContext"
 import Dimensions from "../../style/Dimensions"
 import {
   imageHistory as imageHistoryKey,
-  scanHistory as scanRecordKey
+  scanHistory as scanRecordKey,
 } from "../../utils/localStorageConfig.json"
 
 import Photos from "../../components/list/Photos"
 import { type ScanRecord } from "../../type/data"
 import { useUser } from "@realm/react"
 import { useAsyncMapStorage } from "../../utils/localStorage"
-import { Product } from "../../realm/models/Producer/Product"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { type Record } from "../../realm/models/Record"
 
 const { scale } = Dimensions
 
@@ -39,9 +39,12 @@ const { useRealm } = RealmContext
   setPagenumber: (num: number) => void
 } */
 
-type RecordScreenStackProps = StackScreenProps<MainStackParamList, RouteNameMain.record>
+type RecordScreenStackProps = StackScreenProps<
+  MainStackParamList,
+  RouteNameMain.record
+>
 
-export default function RecordScreen ({ navigation }: RecordScreenStackProps) {
+export default function RecordScreen({ navigation }: RecordScreenStackProps) {
   const [contentView, setContentView] = useState("list")
   const [loading, setLoading] = useState(true)
   const recordHistory = useRef<ScanRecord[]>([])
@@ -50,28 +53,22 @@ export default function RecordScreen ({ navigation }: RecordScreenStackProps) {
   const realm = useRealm()
   const user = useUser()
   const { t } = useTranslation()
-  if(user === null) {
-    return (
-      <Text>
-        User is null
-      </Text>
-    )
+  if (user === null) {
+    return <Text>User is null</Text>
   }
-  const recordHistoryStorage = useAsyncMapStorage(
-    `${scanRecordKey}-${user.id}`
-  )
+  const recordHistoryStorage = useAsyncMapStorage(`${scanRecordKey}-${user.id}`)
   const imageHistoryStorage = useAsyncMapStorage(
-    `${imageHistoryKey}-${user.id}`
+    `${imageHistoryKey}-${user.id}`,
   )
 
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       try {
         await AsyncStorage.clear()
-        //imageHistory.current = await imageHistoryStorage.getMapItem()
-        recordHistory.current = (await recordHistoryStorage.getMapItem("object")).map(
-          item => JSON.parse(item ?? "{}")
-        )
+        // imageHistory.current = await imageHistoryStorage.getMapItem()
+        recordHistory.current = (
+          await recordHistoryStorage.getMapItem("object")
+        ).map((item) => JSON.parse(item ?? "{}"))
 
         // let rawRecords = await recordHistoryStorage.getMapItem();
 
@@ -87,7 +84,7 @@ export default function RecordScreen ({ navigation }: RecordScreenStackProps) {
       } catch (error) {
         console.error(error)
       }
-    })().catch(error => {
+    })().catch((error) => {
       throw error
     })
     Alert.alert(`${realm.objects("Product").length}`)
@@ -95,17 +92,17 @@ export default function RecordScreen ({ navigation }: RecordScreenStackProps) {
     //   for( const product of realm.objects(Product)) {
     //     product.category ?? (product.category = "Other")
     //   }
-      
+
     // })
   }, [loading])
 
   const handleToggleRecordStatus = useCallback(
-    (record: any): void => {
+    (record: Record): void => {
       realm.write(() => {
         record.isVerified = !record.isVerified
       })
     },
-    [realm]
+    [realm],
   )
 
   const handleDeleteRecord = useCallback(
@@ -114,24 +111,23 @@ export default function RecordScreen ({ navigation }: RecordScreenStackProps) {
       await recordHistoryStorage.removeOneItem(key)
       setLoading(false)
     },
-    [realm]
+    [realm],
   )
 
   const handleDeleteImageHistory = useCallback(
     async (key: string): Promise<void> => {
       setLoading(true)
-      try {
-        imageHistoryStorage.removeOneItem(key)
-        setLoading(false)
-      } catch (error) {
-        throw error
-      }
+
+      await imageHistoryStorage.removeOneItem(key)
+      setLoading(false)
     },
-    [realm]
+    [realm],
   )
 
   // TODO Type of the data
-  const resultNavigate = (detailInfo: { data: any, type: string }) => { navigation.navigate(RouteNameMain.modalResult, detailInfo) }
+  const resultNavigate = (detailInfo: { data: any; type: string }) => {
+    navigation.navigate(RouteNameMain.modalResult, detailInfo)
+  }
 
   const scanNavigate = (scannedPhoto: string) => {
     navigation.navigate("Scanner", { uri: scannedPhoto })
@@ -146,8 +142,8 @@ export default function RecordScreen ({ navigation }: RecordScreenStackProps) {
               styles.contentViewButton,
               {
                 paddingVertical: 5 * scale,
-                borderBottomWidth: contentView === "list" ? 2 : 0
-              }
+                borderBottomWidth: contentView === "list" ? 2 : 0,
+              },
             ]}
             onPress={() => {
               setContentView("list")
@@ -157,27 +153,29 @@ export default function RecordScreen ({ navigation }: RecordScreenStackProps) {
               style={[
                 styles.contentViewButtonText,
                 {
-                  fontSize: 10 * scale
-                }
+                  fontSize: 10 * scale,
+                },
               ]}
             >
               {t("List")}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => { setContentView("image") }}
+            onPress={() => {
+              setContentView("image")
+            }}
             style={{
               ...styles.contentViewButton,
               paddingVertical: 5 * scale,
-              borderBottomWidth: contentView === "image" ? 2 : 0
+              borderBottomWidth: contentView === "image" ? 2 : 0,
             }}
           >
             <Text
               style={[
                 styles.contentViewButtonText,
                 {
-                  fontSize: 10 * scale
-                }
+                  fontSize: 10 * scale,
+                },
               ]}
             >
               {t("Image")}
@@ -185,22 +183,20 @@ export default function RecordScreen ({ navigation }: RecordScreenStackProps) {
           </TouchableOpacity>
         </View>
 
-        {contentView === "list"
-          ? (
+        {contentView === "list" ? (
           <RecordList
             records={recordHistory.current}
             onToggleRecordStatus={handleToggleRecordStatus}
             onDeleteRecord={handleDeleteRecord}
             detailNavigate={resultNavigate}
           />
-            )
-          : (
+        ) : (
           <Photos
             photos={imageHistory.current}
             parentNavi={scanNavigate}
             onDelete={handleDeleteImageHistory}
           />
-            )}
+        )}
       </TouchableOpacity>
     </SafeAreaView>
   )
@@ -208,39 +204,20 @@ export default function RecordScreen ({ navigation }: RecordScreenStackProps) {
 
 const styles = StyleSheet.create({
   screen: {
-    flex: 1
+    flex: 1,
   },
   content: {
     flex: 1,
-    paddingHorizontal: 0
+    paddingHorizontal: 0,
   },
   contentViewButton: {
     flex: 1,
     alignItems: "center",
-    borderBottomColor: "#000"
+    borderBottomColor: "#000",
   },
   contentViewButtonText: {
-    fontFamily: "SSRegular"
+    fontFamily: "SSRegular",
   },
-  emptyText: {
-    alignItems: "center"
-  },
-  emptyTouchContainer: {
-    alignItems: "center",
-    alignContent: "center"
-  },
-
-  pageSwitchContainer: {
-    flexDirection: "row",
-    height: 10 * scale
-  },
-
-  pageSwitch: {
-    marginLeft: 2 * scale,
-    marginRight: 2 * scale,
-    borderWidth: 2,
-    borderColor: "black"
-  }
 })
 
 // TODO how to type realm result

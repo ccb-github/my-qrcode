@@ -6,15 +6,14 @@ import OrderSchemaList from "./models/Customer/Order"
 import ProductSchemaList from "./models/Producer/Product"
 import CheckRecord from "./models/Regulatory/CheckRecord"
 import CheckerSchemaList from "./models/Regulatory/Checker"
-import RegulatorySchemaList from "./models/Regulatory/Regulatory"
 import EnterpriseSchemaList from "./models/Producer/EnterPrise"
+import Regulatory from "./models/Regulatory/Regulatory"
 
 // TODO realm timeout behavior
 export const realmFileBehavior: OpenRealmBehaviorConfiguration = {
   type: OpenRealmBehaviorType.DownloadBeforeOpen,
   timeOut: 1000,
-  //@ts-ignore
-  timeOutBehavior: "openLocalRealm"
+  timeOutBehavior: "openLocalRealm",
 }
 
 export const config = {
@@ -23,10 +22,10 @@ export const config = {
     ...CheckerSchemaList,
     CheckRecord,
     ...OrderSchemaList,
-    ...RegulatorySchemaList,
+    Regulatory,
     ...ProductSchemaList,
-    ...EnterpriseSchemaList
-  ]
+    ...EnterpriseSchemaList,
+  ],
 }
 
 export default createRealmContext(config)

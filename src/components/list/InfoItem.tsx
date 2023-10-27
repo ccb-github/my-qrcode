@@ -1,8 +1,14 @@
-import React from "react";
-import { View, Text, useWindowDimensions } from "react-native";
-import { Entypo } from '@expo/vector-icons'; 
+import React from "react"
+import { View, Text, useWindowDimensions } from "react-native"
+import { Entypo } from "@expo/vector-icons"
 
-export default function InfoItem({ name, value}: {name: string, value:string}){
+export default function InfoItem({
+  name,
+  value,
+}: {
+  name: string
+  value: string
+}) {
   const { scale } = useWindowDimensions()
   return (
     <View
@@ -23,5 +29,5 @@ export default function InfoItem({ name, value}: {name: string, value:string}){
         <Text style={{ fontSize: 10 * scale }}>{"Data"}</Text>
       </View>
     </View>
-  );
+  )
 }

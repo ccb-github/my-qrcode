@@ -1,7 +1,7 @@
 export enum RouteNameLogin {
   login = "Login",
   register = "Register",
-  resetPassword = "Reset"
+  resetPassword = "Reset",
 }
 export enum RouteNameMain {
   record = "Record",
@@ -30,9 +30,9 @@ enum TabTwo {
 
 export const IconSetting = {
   TabOne,
-  TabTwo
+  TabTwo,
 }
 export const TabNavigationScreenOptions = {
   tabBarActiveTintColor: "yellow",
-  headerShown: true
+  headerShown: true,
 }

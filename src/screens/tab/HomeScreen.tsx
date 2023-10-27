@@ -15,11 +15,11 @@ import { type FontAwesome } from "@expo/vector-icons"
 import { FontAwesomeIconWrapper } from "../../components/Icon"
 import { RouteNameMain } from "../../navigation/const"
 import { useTranslation } from "react-i18next"
-import { type RootTabScreenProps } from "../../type/props"
+import { type RootTabHomeScreenProps } from "../../type/props"
 
 const { getHeight } = Dimensions
 
-export default function HomeScreen({ navigation }: RootTabScreenProps) {
+export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
   const theme = useColorScheme()
   // const [searchBarValue, setSearchBarValue] = useState(t("Search here"))
   const isDarkTheme = theme === "dark"

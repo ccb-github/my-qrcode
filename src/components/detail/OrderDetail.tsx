@@ -8,14 +8,13 @@ const OrderDetail = ({ data }: { data: OrderMain }) => {
   const { t } = useTranslation("order")
   return (
     <>
-      <StringField name="Id" value={data?.customerId}/>
-      <DateField name="Order Time" value={data?.orderTime.toISOString()}/>
-      <List.Section title={t("product list")}>{
-        data.products?.map(
-          (item, index) =>
-            <List.Item title={item.name} key={index}/>
-        )
-      }</List.Section>
+      <StringField name="Id" value={data?.customerId} />
+      <DateField name="Order Time" value={data?.orderTime.toISOString()} />
+      <List.Section title={t("product list")}>
+        {data.products?.map((item, index) => (
+          <List.Item title={item.name} key={index} />
+        ))}
+      </List.Section>
     </>
   )
 }

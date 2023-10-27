@@ -11,17 +11,16 @@ import {
 } from "react-native"
 import RealmContext from "../../realm/RealmContext"
 import Constants from "expo-constants"
-import { Button, Divider, List } from "react-native-paper"
+import { Divider, List } from "react-native-paper"
 import Dimensions from "../../style/Dimensions"
 import { useTranslation } from "react-i18next"
 import LanguagePicker from "../../components/LanguagePicker"
 import realmApp from "../../realm/app"
 import { FontAwesomeIconWrapper } from "../../components/Icon"
-import { type StackScreenProps } from "@react-navigation/stack"
-import { type MainStackParamList } from "../../type/navigation"
-import { type RouteNameMain } from "../../navigation/const"
 import colors from "../../style/colors"
 import { Product } from "../../realm/models/Producer/Product"
+import { type RootTabScreenProps } from "../../type/props"
+import Button from "../../components/Button"
 
 const { scale } = Dimensions
 const { useRealm } = RealmContext
@@ -29,7 +28,15 @@ const { useRealm } = RealmContext
 const AccountList = () => {
   const { t } = useTranslation("settings")
   const currentUser = useUser()
-  // console.log("Realm app",JSON.stringify(realmApp.))
+  const handleLogout = () => {
+    currentUser
+      ?.logOut()
+      .then(() => {})
+      .catch((error) => {
+        throw error
+      })
+  }
+
   return (
     <>
       <List.Accordion
@@ -43,17 +50,7 @@ const AccountList = () => {
               title={entry[1].profile.email}
               right={(color) => {
                 return entry[1].isLoggedIn ? (
-                  <Button
-                    mode="contained"
-                    onPress={() => {
-                      currentUser
-                        ?.logOut()
-                        .then(() => {})
-                        .catch((error) => {
-                          throw error
-                        })
-                    }}
-                  >
+                  <Button mode="contained" onPress={handleLogout}>
                     {t("Log out")}
                   </Button>
                 ) : null
@@ -132,9 +129,7 @@ function SubscriptionList() {
                         if (newValue) {
                           mutableSubs.add(
                             realm.objects(subscription.split("-")[0]),
-                            {
-                              name: subscription,
-                            },
+                            { name: subscription },
                           )
                         } else {
                           mutableSubs.removeByName(subscription)
@@ -146,7 +141,6 @@ function SubscriptionList() {
                       })
                   }}
                 />
-                // </Pressable>
               )}
             />
           )
@@ -155,11 +149,8 @@ function SubscriptionList() {
     </List.Section>
   )
 }
-type SettingScreenStackProps = StackScreenProps<
-  MainStackParamList,
-  RouteNameMain.setting
->
-function SettingScreen(props: SettingScreenStackProps) {
+
+function SettingScreen(props: RootTabScreenProps) {
   const realm = useRealm()
 
   const { t } = useTranslation("settings")
@@ -169,11 +160,11 @@ function SettingScreen(props: SettingScreenStackProps) {
   )
   useEffect(() => {
     // console.log(realm.objects("Checker"))
-    // realm.syncSession?.addProgressNotification(ProgressDirection["Download"],  ProgressMode["ForCurrentlyOutstandingWork"], (transfered, transferAble) => {
-    //   console.log(transferAble, transfered)
+    // realm.syncSession?.addProgressNotification(ProgressDirection["Download"],  ProgressMode["ForCurrentlyOutstandingWork"], (transferred, transferAble) => {
+    //   console.log(transferAble, transferred)
     // })
-    // realm.syncSession?.addProgressNotification(ProgressDirection["Download"],  ProgressMode["ForCurrentlyOutstandingWork"], (transfered, transferAble) => {
-    //   console.log(transferAble, transfered)
+    // realm.syncSession?.addProgressNotification(ProgressDirection["Download"],  ProgressMode["ForCurrentlyOutstandingWork"], (transferred, transferAble) => {
+    //   console.log(transferAble, transferred)
     // })
     // console.log(`Scale`, fontScale)
     realm.syncSession?.addConnectionNotification((newConnectionState) => {

@@ -1,31 +1,28 @@
-import {memo} from 'react';
-import { Text, Pressable, Platform, StyleSheet } from 'react-native';
-import { BSON } from 'realm';
+import { memo } from "react"
+import { Text, Pressable, Platform, StyleSheet } from "react-native"
+import { BSON } from "realm"
 
-import colors from '../style/colors';
-import Dimensions from '../style/Dimensions';
+import colors from "../style/colors"
+import Dimensions from "../style/Dimensions"
 
 const { scale } = Dimensions
 
 export interface RecordDataItem {
   _id: BSON.ObjectId
-  description: string,
-  isVerified: boolean;
-  createdAt: Date,
-  location: Location,
-  url: string,
+  description: string
+  isVerified: boolean
+  createdAt: Date
+  location: Location
+  url: string
 }
 interface RecordItemProps {
-  dataItem:  unknown;
-  description: string;
-  isVerified: boolean;
-  navigateToDetail?: (detailInfo: any) => void;
+  dataItem: unknown
+  description: string
+  isVerified: boolean
+  navigateToDetail?: (detailInfo: any) => void
   onToggleRecordStatus: () => void
-  onDelete?: () => void;
+  onDelete?: () => void
 }
-
-
-
 
 function RecordItem({
   dataItem,
@@ -34,19 +31,19 @@ function RecordItem({
   navigateToDetail,
   onDelete,
 }: RecordItemProps) {
-  console.log(`Data in recordItem`,JSON.stringify(dataItem))
+  console.log(`Data in recordItem`, JSON.stringify(dataItem))
   return (
-    <Pressable style={[styles.item,{ height: 25 * scale}]}>
-      <Pressable
-       
-        style={[styles.status, isVerified && styles.completed]}>
-        <Text style={styles.icon}>{isVerified? '✓' : '○'}</Text>
+    <Pressable style={[styles.item, { height: 25 * scale }]}>
+      <Pressable style={[styles.status, isVerified && styles.completed]}>
+        <Text style={styles.icon}>{isVerified ? "✓" : "○"}</Text>
       </Pressable>
-      <Pressable style={styles.descriptionContainer}  
-                 onPress={() => {
-                   console.log("Dataitem in recorditem",dataItem)
-                   navigateToDetail(JSON.stringify(dataItem))
-      }}>
+      <Pressable
+        style={styles.descriptionContainer}
+        onPress={() => {
+          console.log("Dataitem in recorditem", dataItem)
+          navigateToDetail(JSON.stringify(dataItem))
+        }}
+      >
         <Text numberOfLines={1} style={styles.description}>
           {description}
         </Text>
@@ -55,14 +52,13 @@ function RecordItem({
         <Text style={styles.deleteText}>Delete</Text>
       </Pressable>
     </Pressable>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   item: {
-   
-    alignSelf: 'stretch',
-    flexDirection: 'row',
+    alignSelf: "stretch",
+    flexDirection: "row",
     marginVertical: 8,
     backgroundColor: colors.white,
     borderRadius: 5,
@@ -83,7 +79,7 @@ const styles = StyleSheet.create({
   },
   descriptionContainer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   description: {
     paddingHorizontal: 10,
@@ -92,8 +88,8 @@ const styles = StyleSheet.create({
   },
   status: {
     width: 50,
-    height: '100%',
-    justifyContent: 'center',
+    height: "100%",
+    justifyContent: "center",
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
     backgroundColor: colors.gray,
@@ -102,7 +98,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.purple,
   },
   deleteButton: {
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   deleteText: {
     marginHorizontal: 10,
@@ -111,11 +107,11 @@ const styles = StyleSheet.create({
   },
   icon: {
     color: colors.white,
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 17,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
-});
+})
 
 // We want to make sure only tasks that change are rerendered
 const shouldNotRerender = (
@@ -123,6 +119,6 @@ const shouldNotRerender = (
   nextProps: RecordItemProps,
 ) =>
   prevProps.description === nextProps.description &&
-  prevProps.isVerified === nextProps.isVerified;
+  prevProps.isVerified === nextProps.isVerified
 
-export default memo(RecordItem, shouldNotRerender);
+export default memo(RecordItem, shouldNotRerender)

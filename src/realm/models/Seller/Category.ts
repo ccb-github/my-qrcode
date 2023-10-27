@@ -19,8 +19,8 @@
 //     };
 //   };
 // }
-  
-export class Category extends Realm.Object{
+
+export class Category extends Realm.Object {
   static schema = {
     name: "Category",
     primaryKey: "_id",
@@ -28,23 +28,19 @@ export class Category extends Realm.Object{
       _id: "objectId",
       description: "string",
       name: "string",
-      
+
       createdAt: "date",
-    
     },
   }
   static generate = (description: string) => {
-    const seed = new Realm.BSON.ObjectId();
+    const seed = new Realm.BSON.ObjectId()
     return {
       _id: seed,
       description: description || `Enterprise ${seed.toHexString()}`,
       name: seed.toHexString(),
-      createAt: new Date()
-    };
+      createAt: new Date(),
+    }
   }
 }
-  
-  
-  
-  
+
 export default Category

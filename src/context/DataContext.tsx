@@ -1,20 +1,21 @@
-import { createContext } from "react";
-// type DataContextValue = {
-//   dataItem: null | ,
-//   type: "unset",
-//   url: null
-// }
-const defaultDataCotext = {
+import { createContext } from "react"
+type DataContextValue = {
+  dataItem: unknown
+  type: string
+  url: string | null
+}
+const defaultDataContext = {
   dataItem: null,
   type: "unset",
-  url: null
+  url: null,
 }
 
-const DataContext = createContext(defaultDataCotext)
+const DataContext = createContext<DataContextValue>(defaultDataContext)
 
-export const DataProvider = ({children}: {children: React.ReactNode}) => (
-  <DataContext.Provider value={{...defaultDataCotext, dataItem: "default string"}
-  }>
+export const DataProvider = ({ children }: { children: React.ReactNode }) => (
+  <DataContext.Provider
+    value={{ ...defaultDataContext, dataItem: "default string" }}
+  >
     {children}
   </DataContext.Provider>
 )

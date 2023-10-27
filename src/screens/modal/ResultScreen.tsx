@@ -1,26 +1,28 @@
 import { useTranslation } from "react-i18next"
-import { Pressable, useColorScheme } from "react-native"
+import { Pressable, useColorScheme, Text } from "react-native"
 import { Divider, List, TextInput } from "react-native-paper"
 import * as WebBrowser from "expo-web-browser"
 import { AntDesignIconWrapper } from "../../components/Icon"
 import { SafeAreaView } from "react-native-safe-area-context"
-import type {
-  RootStackResultScreenProps
-} from "../../type/navigation"
+import type { RootStackResultScreenProps } from "../../type/navigation"
 import { RouteNameMain } from "../../navigation/const"
+import { useContext } from "react"
+import DataContext from "../../context/DataContext"
 
-export default function ResultScreen ({
+export default function ResultScreen({
   navigation,
-  route
+  route,
 }: RootStackResultScreenProps) {
-  const { t } = useTranslation("home")
+  const { t } = useTranslation("result")
   const theme = useColorScheme()
   const { data, type } = route.params
-  console.log(`Data result from resultscreen ${data}`)
+  const resultData = useContext(DataContext)
+  console.log(resultData)
+  console.log(`Data result from resultScreen ${JSON.stringify(data)}`)
   // TODO PADDING
   const isDarkTheme = theme === "dark"
-  const openInBrowser = async () => {
-    const result = WebBrowser.openBrowserAsync(data)
+  const openInBrowser = async (url: string) => {
+    const result = await WebBrowser.openBrowserAsync(url)
     console.log(result)
   }
   return (
@@ -28,7 +30,7 @@ export default function ResultScreen ({
       style={{
         flexDirection: "column",
         backgroundColor: isDarkTheme ? "black" : "white",
-        paddingTop: 50
+        paddingTop: 50,
       }}
     >
       <TextInput
@@ -37,20 +39,26 @@ export default function ResultScreen ({
         spellCheck={false}
         value={typeof data === "string" ? data : JSON.stringify(data)}
       />
+      <Text>
+        {typeof resultData.dataItem === "string"
+          ? resultData.dataItem
+          : JSON.stringify(resultData.dataItem)}
+      </Text>
       <Divider />
       <List.Item
         title={t("Open website")}
         right={() => (
           <Pressable
-            onPress={ () => {
-              try {
-                void openInBrowser()
-              } catch (error) {
+            disabled={typeof data === "string"}
+            onPress={() => {
+              ;(async () => {
+                await openInBrowser(resultData.url!)
+              })().catch((error) => {
                 throw error
-              }
+              })
             }}
           >
-            <AntDesignIconWrapper name="arrowsalt" />
+            <AntDesignIconWrapper name="chrome" />
           </Pressable>
         )}
       />
@@ -59,13 +67,14 @@ export default function ResultScreen ({
         right={() => (
           <Pressable
             onPress={() => {
-              navigation.navigate(RouteNameMain.modalDetail, {
-                data,
-                type
-              })
+              if (Array.isArray(data) ?? data)
+                navigation.navigate(RouteNameMain.modalDetail, {
+                  data,
+                  type,
+                })
             }}
           >
-            <AntDesignIconWrapper name="arrowsalt" />
+            <AntDesignIconWrapper name="arrowright" />
           </Pressable>
         )}
       ></List.Item>

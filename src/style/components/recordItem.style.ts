@@ -1,10 +1,10 @@
 import { StyleSheet, Platform } from "react-native"
-import colors from "../colors";
+import colors from "../colors"
 
 const styles = StyleSheet.create({
   item: {
-    alignSelf: 'stretch',
-    flexDirection: 'row',
+    alignSelf: "stretch",
+    flexDirection: "row",
     marginVertical: 8,
     backgroundColor: colors.white,
     borderRadius: 5,
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   description: {
     paddingHorizontal: 10,
@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
   },
   status: {
     width: 50,
-    height: '100%',
-    justifyContent: 'center',
+    height: "100%",
+    justifyContent: "center",
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
     backgroundColor: colors.gray,
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.purple,
   },
   deleteButton: {
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   deleteText: {
     marginHorizontal: 10,
@@ -58,10 +58,10 @@ const styles = StyleSheet.create({
   },
   icon: {
     color: colors.white,
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 17,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
-});
+})
 
 export default styles

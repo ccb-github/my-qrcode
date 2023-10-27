@@ -5,11 +5,15 @@ import {
   View,
   ScrollView,
   Text,
-  useWindowDimensions
+  useWindowDimensions,
 } from "react-native"
-import { Chip, List, Divider } from "react-native-paper"
-import { StringField, DateField, ImageField, LinkObjectField } from "../../components/field"
-import { type OrderMain } from "../../realm/models/Customer/Order"
+import { Chip, Divider } from "react-native-paper"
+import {
+  StringField,
+  DateField,
+  ImageField,
+  LinkObjectField,
+} from "../../components/field"
 import Dimensions from "../../style/Dimensions"
 import i18n from "../../lib/i18-next"
 import { useTranslation } from "react-i18next"
@@ -18,21 +22,20 @@ import { type Checker } from "../../realm/models/Regulatory/Checker"
 import { hintTextBySize } from "../../style/common"
 import type { Product } from "../../realm/models/Producer/Product"
 import { type RootStackDetailScreenProps } from "../../type/RootStackDetailScreenProps"
+import { type DetailViewProps } from "../../type/props"
+import { type ObjectId } from "bson"
 const { getFontSize } = Dimensions
 
-// TODO intergrate data
-//
+// TODO integrate data
 
-// eslint-disable-next-line react/prop-types
-type DetailProps<DataType> = {
-  data: DataType,
-  linkAction: (linkedData: unknown) => void,
-  scale: number
-}
-const ProductDetail = ({ data, linkAction, scale }: DetailProps<Product>) => {
+const ProductDetail = ({
+  data,
+  linkAction,
+  scale,
+}: DetailViewProps<Product>) => {
   console.log(`Data inside ProductDetail ${JSON.stringify(data)}`)
   const { t } = useTranslation("product")
-  const dataIdInterpret = value => {
+  const dataIdInterpret = (value: ObjectId | string | unknown) => {
     if (typeof value.toHexString === "function") {
       return value.toHexString()
     } else if (typeof value === "string") {
@@ -50,7 +53,7 @@ const ProductDetail = ({ data, linkAction, scale }: DetailProps<Product>) => {
         <StringField name={t("Name")} value={data.name} />
         <Divider style={{ borderStyle: "dashed" }} />
         <StringField
-          name={t("Shelflife")}
+          name={t("ShelfLife")}
           value={`${data.shelfLife} ${t("days")}`}
         />
         <Divider />
@@ -67,8 +70,8 @@ const ProductDetail = ({ data, linkAction, scale }: DetailProps<Product>) => {
 
       <View style={{ backgroundColor: "white" }}>
         <Text style={{ textAlign: "center" }}>Enterprise</Text>
-        {data.producer ?? false ? (
-          <LinkObjectField
+        {typeof data.producer === "object" ? (
+          <LinkObjectField<EnterpriseMain>
             valueNameKey={"name"}
             name={t("Producer")}
             type={"Enterprise"}
@@ -85,8 +88,8 @@ const ProductDetail = ({ data, linkAction, scale }: DetailProps<Product>) => {
 
       <View style={{ backgroundColor: "white" }}>
         <Text style={{ textAlign: "center" }}>{"Enterprise"}</Text>
-        {data.producer ?? false ? (
-          <LinkObjectField
+        {data.producer != null ? (
+          <LinkObjectField<EnterpriseMain>
             name={t("Producer")}
             type={"Enterprise"}
             valueNameKey=""
@@ -108,9 +111,12 @@ const CheckerDetail = ({ data }: { data: Checker }) => {
   const { t } = useTranslation("checker")
   return (
     <>
-      <StringField name={t("Check") + t("Id")} value={data._id}/>
-      <StringField name={t("Check") + t("device")} value={"Random device"}/>
-      <StringField name={t("Check") + t("time")} value={new Date().toISOString()}/>
+      <StringField name={t("Check") + t("Id")} value={data._id.toHexString()} />
+      <StringField name={t("Check") + t("device")} value={"Random device"} />
+      <StringField
+        name={t("Check") + t("time")}
+        value={new Date().toISOString()}
+      />
     </>
   )
 }
@@ -128,22 +134,22 @@ const EnterpriseDetail = ({ data }: { data: EnterpriseMain }) => {
       <DateField name={t("createAt")} value={data.createdAt.toDateString()} />
       <StringField name={t("name")} value={data.name} />
       <StringField name={t("email")} value={data.email} />
-      <ImageField name={t("brand")} value={data?.tradeMark || "空"} />
+      <ImageField name={t("brand")} value={data.tradeMark ?? "Empty"} />
       <StringField name={t("register place")} value={data.registerPlace} />
     </>
   )
 }
 
-export default function DetailScreen ({ route }: RootStackDetailScreenProps) {
+export default function DetailScreen({ route }: RootStackDetailScreenProps) {
   const { t } = useTranslation(i18n.language)
   const { scale, height } = useWindowDimensions()
 
-  const contentTabStackRef = useRef(new Set())
+  const contentTabStackRef = useRef<Set<string>>(new Set())
   const cacheDataRef = useRef({})
   const [type, setType] = useState<string | null>(null)
 
   useEffect(() => {
-    console.log("Detailscreen mounted")
+    console.log("DetailScreen mounted")
 
     refreshData(route.params)
   }, [])
@@ -152,7 +158,7 @@ export default function DetailScreen ({ route }: RootStackDetailScreenProps) {
    *refresh the data in screen
    *
    */
-  const refreshData = (newData) => {
+  const refreshData = (newData: { type: string; data: unknown }) => {
     console.log("Refresh function", JSON.stringify(newData))
     // debugger
     console.log("This is the data now", newData.data)
@@ -167,7 +173,7 @@ export default function DetailScreen ({ route }: RootStackDetailScreenProps) {
       <View
         style={{
           flexDirection: "row",
-          paddingHorizontal: 3 * scale
+          paddingHorizontal: 3 * scale,
         }}
       >
         {[...contentTabStackRef.current].map((tab, index) => (
@@ -188,7 +194,7 @@ export default function DetailScreen ({ route }: RootStackDetailScreenProps) {
         showsVerticalScrollIndicator={false}
         style={{
           width: "100%",
-          paddingHorizontal: 5 * scale
+          paddingHorizontal: 5 * scale,
         }}
       >
         {((type) => {
@@ -207,7 +213,7 @@ export default function DetailScreen ({ route }: RootStackDetailScreenProps) {
               return (
                 <EnterpriseDetail
                   data={cacheDataRef.current[type]}
-                  linkAction={(newData) => {
+                  linkAction={(newData: any) => {
                     refreshData(newData)
                   }}
                 />
@@ -216,7 +222,7 @@ export default function DetailScreen ({ route }: RootStackDetailScreenProps) {
               return (
                 <CheckerDetail
                   data={cacheDataRef.current[type]}
-                  linkAction={(newData) => {
+                  linkAction={(newData: any) => {
                     refreshData(newData)
                   }}
                 />
@@ -237,8 +243,8 @@ export default function DetailScreen ({ route }: RootStackDetailScreenProps) {
 
                       backgroundColor: "red",
                       fontWeight: "bold",
-                      textAlignVertical: "top"
-                    }
+                      textAlignVertical: "top",
+                    },
                   ]}
                 >
                   {t("No valid data found in qrcode url")}
@@ -258,19 +264,10 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     backgroundColor: "lightgray",
     alignItems: "center",
-    justifyContent: "center"
-  },
-  contentViewButton: {
-    flex: 1,
-    alignItems: "center",
-    borderBottomColor: "#000"
-  },
-  contentViewButtonText: {
-    fontFamily: "SSRegular",
-    fontSize: 10
+    justifyContent: "center",
   },
   hintFontStyle: {
     textAlign: "center",
-    marginTop: 40
-  }
+    marginTop: 40,
+  },
 })

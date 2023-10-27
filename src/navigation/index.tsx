@@ -11,7 +11,7 @@ import ResultScreen from "../screens/modal/ResultScreen"
 import { useEffect } from "react"
 import {
   imageHistory as imageHistoryKey,
-  scanHistory as scanRecordKey
+  scanHistory as scanRecordKey,
 } from "../utils/localStorageConfig.json"
 import { useAsyncStorage } from "@react-native-async-storage/async-storage"
 import { RouteNameLogin, RouteNameMain } from "./const"
@@ -26,44 +26,52 @@ const { useRealm } = RealmContext
  * A root stack navigator is often used for displaying modals on top of all other content.
  * https://reactnavigation.org/docs/modal  options={{headerShown: false}}
  */
-interface LoginNavigationProps {
+type LoginNavigationProps = {
   initialRouteName?: string
 }
 const Stack = createStackNavigator()
-export function LoginNavigation (props: LoginNavigationProps = { initialRouteName: "Login" }) {
+export function LoginNavigation(
+  props: LoginNavigationProps = { initialRouteName: "Login" },
+) {
   const { initialRouteName } = props
   console.log("LoginNavigation body")
   return (
-        <Stack.Navigator initialRouteName={initialRouteName}>
-          <Stack.Screen name={RouteNameLogin.login} component={LoginScreen} />
-          <Stack.Screen name={RouteNameLogin.register} component={RegisterScreen}/>
-          <Stack.Screen name={RouteNameLogin.resetPassword} component={ResetPasswordScreen}/>
-        </Stack.Navigator>
+    <Stack.Navigator initialRouteName={initialRouteName}>
+      <Stack.Screen name={RouteNameLogin.login} component={LoginScreen} />
+      <Stack.Screen name={RouteNameLogin.register} component={RegisterScreen} />
+      <Stack.Screen
+        name={RouteNameLogin.resetPassword}
+        component={ResetPasswordScreen}
+      />
+    </Stack.Navigator>
   )
 }
 
-export function MainNavigation () {
+export function MainNavigation() {
   console.log("MainNavigation body")
   const user = useUser()
-  const imageHistorysStorage = useAsyncStorage(`${imageHistoryKey}-${user?.id ?? "NULL-id"}`)
-  const recordHistorysStorage = useAsyncStorage(`${scanRecordKey}-${user?.id ?? "NULL-id"}`)
+  const imageHistoryStorage = useAsyncStorage(
+    `${imageHistoryKey}-${user?.id ?? "NULL-id"}`,
+  )
+  const recordHistoryStorage = useAsyncStorage(
+    `${scanRecordKey}-${user?.id ?? "NULL-id"}`,
+  )
   const { t } = useTranslation("title")
   const realm = useRealm()
   useEffect(() => {
-    console.log(realm.path);
-    (async () => {
+    console.log(realm.path)
+    ;(async () => {
       // 初始化记录方便使用
-      
-      const imageHistorys = await imageHistorysStorage.getItem()
-      const recordHistorys = await recordHistorysStorage.getItem()
-      console.log("Index navigation",{imageHistorys}, {recordHistorys})
-      if (imageHistorys === null) {
-        await imageHistorysStorage.setItem("[]")
+      const imageHistory = await imageHistoryStorage.getItem()
+      const recordHistory = await recordHistoryStorage.getItem()
+      console.log("Index navigation", { imageHistory }, { recordHistory })
+      if (imageHistory === null) {
+        await imageHistoryStorage.setItem("[]")
       }
-      if (recordHistorys === null) {
-        await recordHistorysStorage.setItem("[]")
+      if (recordHistory === null) {
+        await recordHistoryStorage.setItem("[]")
       }
-    })().catch(error => {
+    })().catch((error) => {
       throw error
     })
   }, [])
@@ -73,23 +81,22 @@ export function MainNavigation () {
         name={RouteNameMain.tab}
         component={BottomTabNavigator}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
         options={{
-          title: t("Records")
+          title: t("Records"),
         }}
-        name={"Record"} component={RecordScreen} />
+        name={"Record"}
+        component={RecordScreen}
+      />
       <Stack.Group screenOptions={{ presentation: "transparentModal" }}>
+        <Stack.Screen name={"FigmaTest"} component={FigmaSampleScreen} />
         <Stack.Screen
-          name={"FigmaTest"}
-          component={FigmaSampleScreen}
+          name={RouteNameMain.storageInspect}
+          component={AsyncStorageInspect}
         />
-        <Stack.Screen name={RouteNameMain.storageInspect} component={
-          AsyncStorageInspect
-        }/>
-
       </Stack.Group>
 
       <Stack.Group screenOptions={{ presentation: "modal" }}>
@@ -109,14 +116,14 @@ export function MainNavigation () {
                     navigation.navigate(RouteNameMain.record)
                   }}
                   style={({ pressed }) => ({
-                    opacity: pressed ? 0.5 : 1
+                    opacity: pressed ? 0.5 : 1,
                   })}
                 >
                   <Text>History</Text>
                 </Pressable>
               )
             },
-            headerTransparent: true
+            headerTransparent: true,
           })}
         />
         <Stack.Screen
@@ -130,14 +137,14 @@ export function MainNavigation () {
                     navigation.navigate("Tab")
                   }}
                   style={({ pressed }) => ({
-                    opacity: pressed ? 0.5 : 1
+                    opacity: pressed ? 0.5 : 1,
                   })}
                 >
                   <Text>History</Text>
                 </Pressable>
               )
             },
-            headerTransparent: true
+            headerTransparent: true,
           })}
         />
       </Stack.Group>

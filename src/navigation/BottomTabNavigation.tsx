@@ -3,7 +3,10 @@ import { Pressable } from "react-native"
 import { AntDesign } from "@expo/vector-icons"
 import { useTranslation } from "react-i18next"
 
-import { type MainStackTabNavigatorProps, type RootTabParamList } from "../type/navigation"
+import {
+  type MainStackTabNavigatorProps,
+  type RootTabParamList,
+} from "../type/navigation"
 
 import { Avatar } from "react-native-paper"
 import { FontAwesomeIconWrapper } from "../components/Icon"
@@ -23,14 +26,14 @@ const { getWidth } = Dimension
 const BottomTab = createBottomTabNavigator<RootTabParamList>()
 
 export default function BottomTabNavigator({
-  route
+  route,
 }: MainStackTabNavigatorProps) {
   const { t } = useTranslation("title")
   // const { initialRouteName } = route.params
   const initialRouteName = "TabOne"
   return (
     <BottomTab.Navigator
-      initialRouteName={ initialRouteName || "TabOne"}
+      initialRouteName={initialRouteName || "TabOne"}
       screenOptions={TabNavigationScreenOptions}
     >
       <BottomTab.Screen
@@ -56,7 +59,7 @@ export default function BottomTabNavigator({
             >
               <FontAwesomeIconWrapper name="camera-retro" size={getWidth(10)} />
             </Pressable>
-          )
+          ),
         })}
       />
       <BottomTab.Screen
@@ -68,7 +71,7 @@ export default function BottomTabNavigator({
             <Pressable
               onPress={() => {}}
               style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1
+                opacity: pressed ? 0.5 : 1,
               })}
             >
               <Avatar.Text size={getWidth(10)} label="XD" />
@@ -96,7 +99,7 @@ export default function BottomTabNavigator({
           // ),
           tabBarIcon: ({ color }) => (
             <AntDesign name="setting" size={getWidth(10)} color={color} />
-          )
+          ),
         }}
       />
     </BottomTab.Navigator>

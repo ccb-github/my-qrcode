@@ -29,6 +29,7 @@ import { type RootTabScreenProps } from "../../type/props"
 // TODO Adjust to scale
 const { scale } = Dimensions
 const { useRealm } = RealmContext
+
 export default function ProfileScreen({ navigation }: RootTabScreenProps) {
   const colorScheme = useColorScheme()
   const { t } = useTranslation("profile")
@@ -65,7 +66,7 @@ export default function ProfileScreen({ navigation }: RootTabScreenProps) {
       // TODO profile title style
       <List.Section title={"Info"}>
         {/* Profile Email */}
-        {!loading ? (
+        {loading ? (
           profileKeyList.map((profileKey) => (
             <>
               <View style={styles.profileFieldView} key={profileKey}>
@@ -83,7 +84,7 @@ export default function ProfileScreen({ navigation }: RootTabScreenProps) {
                   editable={editable}
                   placeholderTextColor="#003f5c"
                   onChangeText={(value) =>
-                    (userData.current![profileKey] = value)
+                    (userData.current[profileKey] = value)
                   }
                 />
               </View>
@@ -110,14 +111,10 @@ export default function ProfileScreen({ navigation }: RootTabScreenProps) {
             <Button
               style={{ backgroundColor: "#4b7bec" }}
               onPress={() => {
-                submitUserCustomData(userData.current)
-                  .then(() => {
-                    setLoading(true)
-                    toggleEditable(false)
-                  })
-                  .catch((error) => {
-                    throw error
-                  })
+                submitUserCustomData(userData.current).then(() => {
+                  setLoading(true)
+                  toggleEditable(false)
+                })
               }}
             >
               {t("Submit")}
@@ -180,9 +177,7 @@ export default function ProfileScreen({ navigation }: RootTabScreenProps) {
           <View>
             <TouchableOpacity
               style={styles.interactButton}
-              onPress={() => {
-                navigation.navigate(RouteNameMain.modalScanner)
-              }}
+              onPress={() => navigation.navigate(RouteNameMain.modalScanner)}
             >
               <Text style={styles.interactButtonText}>{t("Scan")}</Text>
             </TouchableOpacity>

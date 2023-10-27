@@ -10,26 +10,20 @@ import {
   ViewStyle,
   TextInput,
   Alert,
-  useWindowDimensions
-} from "react-native";
-import { Button, Card, Divider } from "react-native-paper";
-import { BaseFieldProps } from "../../type/props";
+  useWindowDimensions,
+} from "react-native"
+import { Button, Card, Divider } from "react-native-paper"
+import { BaseFieldProps } from "../../type/props"
 
-import Dimension from "../../style/Dimensions";
-import { getTabBarHeight } from "@react-navigation/bottom-tabs/lib/typescript/src/views/BottomTabBar";
-import { FieldStyles, FieldTextStyles } from "../../style/components/field.style";
-import StringField from "./StringField";
-
-
-
-
+import Dimension from "../../style/Dimensions"
+import { getTabBarHeight } from "@react-navigation/bottom-tabs/lib/typescript/src/views/BottomTabBar"
+import {
+  FieldStyles,
+  FieldTextStyles,
+} from "../../style/components/field.style"
+import StringField from "./StringField"
 
 const StatusField = (props: BaseFieldProps) => {
-
-  return (
-	  <StringField {...props} />
-	)
+  return <StringField {...props} />
 }
 export default StatusField
-
-

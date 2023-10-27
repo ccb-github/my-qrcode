@@ -23,7 +23,7 @@ class Product extends Realm.Object {
     properties: {
       _id: {
         type: "objectId",
-        default: new Realm.BSON.ObjectID()
+        default: new Realm.BSON.ObjectID(),
       },
       name: "string",
       category: "string",
@@ -36,8 +36,8 @@ class Product extends Realm.Object {
       producer: "Enterprise?",
       checker: "Checker?",
       checkRecord: "CheckRecord?",
-      ownerId: "string"
-    }
+      ownerId: "string",
+    },
   }
 
   generateDummyData = (userid?: string, description?: string) => {
@@ -50,7 +50,7 @@ class Product extends Realm.Object {
       standard: `${Math.random().toFixed(7).slice(1)}@domain.com`,
       assemlePlace: "China",
       ownerId: userid || "system",
-      category: "System default"
+      category: "System default",
     }
   }
 }

@@ -1,12 +1,12 @@
-import {memo} from 'react';
-import { Text, Pressable, Platform, StyleSheet } from 'react-native';
-import { BSON } from 'realm';
-import { AntDesignIconWrapper } from '../Icon';
+import { memo } from "react"
+import { Text, Pressable, Platform, StyleSheet } from "react-native"
+import { BSON } from "realm"
+import { AntDesignIconWrapper } from "../Icon"
 
-import colors from '../../style/colors';
-import Dimensions from '../../style/Dimensions';
-import { ScanRecord } from '../../type/data';
-import styles from '../../style/components/recordItem.style';
+import colors from "../../style/colors"
+import Dimensions from "../../style/Dimensions"
+import { ScanRecord } from "../../type/data"
+import styles from "../../style/components/recordItem.style"
 
 const { scale } = Dimensions
 console.log(`The scale ${scale}`)
@@ -20,12 +20,12 @@ console.log(`The scale ${scale}`)
 //   url: string,
 // }
 interface RecordItemProps {
-  dataItem:  ScanRecord;
-  description: string;
-  isVerified?: boolean;
-  navigateToDetail?: (detailInfo: any) => void;
+  dataItem: ScanRecord
+  description: string
+  isVerified?: boolean
+  navigateToDetail?: (detailInfo: any) => void
   onToggleRecordStatus: () => void
-  onDelete?: () => void;
+  onDelete?: () => void
 }
 
 function clgWrapper(message: string) {
@@ -34,8 +34,6 @@ function clgWrapper(message: string) {
   console.log("*********Ender of the block**********")
 }
 
-
-
 function RecordItem({
   dataItem,
   description,
@@ -43,21 +41,28 @@ function RecordItem({
   navigateToDetail,
   onDelete,
 }: RecordItemProps) {
-  console.log(`Data in recordItem`,JSON.stringify(dataItem))
-  const naviAction = navigateToDetail || (() => alert("No action bind for item click"))
+  console.log(`Data in recordItem`, JSON.stringify(dataItem))
+  const naviAction =
+    navigateToDetail || (() => alert("No action bind for item click"))
   return (
     <Pressable style={[styles.item, { height: 25 * scale }]}>
-      <Pressable style={[styles.status, isVerified && styles.completed, {
-        alignItems: "center"
-      }]}>
+      <Pressable
+        style={[
+          styles.status,
+          isVerified && styles.completed,
+          {
+            alignItems: "center",
+          },
+        ]}
+      >
         {/* <Text style={styles.icon}>{isVerified ? "✓" : "○"}</Text> */}
-        <AntDesignIconWrapper name='checkcircle'/>
+        <AntDesignIconWrapper name="checkcircle" />
       </Pressable>
       <Pressable
         style={styles.contentContainer}
         onPress={() => {
-          console.log("Dataitem in record item", dataItem);
-          naviAction(dataItem.content);
+          console.log("Dataitem in record item", dataItem)
+          naviAction(dataItem.content)
         }}
       >
         <Text numberOfLines={1} style={styles.description}>
@@ -71,10 +76,8 @@ function RecordItem({
         <Text style={styles.deleteText}>Delete</Text>
       </Pressable>
     </Pressable>
-  );
+  )
 }
-
-
 
 // We want to make sure only tasks that change are rerendered
 const shouldNotRerender = (
@@ -82,6 +85,6 @@ const shouldNotRerender = (
   nextProps: RecordItemProps,
 ) =>
   prevProps.description === nextProps.description &&
-  prevProps.isVerified === nextProps.isVerified;
+  prevProps.isVerified === nextProps.isVerified
 
-export default memo(RecordItem, shouldNotRerender);
+export default memo(RecordItem, shouldNotRerender)

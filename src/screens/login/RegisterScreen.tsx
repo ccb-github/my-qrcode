@@ -1,6 +1,5 @@
-import { useUser } from "@realm/react"
 import { StatusBar } from "expo-status-bar"
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { useTranslation } from "react-i18next"
 import {
   StyleSheet,
@@ -9,13 +8,15 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  useWindowDimensions
+  useWindowDimensions,
 } from "react-native"
 import { Button } from "react-native-paper"
 import app from "../../realm/app"
 import { type LoginStackResetPasswordScreenProps } from "../../type/navigation"
 
-export default function RegisterScreen ({ navigation }: LoginStackResetPasswordScreenProps) {
+export default function RegisterScreen({
+  navigation,
+}: LoginStackResetPasswordScreenProps) {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [repeatPassword, setRepeatPassword] = useState("")
@@ -25,7 +26,7 @@ export default function RegisterScreen ({ navigation }: LoginStackResetPasswordS
 
   useEffect(() => {}, [])
 
-  const registerWithEmailAndPassword = async () => {
+  const registerWithEmailAndPassword = () => {
     if (email === "" || password === "" || repeatPassword === "") {
       alert("Please fill all the field")
       return
@@ -36,17 +37,16 @@ export default function RegisterScreen ({ navigation }: LoginStackResetPasswordS
       alert("Password mismatch")
       return
     }
-
-    try {
+    ;(async () => {
       console.log("Register begin")
       await app.emailPasswordAuth.registerUser({ email, password })
       const emailPasswordCred = Realm.Credentials.emailPassword(email, password)
       const loginUser = await app.logIn(emailPasswordCred)
       console.log(`Login with user ${loginUser.id}`)
-    } catch (error) {
+    })().catch((error) => {
       alert(error?.message)
       console.error(error)
-    }
+    })
     // navigation.navigate("Tab")
   }
 

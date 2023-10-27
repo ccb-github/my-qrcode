@@ -20,20 +20,20 @@ class OrderMain extends Realm.Object {
       paymentMethod: "string",
       transitionId: "objectId",
       products: "Product[]",
-      orderTime: "date"
-    }
+      orderTime: "date",
+    },
   }
 
   generate = (description: string) => {
     return {
       _id: new UUID(),
       customerId: realmApp.currentUser?.id || "system",
-      orderTime: new Date()
+      orderTime: new Date(),
     }
   }
 }
 
-const OrderSchemaList = [ OrderMain ]
+const OrderSchemaList = [OrderMain]
 
 export default OrderSchemaList
 export { OrderMain }

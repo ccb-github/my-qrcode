@@ -8,7 +8,7 @@ import {
   View,
   Image,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native"
 import Dimensions from "../../style/Dimensions"
 import { RouteNameLogin } from "../../navigation/const"
@@ -16,7 +16,10 @@ import { type LoginStackResetPasswordScreenProps } from "../../type/navigation"
 
 const { scale } = Dimensions
 
-export default function ResetPasswordScreen ({ navigation, route }: LoginStackResetPasswordScreenProps) {
+export default function ResetPasswordScreen({
+  navigation,
+  route,
+}: LoginStackResetPasswordScreenProps) {
   const [email, setEmail] = useState("")
   const realmApp = useApp()
 
@@ -48,8 +51,8 @@ export default function ResetPasswordScreen ({ navigation, route }: LoginStackRe
             borderRadius: 18 * scale,
             width: "70%",
             height: 18 * scale,
-            marginBottom: 8 * scale
-          }
+            marginBottom: 8 * scale,
+          },
         ]}
       >
         <TextInput
@@ -58,8 +61,8 @@ export default function ResetPasswordScreen ({ navigation, route }: LoginStackRe
             {
               padding: 4 * scale,
               marginLeft: 8 * scale,
-              marginRight: 8 * scale
-            }
+              marginRight: 8 * scale,
+            },
           ]}
           value={email}
           placeholder="Email."
@@ -82,8 +85,8 @@ export default function ResetPasswordScreen ({ navigation, route }: LoginStackRe
           {
             borderRadius: 10 * scale,
             height: 20 * scale,
-            marginTop: 16 * scale
-          }
+            marginTop: 16 * scale,
+          },
         ]}
         onPress={() => resetPasswordForEmailAccount}
       >
@@ -98,19 +101,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   inputView: {
     backgroundColor: "#FFC0CB",
-    alignItems: "center"
+    alignItems: "center",
   },
   textInput: {
-    flex: 1
+    flex: 1,
   },
   forgetBtn: {
     width: "80%",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#FF1493"
-  }
+    backgroundColor: "#FF1493",
+  },
 })

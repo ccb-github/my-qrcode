@@ -1,13 +1,13 @@
-import realmApp from "../../app";
+import realmApp from "../../app"
 import { Realm } from "@realm/react"
-import { BSON } from "realm";
+import { BSON } from "realm"
 
-//TODO the type of css color 
+//TODO the type of css color
 class MobileDetailAppearance extends Realm.Object {
   _id: BSON.ObjectId
   dataType: string
   titleColor: string
-  subTitleColor: string 
+  subTitleColor: string
   static schema = {
     name: "MobileDetailAppearance",
     primaryKey: "_id",
@@ -16,12 +16,9 @@ class MobileDetailAppearance extends Realm.Object {
       //This is the type of schemaKey
       dataType: "string",
       titleColor: "string",
-      subTitleColor: "string" 
-    }
-  };
+      subTitleColor: "string",
+    },
+  }
 }
 
-
-export {
-  MobileDetailAppearance
-}
+export { MobileDetailAppearance }

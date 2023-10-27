@@ -1,16 +1,12 @@
 import { useEffect, useState } from "react"
-import {
-  Platform,
-  StyleSheet,
-  Image
-} from "react-native"
+import { Platform, StyleSheet, Image } from "react-native"
 import * as ImagePicker from "expo-image-picker"
 interface ImagePickerExpoProps {
   style: any
   afterPick?: (result: string) => any
   uri?: string
 }
-export function ImagePickerExpo (props: ImagePickerExpoProps) {
+export function ImagePickerExpo(props: ImagePickerExpoProps) {
   const { style, afterPick, uri } = props
   const [image, setImage] = useState(uri ?? null)
   useEffect(() => {
@@ -27,7 +23,7 @@ export function ImagePickerExpo (props: ImagePickerExpoProps) {
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
         aspect: [4, 4],
-        quality: 1
+        quality: 1,
       })
       if (result.canceled) {
         return
@@ -47,7 +43,7 @@ export function ImagePickerExpo (props: ImagePickerExpoProps) {
   return (
     <Image
       source={{
-        uri: image
+        uri: image,
       }}
       style={[styles.container, style]}
     />
@@ -57,13 +53,13 @@ export function ImagePickerExpo (props: ImagePickerExpoProps) {
 const styles = StyleSheet.create({
   container: {
     // Default image picker background color black
-    backgroundColor: "red"
+    backgroundColor: "red",
   },
   horizontal: {},
   icon: {
     fontSize: 74,
     color: "rgba(126,211,33,1)",
     height: 83,
-    width: 74
-  }
+    width: 74,
+  },
 })

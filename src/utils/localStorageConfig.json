@@ -1,5 +1,5 @@
 {
-    "imageHistory": "imageHistorys",
-    "scanHistory": "scanRecords",
-    "fetchUrlPrefix": "https://data.mongodb-api.com/app/application-qrcode-ukplu/endpoint"
+  "imageHistory": "imageHistorys",
+  "scanHistory": "scanRecords",
+  "fetchUrlPrefix": "https://data.mongodb-api.com/app/application-qrcode-ukplu/endpoint"
 }

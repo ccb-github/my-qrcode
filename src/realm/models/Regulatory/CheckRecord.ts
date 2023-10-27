@@ -19,9 +19,9 @@ export default class CheckRecord extends Realm.Object {
       name: "string",
       operator: "Checker",
       result: "string",
-      target: "Product"
+      target: "Product",
     },
-    primaryKey: "_id"
+    primaryKey: "_id",
   }
 
   static generate(description?: string) {
@@ -36,17 +36,16 @@ export default class CheckRecord extends Realm.Object {
   }
 }
 
-
 export const CheckRecordSchema = {
-  name: 'CheckRecord',
+  name: "CheckRecord",
   properties: {
-    _id: 'objectId',
-    device: 'string',
-    method: 'string?',
-    name: 'string',
-    operator: 'Checker',
-    result: 'string',
-    target: 'Product',
+    _id: "objectId",
+    device: "string",
+    method: "string?",
+    name: "string",
+    operator: "Checker",
+    result: "string",
+    target: "Product",
   },
-  primaryKey: '_id',
-};
+  primaryKey: "_id",
+}

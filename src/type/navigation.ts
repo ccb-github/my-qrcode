@@ -4,60 +4,76 @@
  */
 import type { StackScreenProps } from "@react-navigation/stack"
 import type { ParamListBase } from "@react-navigation/routers"
-import { type RouteNameMain } from "../navigation/const"
+import { type RouteNameLogin, type RouteNameMain } from "../navigation/const"
+import { type NavigatorScreenParams } from "@react-navigation/native"
 
 declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace ReactNavigation {
-    interface RootParamList extends RootStackParamList { }
+    /** This is because we can not use declaration merge with 'type alias' */
+    // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+    interface RootParamList extends MainStackParamList {}
   }
 }
 
-export type RootStackScreenProps<Screen extends keyof RootStackParamList> = StackScreenProps<
-RootStackParamList,
-Screen
->
+export type RootStackScreenProps<Screen extends keyof MainStackParamList> =
+  StackScreenProps<MainStackParamList, Screen>
 
-export interface RootTabParamList {
-  TabOne: { height: number }
+export type RootTabParamList = {
+  TabOne: undefined | Record<string, unknown>
   TabTwo: undefined
   TabThree: undefined
-}
+} & ParamListBase
 
 export const TabScreenNameList = ["TabOne", "TabTwo", "TabThree"]
 
-export interface RootStackParamList extends ParamListBase {
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+export type MainStackParamList = {
   Home: undefined
-  Detail: { data: any, type: string }
+  Detail: { data: any; type: string }
   Setting: undefined
-  Result: { data: any, type: string }
+  Result: { data: any; type: string }
   Scanner: { uri: string }
   Record: undefined
-}
+  Tab: NavigatorScreenParams<RootTabParamList>
+} & ParamListBase
+
+export type LoginStackParamList = {
+  Login: undefined
+  SignUp: undefined
+  Reset: { email: string } | undefined
+} & ParamListBase
 
 export type RootStackBarCodeScreenProps = StackScreenProps<
-RootStackParamList,
-RouteNameMain.modalScanner
+  MainStackParamList,
+  RouteNameMain.modalScanner
 >
 
 export type RootStackResultScreenProps = StackScreenProps<
-RootStackParamList,
-RouteNameMain.modalResult
+  MainStackParamList,
+  RouteNameMain.modalResult
 >
 
-export type ResultScreenStackProps = StackScreenProps<RootStackParamList, RouteNameMain.modalResult>
+export type LoginStackLoginScreenProps = StackScreenProps<
+  LoginStackParamList,
+  RouteNameLogin.login
+>
 
-enum TabOne {
-  ToolBar = "What",
-  TabBarIcon = "history",
-}
+export type MainStackResultProps = StackScreenProps<
+  MainStackParamList,
+  RouteNameMain.modalResult
+>
 
-enum TabTwo {
-  ToolBar = "anchor",
-  TabBarIcon = "anchor",
-}
+export type MainStackTabNavigatorProps = StackScreenProps<
+  MainStackParamList,
+  RouteNameMain.tab
+>
 
-export const IconSetting = {
-  TabOne,
-  TabTwo
-}
+export type LoginStackRegisterScreenProps = StackScreenProps<
+  LoginStackParamList,
+  RouteNameLogin.register
+>
+
+export type LoginStackResetPasswordScreenProps = StackScreenProps<
+  LoginStackParamList,
+  RouteNameLogin.resetPassword
+>

@@ -11,6 +11,10 @@ export type RootTabScreenProps = CompositeScreenProps<
   BottomTabScreenProps<RootTabParamList, RouteNameMain.tab>,
   StackScreenProps<MainStackParamList>
 >
+export type RootTabHomeScreenProps = CompositeScreenProps<
+  BottomTabScreenProps<RootTabParamList, "TabOne">,
+  StackScreenProps<MainStackParamList>
+>
 
 export type RootStackDetailScreenProps = StackScreenProps<
   MainStackParamList,
@@ -45,9 +49,9 @@ export type FontAwesomeIconWrapperProps = {
 }
 
 /** FieldView */
-export type BaseFieldProps = {
+export type BaseFieldProps<ValueType = string> = {
   name: string
-  value: string | undefined
+  value: ValueType
   style?: ViewStyle
   textStyle?: TextStyle
 }
@@ -56,10 +60,13 @@ export type TextAreaFieldProps = {
   numberOfLines: number
 } & BaseFieldProps
 
-export type LinkObjectFieldProps<Value = string> = {
+export type LinkObjectFieldProps<ValueType> = {
   name: string
-  value: Value
   valueNameKey: string
   type: string
   onPressAction: (routeData: any) => void
-} & BaseFieldProps
+} & BaseFieldProps<ValueType>
+
+/**
+ * End of the props for fieldView
+ */

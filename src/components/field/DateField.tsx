@@ -1,17 +1,15 @@
-import {
-  Text,
-  View,
-  Alert,
-  useWindowDimensions
-} from "react-native"
+import { Text, View, Alert, useWindowDimensions } from "react-native"
 
 import Dimension from "../../style/Dimensions"
-import { FieldStyles, FieldTextStyles } from "../../style/components/field.style"
+import {
+  FieldStyles,
+  FieldTextStyles,
+} from "../../style/components/field.style"
 
 // TODO empty field
 const { scale } = Dimension
 
-const DateField = (props: { name: string, value: string | undefined }) => {
+const DateField = (props: { name: string; value: string | undefined }) => {
   const { name, value } = props
   const { scale: scaleHook } = useWindowDimensions()
   if (scale === scaleHook) {
@@ -19,9 +17,15 @@ const DateField = (props: { name: string, value: string | undefined }) => {
   }
   return (
     <View style={FieldStyles.container}>
-
       <View style={FieldStyles.nameFieldView}>
-        <View style={{ backgroundColor: "blue", width: 30, borderRadius: 5, height: "100%" }}/>
+        <View
+          style={{
+            backgroundColor: "blue",
+            width: 30,
+            borderRadius: 5,
+            height: "100%",
+          }}
+        />
         <Text style={FieldTextStyles.nameFieldText}>{name}</Text>
       </View>
       <View style={FieldStyles.valueFieldView}>

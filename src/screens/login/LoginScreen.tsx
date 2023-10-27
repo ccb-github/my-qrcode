@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import {
   StyleSheet,
   Text,
@@ -8,7 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
-  Alert
+  Alert,
 } from "react-native"
 import realmApp from "../../realm/app"
 import Dimensions from "../../style/Dimensions"
@@ -16,38 +16,53 @@ import { useTranslation } from "react-i18next"
 import LanguagePicker from "../../components/LanguagePicker"
 import { Title } from "react-native-paper"
 import { type LoginStackLoginScreenProps } from "../../type/navigation"
+import i18n from "../../lib/i18-next"
 
 const { scale } = Dimensions
 
-export default function LoginScreen ({ navigation }: LoginStackLoginScreenProps) {
+export default function LoginScreen({
+  navigation,
+}: LoginStackLoginScreenProps) {
   const email = useRef("")
   const password = useRef("")
   const [loginLoading, setLoginLoading] = useState(false)
 
   const { t } = useTranslation("login")
+  useEffect(() => {
+    console.log(i18n.language)
+  })
 
-  const loginWithEmailAndPassword = async () => {
-    if (email.current === "" || password.current === "") {
-      console.log("loginEmpty")
-      alert("Please fill all the field")
-      return
-    }
-    try {
-      setLoginLoading(true)
-      console.log("Cred create start")
-      const emailPasswordCred = Realm.Credentials.emailPassword(email.current, password.current)
-      const loginUser = await realmApp.logIn(emailPasswordCred)
-      console.log(`Login with user ${loginUser.id}`)
-    } catch (error) {
-      const { message } = error
-      Alert.alert(t("Error"), (typeof message === "string" ? message : "No specific message"),
-        [{ text: t("Ok") }]
-      )
-      console.error("Login error", error)
-      return
-    } finally {
-      setLoginLoading(false)
-    }
+  const loginWithEmailAndPassword = () => {
+    ;(async () => {
+      if (email.current === "" || password.current === "") {
+        console.log("loginEmpty")
+        alert("Please fill all the field")
+        return
+      }
+      try {
+        setLoginLoading(true)
+        console.log("Cred create start")
+        const emailPasswordCred = Realm.Credentials.emailPassword(
+          email.current,
+          password.current,
+        )
+        const loginUser = await realmApp.logIn(emailPasswordCred)
+        console.log(`Login with user ${loginUser.id}`)
+      } catch (error) {
+        const { message } = error
+        Alert.alert(
+          t("Error"),
+          typeof message === "string" ? message : "No specific message",
+          [{ text: t("Ok") }],
+        )
+        console.error("Login error", error)
+        return
+      } finally {
+        setLoginLoading(false)
+      }
+    })().catch((error) => {
+      throw error
+    })
   }
 
   return (
@@ -55,7 +70,7 @@ export default function LoginScreen ({ navigation }: LoginStackLoginScreenProps)
       <StatusBar style="auto" />
       <View style={styles.titleView}>
         <Title style={styles.textInput}>
-         {`XX${t("Traceability system")}`}
+          <Text>{`XX${t("Traceability system")}`}</Text>
         </Title>
       </View>
       <Image
@@ -100,7 +115,7 @@ export default function LoginScreen ({ navigation }: LoginStackLoginScreenProps)
         style={styles.actionBtn}
         onPress={loginWithEmailAndPassword}
       >
-        <Text>{t("Log in")}</Text>
+        <Text>{t("Login")}</Text>
         {loginLoading ? <ActivityIndicator size={"small"} /> : null}
       </TouchableOpacity>
       <TouchableOpacity
@@ -120,11 +135,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
 
   image: {
-    marginBottom: 10 * scale
+    marginBottom: 10 * scale,
   },
 
   inputView: {
@@ -134,7 +149,7 @@ const styles = StyleSheet.create({
     height: 18 * scale,
     marginBottom: 8 * scale,
 
-    alignItems: "center"
+    alignItems: "center",
   },
 
   titleView: {
@@ -143,21 +158,20 @@ const styles = StyleSheet.create({
     width: "70%",
     marginBottom: 8 * scale,
 
-    alignItems: "center"
+    alignItems: "center",
   },
 
   textInput: {
     flex: 1,
     padding: 4 * scale,
     marginLeft: 8 * scale,
-    marginRight: 8 * scale
-
+    marginRight: 8 * scale,
   },
 
   forgotPasswordText: {
     height: 12 * scale,
     marginBottom: 12 * scale,
-    textDecorationLine: "underline"
+    textDecorationLine: "underline",
   },
 
   actionBtn: {
@@ -167,27 +181,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 16 * scale,
-    backgroundColor: "#FF1493"
-  }
-
+    backgroundColor: "#FF1493",
+  },
 })
-/*
-import {render, screen, fireEvent} from '@testing-library/react-native'
-test('examples of some things', async () => {
-  const expectedUsername = 'admin@domain.com'
-
-  render(<LoginScreen navigation={undefined} />)
-
-  fireEvent.changeText(screen.getByTestId('input'), expectedUsername)
-  fireEvent.press(screen.getByText('Print Username'))
-
-  // Using `findBy` query to wait for asynchronous operation to finish
-  const usernameOutput = await screen.findByTestId('printed-username')
-
-  // Using `toHaveTextContent` matcher from `@testing-library/jest-native` package.
-  expect(usernameOutput).toHaveTextContent(expectedUsername)
-
-  expect(screen.toJSON()).toMatchSnapshot()
-})
-
- */

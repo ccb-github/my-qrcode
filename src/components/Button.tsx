@@ -1,8 +1,12 @@
 import { StyleSheet } from "react-native"
-import { Button as ButtonOri, type Props } from "react-native-paper"
+import {
+  Button as ButtonOri,
+  type ButtonProps as PaperButtonProps,
+} from "react-native-paper"
+
 type ButtonProps = {
   children: React.ReactNode
-} & Props
+} & PaperButtonProps
 
 export default function Button({ style, children, onPress }: ButtonProps) {
   return (

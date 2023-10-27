@@ -1,9 +1,17 @@
-import AsyncStorage, { useAsyncStorage } from "@react-native-async-storage/async-storage";
-import { useEffect, useRef, useState } from "react";
-import { View, Text, Pressable, ScrollView, useWindowDimensions } from "react-native";
-import { Divider, List } from "react-native-paper";
-import { useAsyncMapStorage } from "../../utils/localStorage";
-import { SafeAreaView } from "react-native-safe-area-context";
+import AsyncStorage, {
+  useAsyncStorage,
+} from "@react-native-async-storage/async-storage"
+import { useEffect, useRef, useState } from "react"
+import {
+  View,
+  Text,
+  Pressable,
+  ScrollView,
+  useWindowDimensions,
+} from "react-native"
+import { Divider, List } from "react-native-paper"
+import { useAsyncMapStorage } from "../../utils/localStorage"
+import { SafeAreaView } from "react-native-safe-area-context"
 
 export default function AsyncStorageInspect() {
   const recordStorage = useAsyncStorage("records")
@@ -13,20 +21,18 @@ export default function AsyncStorageInspect() {
   const allItem = useRef<readonly any[]>([])
 
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       const allKeys = await AsyncStorage.getAllKeys()
-      console.log("Allkeys in storage",allKeys)
+      console.log("Allkeys in storage", allKeys)
       //await testHook.addItem(new Date().getTime().toString(), "file:///data/user/0/com.bioexpo.startwithmanaged/cache/ImagePicker/edfb4033-f6ab-4f28-8dc9-58f7e779310f.jpg");
-      
+
       const allKeyValue = await AsyncStorage.multiGet(allKeys)
-      
+
       allItem.current = allKeyValue
     })()
-    recordStorage.getItem()
-      .then(
-        res => {
-          res !== null || (records.current = JSON.parse(res))}
-      )
+    recordStorage.getItem().then((res) => {
+      res !== null || (records.current = JSON.parse(res))
+    })
   })
   return (
     <SafeAreaView>

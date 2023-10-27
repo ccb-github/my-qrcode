@@ -1,4 +1,4 @@
-function Certificate (){}
+function Certificate() {}
 
 Certificate.schema = {
   name: "Certificate",
@@ -7,9 +7,8 @@ Certificate.schema = {
     _id: "objectId",
     description: "string",
     producer: "Enterprise",
-    
   },
-} 
+}
 
 const CertificateSchema = [Certificate]
-export default CertificateSchema 
+export default CertificateSchema

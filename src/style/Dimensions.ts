@@ -1,13 +1,9 @@
-import  {
-	Dimensions, StatusBar, Platform
-} from 'react-native'
+import { Dimensions, StatusBar, Platform } from "react-native"
 
-const {
-	width,scale,height,fontScale
-} = Dimensions.get("window");
+const { width, scale, height, fontScale } = Dimensions.get("window")
 
-const isIOS = Platform.OS == 'ios';
-const statusBarHeight = isIOS? 20: StatusBar.currentHeight;
+const isIOS = Platform.OS == "ios"
+const statusBarHeight = isIOS ? 20 : StatusBar.currentHeight
 
 export default {
   get: Dimensions.get,
@@ -19,16 +15,16 @@ export default {
   scale: scale,
   fontScale: fontScale,
   statusBarHeight: statusBarHeight,
- 
+
   contentHeight: height - statusBarHeight,
   getFontSize: function (size: number) {
-    return size * fontScale; // 4 6 8 12 16 24 32 48 64
+    return size * fontScale // 4 6 8 12 16 24 32 48 64
   },
   getWidth: function (width: number) {
-    return width * scale;
+    return width * scale
   },
   getHeight: function (height: number) {
-    return height * scale;
+    return height * scale
   },
   size: {
     "1": 1 * fontScale,
@@ -61,4 +57,4 @@ export default {
     "64": 64 * fontScale,
     "66": 66 * fontScale,
   },
-};
+}

@@ -5,5 +5,5 @@ export function CenterFlexContainer(direction: ViewStyle["flexDirection"]) {
     flexDirection: direction,
     alignItems: "center",
     justifyContent: "center",
-  };
+  }
 }

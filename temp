@@ -1,0 +1,11 @@
+
+/media/share/essay-code/my-qrcode /src/components/field/ImageField.tsx
+   3:1   error  All imports in the declaration are only used as types. Use `import type`  @typescript-eslint/consistent-type-imports
+   7:1   error  Expected space or tab after '//' in comment                               spaced-comment
+   8:22  error  'getWidth' is assigned a value but never used                             @typescript-eslint/no-unused-vars
+  43:3   error  Unused style detected: FieldStyles.valueFieldText                         react-native/no-unused-styles
+  46:3   error  Unused style detected: FieldStyles.status                                 react-native/no-unused-styles
+
+✖ 5 problems (5 errors, 0 warnings)
+  2 errors and 0 warnings potentially fixable with the `--fix` option.
+

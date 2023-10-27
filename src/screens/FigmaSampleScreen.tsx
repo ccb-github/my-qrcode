@@ -1,28 +1,30 @@
 import { View, Text } from "react-native"
 
-import styled from 'styled-components/native';
+import styled from "styled-components/native"
 
 const FigmaSampleScreen = () => {
   return (
-    <><Profile>
-      {/* <HEADER>
+    <>
+      <Profile>
+        {/* <HEADER>
 <BGImage />
 </HEADER> */}
-      {/* <CARD> */}
-      <BG />
-      <SHOWMORE>
-        <DEFAULT>
-          <ShowmoreText>Show more</ShowmoreText>
-        </DEFAULT>
-        <HOVER>
-          <ShowmoreText>Show more</ShowmoreText>
-        </HOVER>
-      </SHOWMORE>
-      <AnartistofconsideText>An artist of considerable range, Jessica
-        name taken by Melbourne …</AnartistofconsideText>
-      <LINE />
-      {/* <SanFrancisco,USAText>San Francisco, USA</SanFrancisco,USAText> */}
-      {/* <albumcopy>
+        {/* <CARD> */}
+        <BG />
+        <SHOWMORE>
+          <DEFAULT>
+            <ShowmoreText>Show more</ShowmoreText>
+          </DEFAULT>
+          <HOVER>
+            <ShowmoreText>Show more</ShowmoreText>
+          </HOVER>
+        </SHOWMORE>
+        <AnartistofconsideText>
+          An artist of considerable range, Jessica name taken by Melbourne …
+        </AnartistofconsideText>
+        <LINE />
+        {/* <SanFrancisco,USAText>San Francisco, USA</SanFrancisco,USAText> */}
+        {/* <albumcopy>
       <AlbumText>Album</AlbumText>
       <ViewAllText>View All</ViewAllText>
       <Card1>
@@ -59,41 +61,36 @@ const FigmaSampleScreen = () => {
       </Card1>
     </albumcopy>
     <JessicaJones,27Text>Jessica Jones, 27</JessicaJones,27Text> */}
-      <MESSAGE>
-        <DEFAULT>
-          <BG />
-          <MESSAGEText>MESSAGE</MESSAGEText>
-        </DEFAULT>
-      </MESSAGE>
-      <CONNECT>
-        <DEFAULT>
-          <BG />
-          <CONNECTText>CONNECT</CONNECTText>
-        </DEFAULT>
-      </CONNECT>
-      <IMG>
-        <DEFAULT>
-          <IMGImage />
-        </DEFAULT>
-      </IMG>
-      <COMMENTS>
-        <Text89>89</Text89>
-        <CommentsText>Comments</CommentsText>
-      </COMMENTS>
-      <PHOTOS>
-        
-      <PhotosText>Photos</PhotosText>
-    </PHOTOS>
-   
-        
-      
-        
+        <MESSAGE>
+          <DEFAULT>
+            <BG />
+            <MESSAGEText>MESSAGE</MESSAGEText>
+          </DEFAULT>
+        </MESSAGE>
+        <CONNECT>
+          <DEFAULT>
+            <BG />
+            <CONNECTText>CONNECT</CONNECTText>
+          </DEFAULT>
+        </CONNECT>
+        <IMG>
+          <DEFAULT>
+            <IMGImage />
+          </DEFAULT>
+        </IMG>
+        <COMMENTS>
+          <Text89>89</Text89>
+          <CommentsText>Comments</CommentsText>
+        </COMMENTS>
+        <PHOTOS>
+          <PhotosText>Photos</PhotosText>
+        </PHOTOS>
+
         <ProfileText>Profile</ProfileText>
-        
-        
+
         <TielebarText>Tiele bar</TielebarText>
-      
-    </Profile></>
+      </Profile>
+    </>
   )
 }
 export default FigmaSampleScreen

@@ -1,21 +1,20 @@
-import realmApp from "../app";
-import {BSON} from "realm"
-
+import realmApp from "../app"
+import { BSON } from "realm"
 
 const RecordMainSchema = {
-    name: "Record",
-    primaryKey: "_id", 
-    properties: {
-      _id: "objectId",
-      description: "string",
-      isVerified: { type: "bool", default: false },
-      createdAt: "date",
-      location: "Location",
-      url: { type: "string", default: "www.dummyurl.com" },
-      code: { type: "Qrcode?"},
-      ownerId: "string",
-    },
-   /*  generate: (description: string)  => {
+  name: "Record",
+  primaryKey: "_id",
+  properties: {
+    _id: "objectId",
+    description: "string",
+    isVerified: { type: "bool", default: false },
+    createdAt: "date",
+    location: "Location",
+    url: { type: "string", default: "www.dummyurl.com" },
+    code: { type: "Qrcode?" },
+    ownerId: "string",
+  },
+  /*  generate: (description: string)  => {
       return {
           _id: new Realm.BSON.ObjectId(),
           description: description,
@@ -29,17 +28,16 @@ const RecordMainSchema = {
     } */
 }
 
-class Record extends Realm.Object{
+class Record extends Realm.Object {
   _id: BSON.ObjectId
   description: string
   isVerified: boolean
   createdAt: Date
- 
-  
+
   ownerId: string
   static schema = {
     name: "Record",
-    primaryKey: "_id", 
+    primaryKey: "_id",
     properties: {
       _id: "objectId",
       description: "string",
@@ -47,22 +45,22 @@ class Record extends Realm.Object{
       createdAt: "date",
       location: "Location",
       url: { type: "string", default: "www.dummyurl.com" },
-      code: { type: "Qrcode?"},
+      code: { type: "Qrcode?" },
       ownerId: "string",
-    }
+    },
   }
   generate(description: string) {
     return {
-        _id: new Realm.BSON.ObjectId(),
-        description: description,
-        location: {
-          longitude: 50, 
-          latitude: 50
-        },
-    
-        createdAt: new Date(),
-        ownerId: realmApp.currentUser.id
-    };
+      _id: new Realm.BSON.ObjectId(),
+      description: description,
+      location: {
+        longitude: 50,
+        latitude: 50,
+      },
+
+      createdAt: new Date(),
+      ownerId: realmApp.currentUser.id,
+    }
   }
 }
 // RecordMain.generate = (description: string)  => {
@@ -70,16 +68,14 @@ class Record extends Realm.Object{
 //       _id: new Realm.BSON.ObjectId(),
 //       description: description,
 //       location: {
-//         longitude: 50, 
+//         longitude: 50,
 //         latitude: 50
 //       },
-  
+
 //       createdAt: new Date(),
 //       ownerId: realmApp.currentUser.id
 //   };
 // }
-const RecordSchemaList = [
-  Record
-]
-export { Record, RecordMainSchema}
-export default RecordSchemaList  
+const RecordSchemaList = [Record]
+export { Record, RecordMainSchema }
+export default RecordSchemaList

@@ -8,7 +8,7 @@ class Producer extends Realm.Object {
       location: "Location?",
       ownerId: "string",
     },
-  };
+  }
 }
-const ProducerSchemaList = [Producer];
-export default ProducerSchemaList;
+const ProducerSchemaList = [Producer]
+export default ProducerSchemaList
