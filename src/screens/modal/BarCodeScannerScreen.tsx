@@ -18,7 +18,7 @@ import {
   scanHistory,
   fetchUrlPrefix,
 } from "../../utils/localStorageConfig.json"
-import BottomFloatToolbar from "../../components/FloatToolbar"
+import BottomToolbar from "../../components/BottomToolbar"
 
 import { borderStyle, clgWrapper } from "../../__test__/helper"
 
@@ -162,7 +162,7 @@ export default function BarCodeScannerScreen({
           Alert.alert("This image can not be retrieve")
           break
         default:
-          Alert.alert("Unkown or no error.code")
+          Alert.alert("Unknown or no error.code")
       }
       throw new Error(error)
     }
@@ -271,9 +271,11 @@ export default function BarCodeScannerScreen({
           <Text style={[styles.hintText, { fontSize: 10 * scale }]}>
             {JSON.stringify(scanData.dataItem)}
           </Text>
-          <BottomFloatToolbar
+          <BottomToolbar
             afterPickCallBack={scanFromImageURLAsync}
-            style={{ ...styles.bottomToolBar, height: 30 * scale }}
+            style={{
+              height: 50 * scale,
+            }}
           />
         </View>
       ) : (
@@ -288,13 +290,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
   },
-  bottomToolBar: {
-    width: "100%",
-  },
   hintText: {
     position: "relative",
     top: 60,
-
     textAlign: "center",
   },
 })

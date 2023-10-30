@@ -1,20 +1,17 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import {
-  StyleSheet,
   Text,
   View,
   ScrollView,
-  TouchableOpacity,
   useColorScheme,
-  TextInput,
   Pressable,
   ActivityIndicator,
+  useWindowDimensions,
 } from "react-native"
 
 import RealmContext from "../../realm/RealmContext"
 import { useUser } from "@realm/react"
 import { Divider, List, Switch, Tooltip } from "react-native-paper"
-import Dimensions from "../../style/Dimensions"
 import {
   APP_DATABASE_NAME,
   USER_CUSTOM_DATA_COLLECTION,
@@ -22,71 +19,108 @@ import {
 import { screenStyleByTheme } from "../../style/common"
 import { useTranslation } from "react-i18next"
 import Button from "../../components/Button"
-import { RouteNameMain } from "../../navigation/const"
 import { type UserProfile } from "../../type/user"
-import { type RootTabScreenProps } from "../../type/props"
+import { type RootTabProfileScreenProps } from "../../type/props"
+import styled from "styled-components/native"
+import {
+  FlexItemView,
+  StyledFlexRowTouchableOpacity,
+  StyledFlexRowView,
+  StyledTextByAbsoluteSize,
+} from "../../components/styledTemplate"
 
-// TODO Adjust to scale
-const { scale } = Dimensions
 const { useRealm } = RealmContext
-export default function ProfileScreen({ navigation }: RootTabScreenProps) {
+const ProfileFieldView = styled.View`
+  flex-direction: "row";
+  align-items: "center";
+`
+/**
+ * @param scale {number} The pr
+ */
+const ProfileFieldValueTextInput = styled.TextInput<{
+  scale: number
+  editable: boolean
+}>`
+  flex: 1;
+  padding: ${(props) => 4 * props.scale}px;
+  margin-top: ${(props) => 2 * props.scale}px;
+  margin-bottom: ${(props) => 2 * props.scale}px;
+  margin-left: ${(props) => 8 * props.scale}px;
+  margin-right: ${(props) => 8 * props.scale}px;
+  border-width: 1px;
+  border-color: ${(props) => (props.editable ? "red" : "black")};
+  border-radius: 8px;
+`
+const ProfileContainerView = styled.View`
+  background-color: #fff;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+`
+const InteractionButtonText = styled(StyledTextByAbsoluteSize)<{size: number}>`
+  color: #fff;
+  padding-left: 6px;
+  padding-right: 6px;
+`
+export default function ProfileScreen({
+  navigation,
+}: RootTabProfileScreenProps) {
   const colorScheme = useColorScheme()
   const { t } = useTranslation("profile")
   const user = useUser()
   const realm = useRealm()
+  const { scale } = useWindowDimensions()
   useEffect(() => {
     console.log(realm.objects)
     if (user === null)
       throw new Error("You must login first to see this screen")
   }, [user])
 
-  const UserProfileData = ({
+  function UserProfileData<ProfileKey extends keyof UserProfile>({
     profileKeyList,
   }: {
     profileKeyList: string[]
     dataSubmitAction: (dataObj: any) => Promise<void>
-  }) => {
-    const userData = useRef<UserProfile>()
-
+  }) {
+    let userData = useMemo<Map<ProfileKey, unknown> | null>(() => null, [])
     const [editable, toggleEditable] = useState(false)
-    const [loading, setLoading] = useState(true)
     useEffect(() => {
       ;(async () => {
         // const { email, name } = await user.refreshCustomData()
         // console.log("Current user id", user?.id)
         // console.log("Current user data", { email, name })
-        userData.current = (await user?.refreshCustomData()) as UserProfile
-        setLoading(false)
+        const resultData = (await user?.refreshCustomData()) as UserProfile
+        userData = new Map(
+          Object.entries(resultData) as Array<[ProfileKey, unknown]>,
+        )
       })().catch((error) => {
         throw error
       })
     }, [])
+    const EmailFieldText = styled(StyledTextByAbsoluteSize)`
+      font-family: "SSRegular";
+      padding: "8px 0px";
+      font-size: 5;
+      color: "#333";
+      margin-top: 4;
+    `
     return (
       // TODO profile title style
       <List.Section title={"Info"}>
         {/* Profile Email */}
-        {!loading ? (
+        {userData !== null ? (
           profileKeyList.map((profileKey) => (
             <>
-              <View style={styles.profileFieldView} key={profileKey}>
-                <Text style={styles.emailField}>{profileKey}</Text>
+              <ProfileFieldView key={profileKey}>
+                <EmailFieldText size={5 * scale}>{profileKey}</EmailFieldText>
                 {/* {editable ? ( */}
-                <TextInput
-                  style={[
-                    styles.textInput,
-                    {
-                      borderColor: editable ? "red" : "black",
-                      borderRadius: 8,
-                    },
-                  ]}
-                  placeholder={t(userData.current![profileKey])}
+                <ProfileFieldValueTextInput
+                  scale={scale}
+                  placeholder={t(userData![profileKey])}
                   editable={editable}
                   placeholderTextColor="#003f5c"
-                  onChangeText={(value) =>
-                    (userData.current![profileKey] = value)
-                  }
+                  onChangeText={(value) => (userData![profileKey] = value)}
                 />
-              </View>
+              </ProfileFieldView>
               <Divider />
             </>
           ))
@@ -94,8 +128,8 @@ export default function ProfileScreen({ navigation }: RootTabScreenProps) {
           <ActivityIndicator size="large" />
         )}
 
-        <View style={styles.profileFieldFootView}>
-          <View style={styles.flexItemView}>
+        <StyledFlexRowView>
+          <FlexItemView>
             <Tooltip title="Activate edit">
               <Switch
                 value={editable}
@@ -105,14 +139,13 @@ export default function ProfileScreen({ navigation }: RootTabScreenProps) {
                 }}
               />
             </Tooltip>
-          </View>
-          <View style={styles.flexItemView}>
+          </FlexItemView>
+          <FlexItemView>
             <Button
               style={{ backgroundColor: "#4b7bec" }}
               onPress={() => {
-                submitUserCustomData(userData.current)
+                submitUserCustomData(Object.fromEntries(userData!))
                   .then(() => {
-                    setLoading(true)
                     toggleEditable(false)
                   })
                   .catch((error) => {
@@ -122,20 +155,8 @@ export default function ProfileScreen({ navigation }: RootTabScreenProps) {
             >
               {t("Submit")}
             </Button>
-            {/* <TouchableOpacity
-              style={styles.interactButton}
-              disabled={!editable}
-              onPress={() => {
-                dataSubmitAction(userData.current).then(() => {
-                  setLoading(true);
-                  toggleEditable(false);
-                });
-              }}
-            >
-              <Text style={styles.interactButtonText}>{t("Submit")}</Text>
-            </TouchableOpacity> */}
-          </View>
-        </View>
+          </FlexItemView>
+        </StyledFlexRowView>
       </List.Section>
     )
   }
@@ -147,9 +168,9 @@ export default function ProfileScreen({ navigation }: RootTabScreenProps) {
     // TODO should I check every time?
     if (user === null)
       throw new Error("You must login first to see this screen")
-    const mongo = user.mongoClient("mongodb-atlas")
 
-    const collection = mongo
+    const collection = user
+      .mongoClient("mongodb-atlas")
       .db(APP_DATABASE_NAME)
       .collection(USER_CUSTOM_DATA_COLLECTION)
     const filter = {
@@ -169,25 +190,26 @@ export default function ProfileScreen({ navigation }: RootTabScreenProps) {
   return (
     <View style={screenStyleByTheme({ colorScheme })}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.profileContainer}>
+        <ProfileContainerView>
           <UserProfileData
             profileKeyList={["email", "name"]}
             dataSubmitAction={submitUserCustomData}
           />
           <Divider />
 
-          {/* Interaction */}
+          {/* Interaction view */}
           <View>
-            <TouchableOpacity
-              style={styles.interactButton}
+            <StyledFlexRowTouchableOpacity
               onPress={() => {
-                navigation.navigate(RouteNameMain.modalScanner)
+                navigation.push("modalScanner")
               }}
             >
-              <Text style={styles.interactButtonText}>{t("Scan")}</Text>
-            </TouchableOpacity>
+              <InteractionButtonText size={9 * scale}>
+                {t("Scan")}
+              </InteractionButtonText>
+            </StyledFlexRowTouchableOpacity>
           </View>
-        </View>
+        </ProfileContainerView>
         <List.Section title="Subscription">
           <List.Item
             title={"Expo version"}
@@ -213,49 +235,4 @@ export default function ProfileScreen({ navigation }: RootTabScreenProps) {
   )
 }
 
-const styles = StyleSheet.create({
-  flexItemView: {
-    flex: 1,
-    alignItems: "center",
-  },
-  profileContainer: {
-    backgroundColor: "#fff",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-  },
-  profileFieldView: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  profileFieldFootView: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  emailField: {
-    fontFamily: "SSRegular",
-    paddingHorizontal: 8 * scale,
-    fontSize: 5 * scale,
-    color: "#333",
-    marginTop: 4,
-  },
-  interactButton: {
-    flex: 1,
-    flexDirection: "row",
-    alignContent: "center",
-    justifyContent: "center",
-  },
-  interactButtonText: {
-    fontFamily: "SSBold",
-    color: "#fff",
-    fontSize: 18,
-    paddingVertical: 6,
-  },
-  textInput: {
-    flex: 1,
-    padding: 4 * scale,
-    marginVertical: 2 * scale,
-    marginLeft: 8 * scale,
-    marginRight: 8 * scale,
-    borderWidth: 1,
-  },
-})
+

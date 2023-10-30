@@ -15,6 +15,10 @@ export type RootTabHomeScreenProps = CompositeScreenProps<
   BottomTabScreenProps<RootTabParamList, "TabOne">,
   StackScreenProps<MainStackParamList>
 >
+export type RootTabProfileScreenProps = CompositeScreenProps<
+  BottomTabScreenProps<RootTabParamList, "TabTwo">,
+  StackScreenProps<MainStackParamList>
+>
 
 export type RootStackDetailScreenProps = StackScreenProps<
   MainStackParamList,

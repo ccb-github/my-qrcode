@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Platform, StyleSheet, Image } from "react-native"
 import * as ImagePicker from "expo-image-picker"
-interface ImagePickerExpoProps {
+type ImagePickerExpoProps = {
   style: any
   afterPick?: (result: string) => any
   uri?: string
@@ -29,10 +29,8 @@ export function ImagePickerExpo(props: ImagePickerExpoProps) {
         return
       } else {
         console.log("URI from image", result)
-        // @ts-expect-error
         setImage(result.uri)
-        // @ts-expect-error
-        afterPick(result.uri)
+        if (typeof afterPick === "function") afterPick(result.uri)
       }
     } catch (error) {
       console.log(error)
@@ -43,7 +41,7 @@ export function ImagePickerExpo(props: ImagePickerExpoProps) {
   return (
     <Image
       source={{
-        uri: image,
+        uri: image ?? undefined,
       }}
       style={[styles.container, style]}
     />
@@ -54,12 +52,5 @@ const styles = StyleSheet.create({
   container: {
     // Default image picker background color black
     backgroundColor: "red",
-  },
-  horizontal: {},
-  icon: {
-    fontSize: 74,
-    color: "rgba(126,211,33,1)",
-    height: 83,
-    width: 74,
   },
 })

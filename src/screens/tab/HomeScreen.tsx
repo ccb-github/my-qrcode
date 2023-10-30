@@ -1,12 +1,8 @@
 /* eslint-disable react-native/no-color-literals */
 import {
-  StyleSheet,
   Text,
-  View,
-  TouchableOpacity,
   useColorScheme,
   type GestureResponderEvent,
-  SafeAreaView,
   useWindowDimensions,
 } from "react-native"
 import { Searchbar } from "react-native-paper"
@@ -16,8 +12,27 @@ import { FontAwesomeIconWrapper } from "../../components/Icon"
 import { RouteNameMain } from "../../navigation/const"
 import { useTranslation } from "react-i18next"
 import { type RootTabHomeScreenProps } from "../../type/props"
-
+import {
+  StyledFlexColumnView,
+  StyledFlexRowView,
+  StyledSafeAreaView,
+} from "../../components/styledTemplate"
+import styled from "styled-components/native"
 const { getHeight } = Dimensions
+
+const NavigationAreaContainer = styled(StyledFlexColumnView)<{height: string}>`
+  flex: 1;
+  height: ${(props) => props.height};
+`
+const NavigationButtonView = styled.TouchableOpacity<{ height: number }>`
+  aspect-ratio: 3 / 2;
+  height: ${(props) => props.height};
+  margin: 40;
+  border-radius: 7;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+`
 
 export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
   const theme = useColorScheme()
@@ -26,7 +41,7 @@ export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
   const { t } = useTranslation("home")
   console.log(`The theme ${theme}`)
 
-  /* TODO unused code
+  /** TODO unused code
     // const coolMusic = "http://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3"
     // const [play, pause, stop, data] = useSound(coolMusic);
   */
@@ -40,13 +55,7 @@ export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
     text: string
     onPress: (event: GestureResponderEvent) => void
   }) => (
-    <TouchableOpacity
-      onPress={onPress}
-      style={[
-        styles.navigationButton,
-        { flexDirection: "row", alignItems: "center" },
-      ]}
-    >
+    <NavigationButtonView onPress={onPress} height={40 * scale}>
       {iconName !== undefined ? (
         <FontAwesomeIconWrapper
           name={iconName}
@@ -62,30 +71,20 @@ export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
       >
         {text}
       </Text>
-    </TouchableOpacity>
+    </NavigationButtonView>
   )
-  // const handlePlay = () => {
-  //   if (data.isPlaying) pause()
-  //   else play()
-  // }
-  const { height } = useWindowDimensions()
+  const { height, scale } = useWindowDimensions()
   return (
-    <SafeAreaView
-      style={{
-        flexDirection: "column",
-        backgroundColor: isDarkTheme ? "black" : "white",
-        height,
-      }}
-    >
+    <StyledSafeAreaView height={height}>
       <Searchbar
         placeholder="Search"
         onChange={(value) => {}}
         value={"Holder"}
       />
-      {/* Navigation to another screen */}
-      <View style={{ flexDirection: "column", flexGrow: 1 }}>
-        <View style={{ flexDirection: "row", flex: 1, width: "100%" }}>
-          <View style={styles.navigationAreaContainer}>
+      {/* Navigate to another screen */}
+      <StyledFlexColumnView style={{ flexGrow: 1 }}>
+        <StyledFlexRowView flex={"1"} style={{ flex: 1, width: "100%" }}>
+          <NavigationAreaContainer height={`${50 * scale}`}>
             <NavigationButton
               iconName={"qrcode"}
               onPress={() => {
@@ -93,8 +92,8 @@ export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
               }}
               text={t("scanner")}
             />
-          </View>
-          <View style={styles.navigationAreaContainer}>
+          </NavigationAreaContainer>
+          <NavigationAreaContainer height={`${50 * scale}`}>
             <NavigationButton
               iconName={"bitbucket"}
               onPress={() => {
@@ -102,10 +101,10 @@ export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
               }}
               text={t("storage")}
             />
-          </View>
-        </View>
-        <View style={{ flexDirection: "row", flex: 1 }}>
-          <View style={styles.navigationAreaContainer}>
+          </NavigationAreaContainer>
+        </StyledFlexRowView>
+        <StyledFlexRowView flex={"1"} style={{ flex: 1, width: "100%" }}>
+          <NavigationAreaContainer height={`${50 * scale}`}>
             <NavigationButton
               iconName={"history"}
               onPress={() => {
@@ -113,42 +112,9 @@ export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
               }}
               text="history"
             />
-          </View>
-          {/* <View
-            style={{
-              ...styles.navigationAreaContainer,
-              borderColor: "yellow",
-              borderWidth: 2
-            }}
-          >
-            <NavigationButton
-              iconName={"info"}
-              onPress={() => {}}
-              text={t("info")}
-            />
-          </View> */}
-        </View>
-      </View>
-    </SafeAreaView>
+          </NavigationAreaContainer>
+        </StyledFlexRowView>
+      </StyledFlexColumnView>
+    </StyledSafeAreaView>
   )
 }
-
-// TODO Adjust to scale
-const styles = StyleSheet.create({
-  navigationAreaContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-    borderColor: "red",
-    borderWidth: 2,
-    height: getHeight(50),
-  },
-  navigationButton: {
-    aspectRatio: 3 / 2,
-    height: getHeight(40),
-    margin: 40,
-    borderRadius: 7,
-    justifyContent: "center",
-  },
-})

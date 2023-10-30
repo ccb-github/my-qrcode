@@ -18,12 +18,12 @@ import Dimensions from "../../style/Dimensions"
 import i18n from "../../lib/i18-next"
 import { useTranslation } from "react-i18next"
 import { type EnterpriseMain } from "../../realm/models/Producer/EnterPrise"
-import { type Checker } from "../../realm/models/Regulatory/Checker"
 import { hintTextBySize } from "../../style/common"
 import type { Product } from "../../realm/models/Producer/Product"
 import { type RootStackDetailScreenProps } from "../../type/RootStackDetailScreenProps"
 import { type DetailViewProps } from "../../type/props"
 import { type ObjectId } from "bson"
+import { CheckerDetail } from "../../components/detail/CheckerDetail"
 const { getFontSize } = Dimensions
 
 // TODO integrate data
@@ -102,21 +102,6 @@ const ProductDetail = ({
           </Text>
         )}
       </View>
-    </>
-  )
-}
-
-const CheckerDetail = ({ data }: { data: Checker }) => {
-  console.log(`Data inside CheckerDetail ${JSON.stringify(data)}`)
-  const { t } = useTranslation("checker")
-  return (
-    <>
-      <StringField name={t("Check") + t("Id")} value={data._id.toHexString()} />
-      <StringField name={t("Check") + t("device")} value={"Random device"} />
-      <StringField
-        name={t("Check") + t("time")}
-        value={new Date().toISOString()}
-      />
     </>
   )
 }
@@ -240,7 +225,6 @@ export default function DetailScreen({ route }: RootStackDetailScreenProps) {
                     styles.hintFontStyle,
                     {
                       fontSize: 20,
-
                       backgroundColor: "red",
                       fontWeight: "bold",
                       textAlignVertical: "top",

@@ -2,20 +2,15 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { Pressable } from "react-native"
 import { AntDesign } from "@expo/vector-icons"
 import { useTranslation } from "react-i18next"
-
-import {
-  type MainStackTabNavigatorProps,
-  type RootTabParamList,
-} from "../type/navigation"
-
+import { type RootTabParamList } from "../type/navigation"
 import { Avatar } from "react-native-paper"
 import { FontAwesomeIconWrapper } from "../components/Icon"
 import Dimension from "../style/Dimensions"
 
 import SettingScreen from "../screens/tab/SettingScreen"
 import ProfileScreen from "../screens/tab/ProfileScreen"
-import HomeScreen from "../screens/tab/HomeScreen"
 import { IconSetting, RouteNameMain, TabNavigationScreenOptions } from "./const"
+import FigmaSampleScreen from "../screens/FigmaSampleScreen"
 
 const { getWidth } = Dimension
 
@@ -25,20 +20,18 @@ const { getWidth } = Dimension
  */
 const BottomTab = createBottomTabNavigator<RootTabParamList>()
 
-export default function BottomTabNavigator({
-  route,
-}: MainStackTabNavigatorProps) {
+export default function BottomTabNavigator() {
   const { t } = useTranslation("title")
   // const { initialRouteName } = route.params
   const initialRouteName = "TabOne"
   return (
     <BottomTab.Navigator
-      initialRouteName={initialRouteName || "TabOne"}
+      initialRouteName={initialRouteName}
       screenOptions={TabNavigationScreenOptions}
     >
       <BottomTab.Screen
         name="TabOne"
-        component={HomeScreen}
+        component={FigmaSampleScreen}
         options={({ navigation }) => ({
           title: t("Home"),
           tabBarIcon: ({ color }: { color: string }) => (

@@ -18,13 +18,13 @@ declare global {
 export type RootStackScreenProps<Screen extends keyof MainStackParamList> =
   StackScreenProps<MainStackParamList, Screen>
 
+export const TabScreenNameList = ["TabOne", "TabTwo", "TabThree"] as const
 export type RootTabParamList = {
   TabOne: undefined | Record<string, unknown>
   TabTwo: undefined
   TabThree: undefined
-} & ParamListBase
-
-export const TabScreenNameList = ["TabOne", "TabTwo", "TabThree"]
+} & ParamListBase &
+  Record<(typeof TabScreenNameList)[number], unknown>
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export type MainStackParamList = {
@@ -67,6 +67,7 @@ export type MainStackTabNavigatorProps = StackScreenProps<
   MainStackParamList,
   RouteNameMain.tab
 >
+
 
 export type LoginStackRegisterScreenProps = StackScreenProps<
   LoginStackParamList,

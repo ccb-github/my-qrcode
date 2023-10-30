@@ -25,7 +25,7 @@ import { type ScanRecord } from "../../type/data"
 import { useUser } from "@realm/react"
 import { useAsyncMapStorage } from "../../utils/localStorage"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { type Record } from "../../realm/models/Record"
+import styled from "styled-components/native"
 
 const { scale } = Dimensions
 
@@ -43,9 +43,25 @@ type RecordScreenStackProps = StackScreenProps<
   MainStackParamList,
   RouteNameMain.record
 >
-
+type TopTabBarButtonProps = {
+  scale: number
+  contentView: "list" | "image"
+  currentView: "list" | "image"
+}
+const TopTabBarButton = styled.TouchableOpacity<TopTabBarButtonProps>`
+  flex: 1,
+  align-items: "center",
+  border-bottom-color: "#000",
+  padding-vertical: ${(props) => 10 * props.scale};
+  border-bottom-width: ${(props) =>
+    props.contentView === props.currentView ? 2 : 0}
+`
+const ButtonText = styled.Text<{ $scale: number }>`
+  font-family: "SSRegular";
+  font-size: ${(props) => 10 * props.$scale};
+`
 export default function RecordScreen({ navigation }: RecordScreenStackProps) {
-  const [contentView, setContentView] = useState("list")
+  const [contentView, setContentView] = useState<"list" | "image">("list")
   const [loading, setLoading] = useState(true)
   const recordHistory = useRef<ScanRecord[]>([])
   const imageHistory = useRef([])
@@ -53,6 +69,7 @@ export default function RecordScreen({ navigation }: RecordScreenStackProps) {
   const realm = useRealm()
   const user = useUser()
   const { t } = useTranslation()
+
   if (user === null) {
     return <Text>User is null</Text>
   }
@@ -69,17 +86,6 @@ export default function RecordScreen({ navigation }: RecordScreenStackProps) {
         recordHistory.current = (
           await recordHistoryStorage.getMapItem("object")
         ).map((item) => JSON.parse(item ?? "{}"))
-
-        // let rawRecords = await recordHistoryStorage.getMapItem();
-
-        // rawRecords = rawRecords.map((item) => ({
-        //   id: new BSON.ObjectId().toHexString(),
-        //   content: item,
-        //   createdAt: new Date(),
-        // }));
-        // recordHistorysStorage.setItem(JSON.stringify(rawRecords));
-        // recordHistorys.current = rawRecords.map( record => JSON.parse(record[1]))
-
         setLoading(false)
       } catch (error) {
         console.error(error)
@@ -88,19 +94,11 @@ export default function RecordScreen({ navigation }: RecordScreenStackProps) {
       throw error
     })
     Alert.alert(`${realm.objects("Product").length}`)
-    // realm.write( () => {
-    //   for( const product of realm.objects(Product)) {
-    //     product.category ?? (product.category = "Other")
-    //   }
-
-    // })
   }, [loading])
 
   const handleToggleRecordStatus = useCallback(
-    (record: Record): void => {
-      realm.write(() => {
-        record.isVerified = !record.isVerified
-      })
+    (record: ScanRecord): void => {
+      console.log("Record")
     },
     [realm],
   )
@@ -125,62 +123,38 @@ export default function RecordScreen({ navigation }: RecordScreenStackProps) {
   )
 
   // TODO Type of the data
-  const resultNavigate = (detailInfo: { data: any; type: string }) => {
+  const resultNavigate = (detailInfo: { data: unknown; type: string }) => {
     navigation.navigate(RouteNameMain.modalResult, detailInfo)
   }
 
   const scanNavigate = (scannedPhoto: string) => {
     navigation.navigate("Scanner", { uri: scannedPhoto })
   }
-
+ 
   return (
     <SafeAreaView style={styles.screen}>
       <TouchableOpacity style={styles.content}>
         <View style={{ flexDirection: "row" }}>
-          <TouchableOpacity
-            style={[
-              styles.contentViewButton,
-              {
-                paddingVertical: 5 * scale,
-                borderBottomWidth: contentView === "list" ? 2 : 0,
-              },
-            ]}
+          <TopTabBarButton
+            scale={scale}
+            contentView={"list"}
+            currentView={contentView}
             onPress={() => {
               setContentView("list")
             }}
           >
-            <Text
-              style={[
-                styles.contentViewButtonText,
-                {
-                  fontSize: 10 * scale,
-                },
-              ]}
-            >
-              {t("List")}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+            <ButtonText $scale={scale}>{t("list")}</ButtonText>
+          </TopTabBarButton>
+          <TopTabBarButton
+            scale={scale}
+            contentView={"image"}
+            currentView={contentView}
             onPress={() => {
               setContentView("image")
             }}
-            style={{
-              ...styles.contentViewButton,
-              paddingVertical: 5 * scale,
-              borderBottomWidth: contentView === "image" ? 2 : 0,
-            }}
           >
-            <Text
-              style={[
-                styles.contentViewButtonText,
-                {
-                  fontSize: 10 * scale,
-                },
-              ]}
-            >
-              {t("Image")}
-            </Text>
-          </TouchableOpacity>
+            <ButtonText $scale={scale}>{t("Image")}</ButtonText>
+          </TopTabBarButton>
         </View>
 
         {contentView === "list" ? (
@@ -210,48 +184,4 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 0,
   },
-  contentViewButton: {
-    flex: 1,
-    alignItems: "center",
-    borderBottomColor: "#000",
-  },
-  contentViewButtonText: {
-    fontFamily: "SSRegular",
-  },
 })
-
-// TODO how to type realm result
-/*  await realm.subscriptions.update( mutableSubs => {
-          mutableSubs.add(realm.objects("Regulatory"), {
-            name: "regulatorySubscription",
-            throwOnUpdate: true,
-          });
-          mutableSubs.add(realm.objects("Order"), {
-            name: "orderSubscription",
-            throwOnUpdate: true,
-          });
-          mutableSubs.add(realm.objects("Enterprise"), {
-            name: "enterpriseSubscription",
-            throwOnUpdate: true,
-          });
-          mutableSubs.add(realm.objects("Producer"), {
-            name: "producerSubscription",
-            throwOnUpdate: true,
-          });
-          mutableSubs.add(realm.objects("Product"), {
-            name: "productSubscription",
-            throwOnUpdate: true,
-          });
-          mutableSubs.add(realm.objects("Checker"), {
-            name: "checkerMainSubscription",
-            throwOnUpdate: true,
-          });
-        }); */
-
-// realm.write( () => {
-//   realm.create("Checker", CheckerSchemaList[0].generate())
-//   realm.create("Enterprise", EnterpriseSchema[0].generate("A 公司"))
-//   realm.create("Order", OrderMainSchema.generate("Order one"))
-//   realm.create("Product", ProductMainSchema.generate("Product a") )
-//   realm.create("Regulatory", RegulatorySchemaList[0].generate(`Regulatory ${Math.random()}`))
-// })
