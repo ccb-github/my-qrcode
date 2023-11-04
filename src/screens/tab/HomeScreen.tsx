@@ -6,7 +6,6 @@ import {
   useWindowDimensions,
 } from "react-native"
 import { Searchbar } from "react-native-paper"
-import Dimensions from "../../style/Dimensions"
 import { type FontAwesome } from "@expo/vector-icons"
 import { FontAwesomeIconWrapper } from "../../components/Icon"
 import { RouteNameMain } from "../../navigation/const"
@@ -16,19 +15,20 @@ import {
   StyledFlexColumnView,
   StyledFlexRowView,
   StyledSafeAreaView,
-} from "../../components/styledTemplate"
+} from "../../components/styled/view"
 import styled from "styled-components/native"
-const { getHeight } = Dimensions
 
-const NavigationAreaContainer = styled(StyledFlexColumnView)<{height: string}>`
+const NavigationAreaContainer = styled(StyledFlexColumnView)<{
+  height?: number
+}>`
   flex: 1;
-  height: ${(props) => props.height};
+  border: red solid 2px;
 `
-const NavigationButtonView = styled.TouchableOpacity<{ height: number }>`
+const NavigationButtonView = styled.TouchableOpacity`
   aspect-ratio: 3 / 2;
-  height: ${(props) => props.height};
-  margin: 40;
-  border-radius: 7;
+  border-radius: 7px;
+  min-width: 100px;
+  border-width: 2px;
   justify-content: center;
   flex-direction: row;
   align-items: center;
@@ -40,7 +40,6 @@ export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
   const isDarkTheme = theme === "dark"
   const { t } = useTranslation("home")
   console.log(`The theme ${theme}`)
-
   /** TODO unused code
     // const coolMusic = "http://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3"
     // const [play, pause, stop, data] = useSound(coolMusic);
@@ -55,17 +54,16 @@ export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
     text: string
     onPress: (event: GestureResponderEvent) => void
   }) => (
-    <NavigationButtonView onPress={onPress} height={40 * scale}>
+    <NavigationButtonView onPress={onPress}>
       {iconName !== undefined ? (
         <FontAwesomeIconWrapper
           name={iconName}
-          size={getHeight(15)}
+          size={15 * scale}
           style={{ marginRight: 5 }}
         />
       ) : null}
       <Text
         style={{
-          textAlign: "center",
           color: isDarkTheme ? "#FFF" : "#000",
         }}
       >
@@ -75,7 +73,7 @@ export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
   )
   const { height, scale } = useWindowDimensions()
   return (
-    <StyledSafeAreaView height={height}>
+    <StyledSafeAreaView height={height - 150}>
       <Searchbar
         placeholder="Search"
         onChange={(value) => {}}
@@ -84,7 +82,7 @@ export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
       {/* Navigate to another screen */}
       <StyledFlexColumnView style={{ flexGrow: 1 }}>
         <StyledFlexRowView flex={"1"} style={{ flex: 1, width: "100%" }}>
-          <NavigationAreaContainer height={`${50 * scale}`}>
+          <NavigationAreaContainer>
             <NavigationButton
               iconName={"qrcode"}
               onPress={() => {
@@ -93,7 +91,7 @@ export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
               text={t("scanner")}
             />
           </NavigationAreaContainer>
-          <NavigationAreaContainer height={`${50 * scale}`}>
+          <NavigationAreaContainer>
             <NavigationButton
               iconName={"bitbucket"}
               onPress={() => {
@@ -103,8 +101,8 @@ export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
             />
           </NavigationAreaContainer>
         </StyledFlexRowView>
-        <StyledFlexRowView flex={"1"} style={{ flex: 1, width: "100%" }}>
-          <NavigationAreaContainer height={`${50 * scale}`}>
+        <StyledFlexRowView flex={"1"} style={{ width: "100%" }}>
+          <NavigationAreaContainer>
             <NavigationButton
               iconName={"history"}
               onPress={() => {

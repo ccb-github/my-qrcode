@@ -17,8 +17,26 @@ import LanguagePicker from "../../components/LanguagePicker"
 import { Title } from "react-native-paper"
 import { type LoginStackLoginScreenProps } from "../../type/navigation"
 import i18n from "../../lib/i18-next"
+import styled from "styled-components/native"
+import { StyledTextByAbsoluteSize } from "../../components/styled/text"
+import { StyledFlexColumnView } from "../../components/styled/view"
 
 const { scale } = Dimensions
+
+const InputView = styled.View<{ scale: number }>`
+  background-color: #ffc0cb;
+  border-radius: ${({ scale }) => "18"}px;
+  width: 70%;
+  height: ${({ scale }) => 18 * scale}px;
+  margin-bottom: 8px;
+
+  align-items: center;
+`
+const ScreenContainer = styled(StyledFlexColumnView)`
+  background-color: blue;
+  flex-direction: column;
+  height: 100%;
+`
 
 export default function LoginScreen({
   navigation,
@@ -66,7 +84,7 @@ export default function LoginScreen({
   }
 
   return (
-    <View style={styles.container}>
+    <ScreenContainer>
       <StatusBar style="auto" />
       <View style={styles.titleView}>
         <Title style={styles.textInput}>
@@ -78,7 +96,7 @@ export default function LoginScreen({
         style={styles.image}
       />
 
-      <View style={styles.inputView}>
+      <InputView scale={scale}>
         <TextInput
           style={styles.textInput}
           placeholder={t("Email")}
@@ -87,9 +105,8 @@ export default function LoginScreen({
             email.current = value
           }}
         />
-      </View>
-
-      <View style={[styles.inputView, {}]}>
+      </InputView>
+      <InputView scale={scale}>
         <TextInput
           style={styles.textInput}
           placeholder={t("Password")}
@@ -99,15 +116,15 @@ export default function LoginScreen({
             password.current = value
           }}
         />
-      </View>
-
+      </InputView>
+      
       <View>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("Reset", { email: email.current })
           }}
         >
-          <Text style={styles.forgotPasswordText}>{t("Forgot Password")}</Text>
+          <ForgetPasswordText scale={scale} size={10}>{t("Forgot Password")}</ForgetPasswordText>
         </TouchableOpacity>
         <LanguagePicker />
       </View>
@@ -118,6 +135,7 @@ export default function LoginScreen({
         <Text>{t("Login")}</Text>
         {loginLoading ? <ActivityIndicator size={"small"} /> : null}
       </TouchableOpacity>
+       {/*
       <TouchableOpacity
         style={styles.actionBtn}
         onPress={() => {
@@ -125,11 +143,18 @@ export default function LoginScreen({
         }}
       >
         <Text>{t("Sign up")}</Text>
-      </TouchableOpacity>
-    </View>
+      </TouchableOpacity> */}
+    </ScreenContainer>
   )
 }
-
+const ForgetPasswordText = styled(StyledTextByAbsoluteSize)<{
+  scale: number
+  size: number
+}>`
+  text-decoration-line: underline;
+  /* height: 12 * scale; */
+  margin-bottom: ${(props) => 12 * props.scale}px;
+`
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -142,22 +167,11 @@ const styles = StyleSheet.create({
     marginBottom: 10 * scale,
   },
 
-  inputView: {
-    backgroundColor: "#FFC0CB",
-    borderRadius: 18 * scale,
-    width: "70%",
-    height: 18 * scale,
-    marginBottom: 8 * scale,
-
-    alignItems: "center",
-  },
-
   titleView: {
     backgroundColor: "#FFC0CB",
     borderRadius: 18 * scale,
     width: "70%",
     marginBottom: 8 * scale,
-
     alignItems: "center",
   },
 
@@ -171,7 +185,7 @@ const styles = StyleSheet.create({
   forgotPasswordText: {
     height: 12 * scale,
     marginBottom: 12 * scale,
-    textDecorationLine: "underline",
+  
   },
 
   actionBtn: {

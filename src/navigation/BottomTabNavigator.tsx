@@ -11,6 +11,7 @@ import SettingScreen from "../screens/tab/SettingScreen"
 import ProfileScreen from "../screens/tab/ProfileScreen"
 import { IconSetting, RouteNameMain, TabNavigationScreenOptions } from "./const"
 import FigmaSampleScreen from "../screens/FigmaSampleScreen"
+import HomeScreen from "../screens/tab/HomeScreen"
 
 const { getWidth } = Dimension
 
@@ -31,7 +32,7 @@ export default function BottomTabNavigator() {
     >
       <BottomTab.Screen
         name="TabOne"
-        component={FigmaSampleScreen}
+        component={HomeScreen}
         options={({ navigation }) => ({
           title: t("Home"),
           tabBarIcon: ({ color }: { color: string }) => (

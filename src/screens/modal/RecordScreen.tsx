@@ -1,12 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react"
-import {
-  Alert,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native"
+import { Alert, Text, View } from "react-native"
 import { useTranslation } from "react-i18next"
 
 import { type StackScreenProps } from "@react-navigation/stack"
@@ -49,12 +42,13 @@ type TopTabBarButtonProps = {
   currentView: "list" | "image"
 }
 const TopTabBarButton = styled.TouchableOpacity<TopTabBarButtonProps>`
-  flex: 1,
-  align-items: "center",
-  border-bottom-color: "#000",
-  padding-vertical: ${(props) => 10 * props.scale};
+  flex: 1;
+  align-items: center;
+  border-bottom-color: #000;
+  padding-top: ${(props) => 10 * props.scale};
+  padding-bottom: ${(props) => 10 * props.scale};
   border-bottom-width: ${(props) =>
-    props.contentView === props.currentView ? 2 : 0}
+    props.contentView === props.currentView ? 2 : 0};
 `
 const ButtonText = styled.Text<{ $scale: number }>`
   font-family: "SSRegular";
@@ -77,7 +71,14 @@ export default function RecordScreen({ navigation }: RecordScreenStackProps) {
   const imageHistoryStorage = useAsyncMapStorage(
     `${imageHistoryKey}-${user.id}`,
   )
-
+  const FlexSafeAreaView = styled.SafeAreaView`
+    flex: 1;
+  `
+  const ContentTouchableOpacity = styled.TouchableOpacity`
+    flex: 1;
+    padding-left: 0px;
+    padding-right: 0px;
+  `
   useEffect(() => {
     ;(async () => {
       try {
@@ -130,10 +131,9 @@ export default function RecordScreen({ navigation }: RecordScreenStackProps) {
   const scanNavigate = (scannedPhoto: string) => {
     navigation.navigate("Scanner", { uri: scannedPhoto })
   }
- 
   return (
-    <SafeAreaView style={styles.screen}>
-      <TouchableOpacity style={styles.content}>
+    <FlexSafeAreaView>
+      <ContentTouchableOpacity>
         <View style={{ flexDirection: "row" }}>
           <TopTabBarButton
             scale={scale}
@@ -167,21 +167,11 @@ export default function RecordScreen({ navigation }: RecordScreenStackProps) {
         ) : (
           <Photos
             photos={imageHistory.current}
-            parentNavi={scanNavigate}
+            navigateAction={scanNavigate}
             onDelete={handleDeleteImageHistory}
           />
         )}
-      </TouchableOpacity>
-    </SafeAreaView>
+      </ContentTouchableOpacity>
+    </FlexSafeAreaView>
   )
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-  content: {
-    flex: 1,
-    paddingHorizontal: 0,
-  },
-})

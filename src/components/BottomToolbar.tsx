@@ -27,7 +27,7 @@ const BottomToolbarView = styled.View`
 `
 const ToolbarIconView = styled.Pressable`
   flex: 1;
-  align-items: "center";
+  align-items: center;
 `
 const ToolbarIcon = ({
   scale,

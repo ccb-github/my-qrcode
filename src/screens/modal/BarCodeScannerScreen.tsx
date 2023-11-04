@@ -1,17 +1,10 @@
 import { useState, useEffect, useContext } from "react"
-import {
-  Text,
-  View,
-  StyleSheet,
-  Alert,
-  useWindowDimensions,
-} from "react-native"
+import { Text, StyleSheet, Alert, useWindowDimensions } from "react-native"
 import {
   type BarCodeScannedCallback,
   BarCodeScanner,
 } from "expo-barcode-scanner"
 import { useTranslation } from "react-i18next"
-import { TouchableOpacity } from "react-native-gesture-handler"
 
 import Dimensions from "../../style/Dimensions"
 import {
@@ -29,12 +22,29 @@ import RealmContext from "../../realm/RealmContext"
 import { useUser } from "@realm/react"
 import DataContext from "../../context/DataContext"
 import { RouteNameMain } from "../../navigation/const"
+import styled from "styled-components/native"
+import { StyledTextByAbsoluteSize } from "../../components/styled/text"
+import { StyledFlexRowView } from "../../components/styled/view"
 
 const { scale } = Dimensions
 const { useRealm } = RealmContext
 
 type Url = string
 type CameraPermission = null | boolean
+
+const ScanAgainButton = styled.TouchableOpacity``
+const UnFocusedText = styled(StyledTextByAbsoluteSize)``
+const ContainerView = styled(StyledFlexRowView)<{ height: number }>`
+  border-color: red;
+  border-width: 4px;
+  height: ${(props) => props.height - 20}px;
+  margin-top: 0px;
+`
+const HintText = styled(StyledTextByAbsoluteSize)`
+  position: relative;
+  top: 60px;
+  text-align: center;
+`
 
 export default function BarCodeScannerScreen({
   navigation,
@@ -236,63 +246,41 @@ export default function BarCodeScannerScreen({
       )
     default:
       return isFocused ? (
-        <View
-          style={[
-            styles.container,
-            {
-              borderColor: "red",
-              borderWidth: 4,
-              height: height - 20,
-              marginTop: 0,
-            },
-          ]}
-        >
+        <ContainerView height={height}>
           <BarCodeScanner
             onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
             style={{ ...StyleSheet.absoluteFillObject, ...borderStyle }}
           />
           {scanned ? (
-            <TouchableOpacity
-              style={styles.hintText}
+            <ScanAgainButton
               onPress={() => {
                 setIsScanned(false)
               }}
             >
-              <Text style={{ fontSize: scale * 10 }}>
+              <StyledTextByAbsoluteSize size={10 * scale}>
                 {t("Tap to Scan Again")}
-              </Text>
-            </TouchableOpacity>
+              </StyledTextByAbsoluteSize>
+            </ScanAgainButton>
           ) : (
-            <Text style={[styles.hintText, { fontSize: 10 * scale }]}>
+            <HintText size={10 * scale}>
               {t("Put image to scan", { ns: "hint" }) +
                 JSON.stringify(scanData.dataItem)}
-            </Text>
+            </HintText>
           )}
-          <Text style={[styles.hintText, { fontSize: 10 * scale }]}>
+          {/* <Text style={[styles.hintText, { fontSize: 10 * scale }]}>
             {JSON.stringify(scanData.dataItem)}
-          </Text>
+          </Text> */}
           <BottomToolbar
             afterPickCallBack={scanFromImageURLAsync}
             style={{
               height: 50 * scale,
             }}
           />
-        </View>
+        </ContainerView>
       ) : (
-        <Text style={{ fontSize: scale * 20 }}>
+        <UnFocusedText size={scale * 20}>
           {t("This screen is unfocused, you should not see this")}
-        </Text>
+        </UnFocusedText>
       )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "column",
-  },
-  hintText: {
-    position: "relative",
-    top: 60,
-    textAlign: "center",
-  },
-})

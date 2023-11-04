@@ -21,9 +21,14 @@ import colors from "../../style/colors"
 import { Product } from "../../realm/models/Producer/Product"
 import { type RootTabScreenProps } from "../../type/props"
 import Button from "../../components/Button"
+import styled from "styled-components"
 
 const { scale } = Dimensions
 const { useRealm } = RealmContext
+const ThemedScrollView = styled(ScrollView)<{ backgroundColor: string }>`
+  flex: 1;
+  background-color: ${({ backgroundColor }) => backgroundColor};
+`
 
 const AccountList = () => {
   const { t } = useTranslation("settings")
@@ -159,14 +164,6 @@ function SettingScreen(props: RootTabScreenProps) {
     realm.syncSession?.isConnected(),
   )
   useEffect(() => {
-    // console.log(realm.objects("Checker"))
-    // realm.syncSession?.addProgressNotification(ProgressDirection["Download"],  ProgressMode["ForCurrentlyOutstandingWork"], (transferred, transferAble) => {
-    //   console.log(transferAble, transferred)
-    // })
-    // realm.syncSession?.addProgressNotification(ProgressDirection["Download"],  ProgressMode["ForCurrentlyOutstandingWork"], (transferred, transferAble) => {
-    //   console.log(transferAble, transferred)
-    // })
-    // console.log(`Scale`, fontScale)
     realm.syncSession?.addConnectionNotification((newConnectionState) => {
       setIsSessionConnected(newConnectionState === "connected")
     })
@@ -177,12 +174,10 @@ function SettingScreen(props: RootTabScreenProps) {
     }
   }, [realm.syncSession])
   return (
-    <ScrollView
-      style={{
-        flex: 1,
-        backgroundColor:
-          Platform.OS === "ios" ? colors.iosSettingBackground : colors.white,
-      }}
+    <ThemedScrollView
+      backgroundColor={
+        Platform.OS === "ios" ? colors.iosSettingBackground : "white"
+      }
     >
       <List.Section title="Status">
         <List.Item
@@ -240,7 +235,7 @@ function SettingScreen(props: RootTabScreenProps) {
           )}
         />
       </List.Section>
-    </ScrollView>
+    </ThemedScrollView>
   )
 }
 

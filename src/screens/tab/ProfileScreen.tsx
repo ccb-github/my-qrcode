@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import {
   Text,
   View,
@@ -26,13 +26,13 @@ import {
   FlexItemView,
   StyledFlexRowTouchableOpacity,
   StyledFlexRowView,
-  StyledTextByAbsoluteSize,
-} from "../../components/styledTemplate"
+} from "../../components/styled/view"
+import { StyledTextByAbsoluteSize } from "../../components/styled/text"
 
 const { useRealm } = RealmContext
 const ProfileFieldView = styled.View`
-  flex-direction: "row";
-  align-items: "center";
+  flex-direction: row;
+  align-items: center;
 `
 /**
  * @param scale {number} The pr
@@ -43,8 +43,8 @@ const ProfileFieldValueTextInput = styled.TextInput<{
 }>`
   flex: 1;
   padding: ${(props) => 4 * props.scale}px;
-  margin-top: ${(props) => 2 * props.scale}px;
-  margin-bottom: ${(props) => 2 * props.scale}px;
+  margin-top: ${(props) => 4 * props.scale}px;
+  margin-bottom: ${(props) => 4 * props.scale}px;
   margin-left: ${(props) => 8 * props.scale}px;
   margin-right: ${(props) => 8 * props.scale}px;
   border-width: 1px;
@@ -56,57 +56,68 @@ const ProfileContainerView = styled.View`
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 `
-const InteractionButtonText = styled(StyledTextByAbsoluteSize)<{size: number}>`
+const InteractionButtonText = styled(StyledTextByAbsoluteSize)<{
+  size: number
+}>`
   color: #fff;
   padding-left: 6px;
   padding-right: 6px;
 `
-export default function ProfileScreen({
-  navigation,
-}: RootTabProfileScreenProps) {
+export default function ProfileScreen({ navigation }: RootTabProfileScreenProps) {
   const colorScheme = useColorScheme()
   const { t } = useTranslation("profile")
   const user = useUser()
   const realm = useRealm()
+  const userData: Partial<UserProfile> = {}
+
   const { scale } = useWindowDimensions()
   useEffect(() => {
-    console.log(realm.objects)
     if (user === null)
       throw new Error("You must login first to see this screen")
+    ;(async () => {
+      // const { email, name } = await user.refreshCustomData()
+      // console.log("Current user id", user?.id)
+      // console.log("Current user data", { email, name })
+    })().catch((error) => {
+      throw error
+    })
   }, [user])
-
-  function UserProfileData<ProfileKey extends keyof UserProfile>({
-    profileKeyList,
+  const fetchUserData = useCallback(async () => {
+    return (await user?.refreshCustomData()) as UserProfile
+  }, [user])
+  function UserProfileData({
+    displayProfileKeyList: profileKeyList,
+    userData: userDataProp,
+    fetchUserData,
   }: {
-    profileKeyList: string[]
+    displayProfileKeyList: Array<keyof UserProfile>
+    userData: Partial<UserProfile>
     dataSubmitAction: (dataObj: any) => Promise<void>
+    fetchUserData: () => Promise<Partial<UserProfile>>
   }) {
-    let userData = useMemo<Map<ProfileKey, unknown> | null>(() => null, [])
+    const [userData, setUserData] = useState<Partial<UserProfile | null>>(null)
     const [editable, toggleEditable] = useState(false)
     useEffect(() => {
       ;(async () => {
-        // const { email, name } = await user.refreshCustomData()
-        // console.log("Current user id", user?.id)
-        // console.log("Current user data", { email, name })
-        const resultData = (await user?.refreshCustomData()) as UserProfile
-        userData = new Map(
-          Object.entries(resultData) as Array<[ProfileKey, unknown]>,
-        )
+        console.log("What")
+        setUserData((await user?.refreshCustomData()) ?? null)
       })().catch((error) => {
         throw error
       })
     }, [])
     const EmailFieldText = styled(StyledTextByAbsoluteSize)`
-      font-family: "SSRegular";
-      padding: "8px 0px";
-      font-size: 5;
-      color: "#333";
-      margin-top: 4;
+      font-family: SSRegular;
+      padding: 8px 20px;
+      font-size: 20px;
+      color: #333;
+      border: 3px;
+      margin-top: 4px;
     `
+
     return (
       // TODO profile title style
       <List.Section title={"Info"}>
-        {/* Profile Email */}
+        {/* Profile View */}
         {userData !== null ? (
           profileKeyList.map((profileKey) => (
             <>
@@ -115,10 +126,10 @@ export default function ProfileScreen({
                 {/* {editable ? ( */}
                 <ProfileFieldValueTextInput
                   scale={scale}
-                  placeholder={t(userData![profileKey])}
+                  placeholder={t(userData[profileKey] ?? "")}
                   editable={editable}
                   placeholderTextColor="#003f5c"
-                  onChangeText={(value) => (userData![profileKey] = value)}
+                  onChangeText={(value) => (userData[profileKey] = value)}
                 />
               </ProfileFieldView>
               <Divider />
@@ -144,7 +155,7 @@ export default function ProfileScreen({
             <Button
               style={{ backgroundColor: "#4b7bec" }}
               onPress={() => {
-                submitUserCustomData(Object.fromEntries(userData!))
+                submitUserCustomData(userData!)
                   .then(() => {
                     toggleEditable(false)
                   })
@@ -192,7 +203,9 @@ export default function ProfileScreen({
       <ScrollView showsVerticalScrollIndicator={false}>
         <ProfileContainerView>
           <UserProfileData
-            profileKeyList={["email", "name"]}
+            userData={userData}
+            displayProfileKeyList={["email", "name"]}
+            fetchUserData={fetchUserData}
             dataSubmitAction={submitUserCustomData}
           />
           <Divider />
@@ -234,5 +247,3 @@ export default function ProfileScreen({
     </View>
   )
 }
-
-
