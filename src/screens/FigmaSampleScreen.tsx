@@ -1,7 +1,6 @@
 import styled from "styled-components/native"
 import Button from "../components/Button"
 import { View } from "react-native"
-import BottomToolbar from "../components/BottomToolbar"
 
 const FigmaSampleScreen = () => {
   return (
@@ -54,7 +53,6 @@ const FigmaSampleScreen = () => {
       <ProfileText>Profile</ProfileText>
       <JessicaJones27Text>27</JessicaJones27Text>
       <TitlebarText>Titlebar</TitlebarText>
-      <BottomToolbar style={{height: 120}}/>
     </CenteredBlackProfile>
   )
 }

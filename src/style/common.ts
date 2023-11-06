@@ -3,15 +3,6 @@ import colors from "./colors"
 type StyleFunction = (
   option: Record<string, string | boolean | number | undefined | null>,
 ) => ViewStyle | TextStyle
-// type StyleFuncObject = {
-// 	[key: string]: StyleFunction
-// }
-// const commonStyles = StyleSheet.create({
-// 	//Style for one whole screen
-// 	screen: {
-// 		flex: 1,
-// 	}
-// })
 
 const screenStyleByTheme: StyleFunction = ({
   colorTheme,
@@ -22,10 +13,8 @@ const screenStyleByTheme: StyleFunction = ({
   backgroundColor: colorTheme === "dark" ? colors.black : colors.white,
 })
 
-const hintTextBySize: StyleFunction = ({ size }: { size: number }) => ({
-  fontWeight: "bold",
-  fontSize: size,
-  textAlign: "center",
-})
+export type ScaleStyledProps = {
+  scale: number
+}
 
-export { screenStyleByTheme, hintTextBySize }
+export { screenStyleByTheme }

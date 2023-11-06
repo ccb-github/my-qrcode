@@ -1,3 +1,6 @@
+/**
+ * @deprecated
+ */
 export type EnterpriseData = {
   _id: "objectId"
   description: "string"

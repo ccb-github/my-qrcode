@@ -13,6 +13,8 @@ import Regulatory from "./models/Regulatory/Regulatory"
 export const realmFileBehavior: OpenRealmBehaviorConfiguration = {
   type: OpenRealmBehaviorType.DownloadBeforeOpen,
   timeOut: 1000,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+  // @ts-ignore
   timeOutBehavior: "openLocalRealm",
 }
 

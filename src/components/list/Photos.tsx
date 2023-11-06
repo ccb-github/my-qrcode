@@ -1,52 +1,54 @@
 import { useEffect } from "react"
-import { Alert, TouchableOpacity, Image } from "react-native"
-import Dimensions from "../../style/Dimensions"
-import { useTranslation } from "react-i18next"
+import { Alert, Image, useWindowDimensions } from "react-native"
+import styled from "styled-components/native"
 
-const { scale } = Dimensions
+const PhotoView = styled.TouchableOpacity<{ width: number }>`
+  border-width: 1;
+  border-color: #000;
+  width: ${(props) => props.width}px;
+`
+const TouchablePhotoContainer = styled.TouchableOpacity<{ scale: number }>`
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  padding-top: ${({ scale }) => 5 * scale}px;
+`
 
 export default function Photos(props: {
-  photos: Array<string>
-  parentNavi: (url: string) => void
+  photos: string[]
+  navigateAction: (url: string) => void
   onDelete: (uri: string) => Promise<void>
 }) {
-  const imgWidth = Dimensions.get("screen").width * 0.33333
-  const { photos, parentNavi, onDelete } = props
-  const {} = useTranslation()
+  const { width, scale } = useWindowDimensions()
+  const imgWidth = width * 0.33333
+  const { photos, navigateAction, onDelete } = props
   useEffect(() => {
-    console.log(scale)
     console.log("Photos inside RecordScreen", photos)
   })
   return (
-    <TouchableOpacity
-      style={{
-        flexDirection: "row",
-        flexWrap: "wrap",
-        alignItems: "flex-start",
-        paddingTop: 5 * scale,
-      }}
-    >
+    <TouchablePhotoContainer scale={scale}>
       {photos?.map((photoUri, index) => (
-        <TouchableOpacity
+        <PhotoView
           key={index}
+          width={imgWidth}
           style={{
-            borderWidth: 1,
-            borderColor: "black",
-
-            width: imgWidth,
             aspectRatio: 1,
           }}
           onLongPress={() => {
             Alert.alert("Delete this image history", "Are you sure", [
               {
                 text: "Cancel",
-                onPress: () => console.log("Operation cenceled"),
+                onPress: () => {
+                  console.log("Operation canceled")
+                },
                 style: "cancel",
               },
               {
                 text: "OK",
                 onPress: () => {
-                  onDelete(photoUri)
+                  onDelete(photoUri).catch((error) => {
+                    throw error
+                  })
                 },
                 style: "destructive",
               },
@@ -54,7 +56,7 @@ export default function Photos(props: {
           }}
           onPress={() => {
             console.log(photoUri)
-            parentNavi(photoUri)
+            navigateAction(photoUri)
           }}
         >
           <Image
@@ -66,8 +68,8 @@ export default function Photos(props: {
               uri: photoUri,
             }}
           />
-        </TouchableOpacity>
+        </PhotoView>
       ))}
-    </TouchableOpacity>
+    </TouchablePhotoContainer>
   )
 }

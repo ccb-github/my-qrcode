@@ -1,12 +1,12 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Modal, View, Text, Pressable, StyleSheet } from "react-native"
 
 const LanguagePicker = () => {
   const [modalVisible, setModalVisible] = useState(false)
-  const { i18n, ready } = useTranslation() //i18n instance
+  const { i18n } = useTranslation() // i18n instance
 
-  //array with all supported languages
+  // Array with all supported languages
   const languages = [
     { name: "de", label: "Deutsch" },
     { name: "en", label: "English" },
@@ -28,7 +28,10 @@ const LanguagePicker = () => {
     <Pressable
       style={styles.button}
       onPress={() => {
-        i18n.changeLanguage(name) //changes the app language
+        i18n.changeLanguage(name).catch((error) => {
+          console.error(error)
+          throw error
+        }) // changes the app language
 
         setModalVisible(!modalVisible)
       }}
@@ -57,7 +60,9 @@ const LanguagePicker = () => {
       </Modal>
       <Pressable
         style={[styles.button, styles.buttonOpen]}
-        onPress={() => setModalVisible(true)}
+        onPress={() => {
+          setModalVisible(true)
+        }}
       >
         {/* displays the current app language */}
         <Text style={styles.textStyle}>{languageDict[i18n.language]}</Text>
@@ -71,6 +76,7 @@ export default LanguagePicker
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
+    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
   },

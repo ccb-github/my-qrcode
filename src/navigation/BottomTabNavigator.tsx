@@ -1,19 +1,14 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import { Pressable } from "react-native"
+import { Pressable, useWindowDimensions } from "react-native"
 import { AntDesign } from "@expo/vector-icons"
 import { useTranslation } from "react-i18next"
 import { type RootTabParamList } from "../type/navigation"
 import { Avatar } from "react-native-paper"
 import { FontAwesomeIconWrapper } from "../components/Icon"
-import Dimension from "../style/Dimensions"
-
 import SettingScreen from "../screens/tab/SettingScreen"
 import ProfileScreen from "../screens/tab/ProfileScreen"
 import { IconSetting, RouteNameMain, TabNavigationScreenOptions } from "./const"
-import FigmaSampleScreen from "../screens/FigmaSampleScreen"
 import HomeScreen from "../screens/tab/HomeScreen"
-
-const { getWidth } = Dimension
 
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to
@@ -23,8 +18,9 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>()
 
 export default function BottomTabNavigator() {
   const { t } = useTranslation("title")
-  // const { initialRouteName } = route.params
+  const { scale } = useWindowDimensions()
   const initialRouteName = "TabOne"
+  const getWidth = (base: number) => base * scale
   return (
     <BottomTab.Navigator
       initialRouteName={initialRouteName}

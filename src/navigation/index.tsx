@@ -1,6 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack"
 import { Pressable, Text } from "react-native"
-import BottomTabNavigator from "./BottomTabNavigation"
+import BottomTabNavigator from "./BottomTabNavigator"
 import RegisterScreen from "../screens/login/RegisterScreen"
 import LoginScreen from "../screens/login/LoginScreen"
 import DetailScreen from "../screens/modal/DetailScreen"
@@ -61,10 +61,10 @@ export function MainNavigation() {
   useEffect(() => {
     console.log(realm.path)
     ;(async () => {
-      // 初始化记录方便使用
       const imageHistory = await imageHistoryStorage.getItem()
       const recordHistory = await recordHistoryStorage.getItem()
       console.log("Index navigation", { imageHistory }, { recordHistory })
+      // 初始化记录方便使用 Initialize the storage content if haven't
       if (imageHistory === null) {
         await imageHistoryStorage.setItem("[]")
       }

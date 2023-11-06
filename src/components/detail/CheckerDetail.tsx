@@ -1,8 +1,9 @@
 import { StringField } from "../field"
 import { useTranslation } from "react-i18next"
 import { type Checker } from "../../realm/models/Regulatory/Checker"
+import { type DetailViewProps } from "../../type/props"
 
-export const CheckerDetail = ({ data }: { data: Checker }) => {
+export const CheckerDetail = ({ data }: DetailViewProps<Checker>) => {
   console.log(`Data inside CheckerDetail ${JSON.stringify(data)}`)
   const { t } = useTranslation("checker")
   return (

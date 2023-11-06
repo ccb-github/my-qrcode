@@ -267,9 +267,6 @@ export default function BarCodeScannerScreen({
                 JSON.stringify(scanData.dataItem)}
             </HintText>
           )}
-          {/* <Text style={[styles.hintText, { fontSize: 10 * scale }]}>
-            {JSON.stringify(scanData.dataItem)}
-          </Text> */}
           <BottomToolbar
             afterPickCallBack={scanFromImageURLAsync}
             style={{

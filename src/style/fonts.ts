@@ -1,4 +1,3 @@
-//This is the base fontsize
 const fonts = {
   normal: 12,
   large: 16,

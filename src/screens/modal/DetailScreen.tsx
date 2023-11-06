@@ -122,11 +122,16 @@ export default function DetailScreen({ route }: RootStackDetailScreenProps) {
               return <Text>Order detail not implement</Text>
             case null:
               return (
-                <StyledTextByAbsoluteSize >Loading...</StyledTextByAbsoluteSize>
+                <StyledTextByAbsoluteSize size={10 * scale}>
+                  Loading...
+                </StyledTextByAbsoluteSize>
               )
             default:
               return (
-                <ScaledHintText style={{ textAlignVertical: "top" }}>
+                <ScaledHintText
+                  scale={scale}
+                  style={{ textAlignVertical: "top" }}
+                >
                   {t("No valid data found in qrcode url")}
                 </ScaledHintText>
               )
@@ -136,4 +141,3 @@ export default function DetailScreen({ route }: RootStackDetailScreenProps) {
     </FullScreenContainer>
   )
 }
-

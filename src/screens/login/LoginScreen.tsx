@@ -1,42 +1,81 @@
 import { StatusBar } from "expo-status-bar"
 import { useEffect, useRef, useState } from "react"
 import {
-  StyleSheet,
   Text,
   View,
   Image,
-  TextInput,
   TouchableOpacity,
   ActivityIndicator,
   Alert,
+  useWindowDimensions,
 } from "react-native"
 import realmApp from "../../realm/app"
-import Dimensions from "../../style/Dimensions"
 import { useTranslation } from "react-i18next"
 import LanguagePicker from "../../components/LanguagePicker"
-import { Title } from "react-native-paper"
 import { type LoginStackLoginScreenProps } from "../../type/navigation"
 import i18n from "../../lib/i18-next"
 import styled from "styled-components/native"
 import { StyledTextByAbsoluteSize } from "../../components/styled/text"
 import { StyledFlexColumnView } from "../../components/styled/view"
 
-const { scale } = Dimensions
+import fonts from "../../style/fonts"
+import { type ScaleStyledProps } from "../../style/common"
 
+const ScreenContainer = styled(StyledFlexColumnView)`
+  flex-direction: column;
+`
 const InputView = styled.View<{ scale: number }>`
   background-color: #ffc0cb;
   border-radius: ${({ scale }) => "18"}px;
   width: 70%;
   height: ${({ scale }) => 18 * scale}px;
   margin-bottom: 8px;
-
   align-items: center;
 `
-const ScreenContainer = styled(StyledFlexColumnView)`
-  background-color: blue;
-  flex-direction: column;
-  height: 100%;
+const TitleView = styled.View<{ scale: number }>`
+  background-color: #ffc0cb;
+  border-radius: ${({ scale }) => 18 * scale}px;
+  width: 70%;
+  margin-bottom: ${({ scale }) => 8 * scale}px;
+  align-items: center;
 `
+
+const ForgetPasswordText = styled(StyledTextByAbsoluteSize)<{
+  scale: number
+  size: number
+}>`
+  text-decoration-line: underline;
+  /* height: 12 * scale; */
+  margin-bottom: ${(props) => 12 * props.scale}px;
+`
+
+const TitleText = styled(StyledTextByAbsoluteSize)<ScaleStyledProps>`
+  flex: 1;
+  padding: ${({ scale }) => 4 * scale}px;
+  margin-left: ${({ scale }) => 8 * scale}px;
+  margin-right: ${({ scale }) => 8 * scale}px;
+`
+const InputField = styled.TextInput<ScaleStyledProps>`
+  flex: 1;
+  padding: ${({ scale }) => 4 * scale}px;
+  margin-left: ${({ scale }) => 8 * scale}px;
+  margin-right: ${({ scale }) => 8 * scale}px;
+`
+
+const IconImage = styled(Image)<ScaleStyledProps>`
+  margin-bottom: ${({ scale }) => 10 * scale}px;
+`
+
+const ActionButton = styled.TouchableOpacity<ScaleStyledProps>`
+  width: 80%;
+  border-radius: ${({ scale }) => scale * 10}px;
+  height: ${({ scale }) => scale * 20}px;
+  align-items: center;
+  justify-content: center;
+  margin-top: ${({ scale }) => scale * 16}px;
+  background-color: #ff1493;
+`
+const scale = 2.625
 
 export default function LoginScreen({
   navigation,
@@ -44,9 +83,10 @@ export default function LoginScreen({
   const email = useRef("")
   const password = useRef("")
   const [loginLoading, setLoginLoading] = useState(false)
-
+  const { scale: scaleHook } = useWindowDimensions()
   const { t } = useTranslation("login")
   useEffect(() => {
+    alert(`${scaleHook}+${scale}`)
     console.log(i18n.language)
   })
 
@@ -86,19 +126,19 @@ export default function LoginScreen({
   return (
     <ScreenContainer>
       <StatusBar style="auto" />
-      <View style={styles.titleView}>
-        <Title style={styles.textInput}>
-          <Text>{`XX${t("Traceability system")}`}</Text>
-        </Title>
-      </View>
-      <Image
+      <TitleView scale={scale}>
+        <TitleText size={fonts.large} scale={scale}>{`XX${t(
+          "Traceability system",
+        )}`}</TitleText>
+      </TitleView>
+      <IconImage
         source={require("../../../assets/favicon.png")}
-        style={styles.image}
+        scale={scale}
       />
 
       <InputView scale={scale}>
-        <TextInput
-          style={styles.textInput}
+        <InputField
+          scale={scale}
           placeholder={t("Email")}
           placeholderTextColor="#003f5c"
           onChangeText={(value) => {
@@ -107,8 +147,8 @@ export default function LoginScreen({
         />
       </InputView>
       <InputView scale={scale}>
-        <TextInput
-          style={styles.textInput}
+        <InputField
+          scale={scale}
           placeholder={t("Password")}
           placeholderTextColor="#003f5c"
           secureTextEntry={true}
@@ -117,25 +157,24 @@ export default function LoginScreen({
           }}
         />
       </InputView>
-      
+
       <View>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("Reset", { email: email.current })
           }}
         >
-          <ForgetPasswordText scale={scale} size={10}>{t("Forgot Password")}</ForgetPasswordText>
+          <ForgetPasswordText scale={scale} size={10}>
+            {t("Forgot Password")}
+          </ForgetPasswordText>
         </TouchableOpacity>
         <LanguagePicker />
       </View>
-      <TouchableOpacity
-        style={styles.actionBtn}
-        onPress={loginWithEmailAndPassword}
-      >
+      <ActionButton scale={scale} onPress={loginWithEmailAndPassword}>
         <Text>{t("Login")}</Text>
         {loginLoading ? <ActivityIndicator size={"small"} /> : null}
-      </TouchableOpacity>
-       {/*
+      </ActionButton>
+      {/*
       <TouchableOpacity
         style={styles.actionBtn}
         onPress={() => {
@@ -147,54 +186,3 @@ export default function LoginScreen({
     </ScreenContainer>
   )
 }
-const ForgetPasswordText = styled(StyledTextByAbsoluteSize)<{
-  scale: number
-  size: number
-}>`
-  text-decoration-line: underline;
-  /* height: 12 * scale; */
-  margin-bottom: ${(props) => 12 * props.scale}px;
-`
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  image: {
-    marginBottom: 10 * scale,
-  },
-
-  titleView: {
-    backgroundColor: "#FFC0CB",
-    borderRadius: 18 * scale,
-    width: "70%",
-    marginBottom: 8 * scale,
-    alignItems: "center",
-  },
-
-  textInput: {
-    flex: 1,
-    padding: 4 * scale,
-    marginLeft: 8 * scale,
-    marginRight: 8 * scale,
-  },
-
-  forgotPasswordText: {
-    height: 12 * scale,
-    marginBottom: 12 * scale,
-  
-  },
-
-  actionBtn: {
-    width: "80%",
-    borderRadius: 10 * scale,
-    height: 20 * scale,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 16 * scale,
-    backgroundColor: "#FF1493",
-  },
-})
