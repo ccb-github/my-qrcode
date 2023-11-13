@@ -29,10 +29,10 @@ export type RootTabParamList = {
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export type MainStackParamList = {
   Home: undefined
-  Detail: { data: any; type: string }
+  Detail: { data: unknown; type: string }
   Setting: undefined
-  Result: { data: any; type: string }
-  Scanner: { uri: string }
+  Result: { data: unknown; type: string }
+  Scanner: { uri: string } | undefined
   Record: undefined
   Tab: NavigatorScreenParams<RootTabParamList>
 } & ParamListBase
@@ -67,7 +67,6 @@ export type MainStackTabNavigatorProps = StackScreenProps<
   MainStackParamList,
   RouteNameMain.tab
 >
-
 
 export type LoginStackRegisterScreenProps = StackScreenProps<
   LoginStackParamList,

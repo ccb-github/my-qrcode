@@ -16,18 +16,31 @@ import {
   StyledFlexRowView,
   StyledSafeAreaView,
 } from "../../components/styled/view"
-import styled from "styled-components/native"
+import styled, { css } from "styled-components/native"
 
 const NavigationAreaContainer = styled(StyledFlexColumnView)<{
   height?: number
+  width?: number
 }>`
   flex: 1;
-  border: red solid 2px;
+  border: red solid 1px;
+  ${({ width, height }) => css`
+    width: ${width};
+    height: ${height};
+  `}
 `
+
+// const StyledView = styled.View((props) => ({
+//   borderWidth: "3px",
+//   borderColor: "black",
+//   borderRadius: "10px",
+//   height: "60px",
+// }))
 const NavigationButtonView = styled.TouchableOpacity`
   aspect-ratio: 3 / 2;
   border-radius: 7px;
   min-width: 100px;
+  padding: 20px;
   border-width: 2px;
   justify-content: center;
   flex-direction: row;
@@ -36,7 +49,6 @@ const NavigationButtonView = styled.TouchableOpacity`
 
 export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
   const theme = useColorScheme()
-  // const [searchBarValue, setSearchBarValue] = useState(t("Search here"))
   const isDarkTheme = theme === "dark"
   const { t } = useTranslation("home")
   console.log(`The theme ${theme}`)
@@ -81,17 +93,17 @@ export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
       />
       {/* Navigate to another screen */}
       <StyledFlexColumnView style={{ flexGrow: 1 }}>
-        <StyledFlexRowView flex={"1"} style={{ flex: 1, width: "100%" }}>
+        <StyledFlexRowView flex={1} style={{ flex: 1, width: "100%" }}>
           <NavigationAreaContainer>
             <NavigationButton
               iconName={"qrcode"}
               onPress={() => {
-                navigation.navigate(RouteNameMain.modalScanner)
+                navigation.push(RouteNameMain.modalScanner)
               }}
               text={t("scanner")}
             />
           </NavigationAreaContainer>
-          <NavigationAreaContainer>
+          <NavigationAreaContainer width={50}>
             <NavigationButton
               iconName={"bitbucket"}
               onPress={() => {
@@ -101,8 +113,8 @@ export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
             />
           </NavigationAreaContainer>
         </StyledFlexRowView>
-        <StyledFlexRowView flex={"1"} style={{ width: "100%" }}>
-          <NavigationAreaContainer>
+        <StyledFlexRowView flex={1} style={{ width: "100%" }}>
+          <NavigationAreaContainer width={100}>
             <NavigationButton
               iconName={"history"}
               onPress={() => {

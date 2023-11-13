@@ -24,24 +24,32 @@
         "react-native"
     ],
     "rules": {
-        "prettier/prettier": "warn",
-        "@typescript-eslint/quotes": "off",
-        "quotes": ["warn", "double"],
-        "no-unreachable": "warn",
-        "@typescript-eslint/space-before-function-paren": "off",
-        "no-unused-expressions": ["warn", {
-            "allowShortCircuit": true
-        }],
-        "@typescript-eslint/no-non-null-assertion": "warn",
-        "@typescript-eslint/no-namespace": 0,
-        "@typescript-eslint/consistent-type-definitions": [1, "type"],
-        "@typescript-eslint/no-misused-promises": "warn",
-        "@typescript-eslint/explicit-function-return-type": "off",
-        "react-native/no-unused-styles": 2,
-        "react-native/split-platform-components": 2,
-        
-        "react-native/no-color-literals": "off",
-        "react-native/no-raw-text": 2,
-        "react-native/no-single-element-style-arrays": 2
+      "prettier/prettier": "warn",
+      "@typescript-eslint/quotes": "off",
+      "quotes": ["warn", "double"],
+      "no-unreachable": "warn",
+      "@typescript-eslint/space-before-function-paren": "off",
+      "no-unused-expressions": [
+        "warn",
+        {
+          "allowShortCircuit": true
+        }
+      ],
+      "@typescript-eslint/no-non-null-assertion": "warn",
+      "@typescript-eslint/no-namespace": 0,
+      "@typescript-eslint/consistent-type-definitions": [1, "type"],
+      "@typescript-eslint/no-misused-promises": "warn",
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "react-native/no-unused-styles": 2,
+      "react-native/split-platform-components": 2,
+
+      "react-native/no-color-literals": "off",
+      "react-native/no-raw-text": [
+        2,
+        {
+          "skip": ["HintText", "StyledTextByAbsoluteSize", "Title", "TitleText"]
+        }
+      ],
+      "react-native/no-single-element-style-arrays": 2
     }
 }

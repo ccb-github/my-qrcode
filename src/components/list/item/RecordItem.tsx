@@ -1,12 +1,12 @@
 import { memo } from "react"
 import { Text, Pressable, Platform, StyleSheet } from "react-native"
 import { BSON } from "realm"
-import { AntDesignIconWrapper } from "../Icon"
+import { AntDesignIconWrapper } from "../../Icon"
 
-import colors from "../../style/colors"
-import Dimensions from "../../style/Dimensions"
-import { ScanRecord } from "../../type/data"
-import styles from "../../style/components/recordItem.style"
+import colors from "../../../style/colors"
+import Dimensions from "../../../style/Dimensions"
+import { ScanRecord } from "../../../type/data"
+import styles from "../../../style/components/recordItem.style"
 
 const { scale } = Dimensions
 console.log(`The scale ${scale}`)

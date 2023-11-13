@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Modal, View, Text, Pressable, StyleSheet } from "react-native"
 
-const LanguagePicker = () => {
+function LanguagePicker() {
   const [modalVisible, setModalVisible] = useState(false)
   const { i18n } = useTranslation() // i18n instance
 

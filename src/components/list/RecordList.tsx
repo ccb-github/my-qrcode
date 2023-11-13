@@ -1,5 +1,5 @@
 import { View, FlatList, StyleSheet } from "react-native"
-import RecordItem from "./RecordItem"
+import RecordItem from "./item/RecordItem"
 import { type ScanRecord } from "../../type/data"
 
 type RecordListProps = {

@@ -13,7 +13,7 @@ import {
   scanHistory as scanRecordKey,
 } from "../../utils/localStorageConfig.json"
 
-import Photos from "../../components/list/Photos"
+import Photos from "../../components/list/item/Photos"
 import { type ScanRecord } from "../../type/data"
 import { useUser } from "@realm/react"
 import { useAsyncMapStorage } from "../../utils/localStorage"

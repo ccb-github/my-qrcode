@@ -64,9 +64,17 @@ export type TextAreaFieldProps = {
   numberOfLines: number
 } & BaseFieldProps
 
-export type LinkObjectFieldProps<ValueType> = {
+export type ObjectFieldProps = {
   name: string
-  valueNameKey: string
+  value: object
+  style: ViewStyle
+}
+export type LinkObjectFieldProps<
+  ValueType,
+  DisplayKey extends keyof ValueType,
+> = {
+  name: string
+  valueAccessor: DisplayKey
   type: string
   onPressAction: (routeData: any) => void
 } & BaseFieldProps<ValueType>

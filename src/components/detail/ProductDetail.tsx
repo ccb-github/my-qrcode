@@ -57,9 +57,9 @@ export const ProductDetail = ({
       <WhiteBackgroundView>
         <Text style={{ textAlign: "center" }}>Enterprise</Text>
         {typeof data.producer === "object" ? (
-          <LinkObjectField<EnterpriseMain>
-            valueNameKey={"name"}
+          <LinkObjectField<EnterpriseMain, "name">
             name={t("Producer")}
+            valueAccessor={"name"}
             type={"Enterprise"}
             value={data.producer}
             onPressAction={linkAction}
@@ -75,10 +75,10 @@ export const ProductDetail = ({
       <WhiteBackgroundView>
         <Text style={{ textAlign: "center" }}>{"Enterprise"}</Text>
         {data.producer != null ? (
-          <LinkObjectField<EnterpriseMain>
-            name={t("Producer")}
+          <LinkObjectField<EnterpriseMain, "name">
+            name={t("name")}
             type={"Enterprise"}
-            valueNameKey=""
+            valueAccessor={"name"}
             value={data.producer}
             onPressAction={linkAction}
           />

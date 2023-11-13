@@ -1,26 +1,11 @@
-import { useState, useEffect } from "react"
-import {
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-  Image,
-  Touchable,
-  TouchableOpacity,
-  ViewStyle,
-  TextInput,
-  Alert,
-  useWindowDimensions,
-} from "react-native"
-import { Button, Card, Divider } from "react-native-paper"
-import { BaseFieldProps } from "../../type/props"
+import { Text, View, Alert, useWindowDimensions } from "react-native"
+import { type BaseFieldProps } from "../../type/props"
 
 import Dimension from "../../style/Dimensions"
-import { getTabBarHeight } from "@react-navigation/bottom-tabs/lib/typescript/src/views/BottomTabBar"
 import { FieldStyles } from "../../style/components/field.style"
 
-//TODO empty field
-const { getFontSize, getWidth, getHeight, scale } = Dimension
+// TODO empty field
+const { getFontSize, scale } = Dimension
 
 const UrlField = (props: BaseFieldProps) => {
   const { name, value } = props

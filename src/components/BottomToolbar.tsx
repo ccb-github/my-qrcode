@@ -55,7 +55,7 @@ export default function BottomToolbar({
   useWindowDimensions()
   const { t } = useTranslation()
   const afterPickCallBack = afterPickCallBackProp ?? (() => {})
-  const pickImage = () => {
+  function pickImage() {
     if (Platform.OS === "web") {
       Alert.alert(
         "Error",

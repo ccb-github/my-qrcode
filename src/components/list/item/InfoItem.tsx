@@ -1,4 +1,3 @@
-import React from "react"
 import { View, Text, useWindowDimensions } from "react-native"
 import { Entypo } from "@expo/vector-icons"
 
@@ -12,12 +11,10 @@ export default function InfoItem({
   const { scale } = useWindowDimensions()
   return (
     <View
-      style={[
-        {
-          flexDirection: "row",
-          justifyContent: "space-between",
-        },
-      ]}
+      style={{
+        flexDirection: "row",
+        justifyContent: "space-between",
+      }}
     >
       <View style={{ flexDirection: "row" }}>
         <Entypo name="email" size={30 * scale} style={{ padding: 10 }} />

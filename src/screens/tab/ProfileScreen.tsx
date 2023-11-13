@@ -28,6 +28,7 @@ import {
   StyledFlexRowView,
 } from "../../components/styled/view"
 import { StyledTextByAbsoluteSize } from "../../components/styled/text"
+import { RouteNameMain } from "../../navigation/const"
 
 const { useRealm } = RealmContext
 const ProfileFieldView = styled.View`
@@ -63,12 +64,14 @@ const InteractionButtonText = styled(StyledTextByAbsoluteSize)<{
   padding-left: 6px;
   padding-right: 6px;
 `
-export default function ProfileScreen({ navigation }: RootTabProfileScreenProps) {
+export default function ProfileScreen({
+  navigation,
+}: RootTabProfileScreenProps) {
   const colorScheme = useColorScheme()
   const { t } = useTranslation("profile")
   const user = useUser()
   const realm = useRealm()
-  const userData: Partial<UserProfile> = {}
+  const userData: Partial<Record<keyof UserProfile, string>> = {}
 
   const { scale } = useWindowDimensions()
   useEffect(() => {
@@ -95,7 +98,8 @@ export default function ProfileScreen({ navigation }: RootTabProfileScreenProps)
     dataSubmitAction: (dataObj: any) => Promise<void>
     fetchUserData: () => Promise<Partial<UserProfile>>
   }) {
-    const [userData, setUserData] = useState<Partial<UserProfile | null>>(null)
+    const [userData, setUserData] =
+      useState<Partial<Record<keyof UserProfile, string> | null>>(null)
     const [editable, toggleEditable] = useState(false)
     useEffect(() => {
       ;(async () => {
@@ -214,7 +218,7 @@ export default function ProfileScreen({ navigation }: RootTabProfileScreenProps)
           <View>
             <StyledFlexRowTouchableOpacity
               onPress={() => {
-                navigation.push("modalScanner")
+                navigation.push(RouteNameMain.modalScanner)
               }}
             >
               <InteractionButtonText size={9 * scale}>

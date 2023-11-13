@@ -9,6 +9,7 @@ export const StyledTextByAbsoluteSize = styled.Text<{
 }>`
   font-size: ${({ size }) => size}px;
 `
+
 export const HintText = styled(StyledTextByAbsoluteSize)<ScaleStyledProps>`
   font-weight: bold;
   font-size: ${({ size }) => size}px;

@@ -2,7 +2,7 @@ import { Dimensions, StatusBar, Platform } from "react-native"
 
 const { width, scale, height, fontScale } = Dimensions.get("window")
 
-const isIOS = Platform.OS == "ios"
+const isIOS = Platform.OS === "ios"
 const statusBarHeight = isIOS ? 20 : StatusBar.currentHeight
 
 export default {
@@ -10,11 +10,11 @@ export default {
   screenWidth: width,
   screenHeight: height,
   screenScale: scale,
-  width: width,
-  height: height,
-  scale: scale,
-  fontScale: fontScale,
-  statusBarHeight: statusBarHeight,
+  width,
+  height,
+  scale,
+  fontScale,
+  statusBarHeight,
 
   contentHeight: height - statusBarHeight,
   getFontSize: function (size: number) {

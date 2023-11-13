@@ -11,9 +11,7 @@ import {
   scanHistory,
   fetchUrlPrefix,
 } from "../../utils/localStorageConfig.json"
-import BottomToolbar from "../../components/BottomToolbar"
-
-import { borderStyle, clgWrapper } from "../../__test__/helper"
+import { clgWrapper } from "../../__test__/helper"
 
 import { queryParamsRegex } from "../../lib/infoFetch"
 import { type RootStackBarCodeScreenProps } from "../../type/navigation"
@@ -25,6 +23,7 @@ import { RouteNameMain } from "../../navigation/const"
 import styled from "styled-components/native"
 import { StyledTextByAbsoluteSize } from "../../components/styled/text"
 import { StyledFlexRowView } from "../../components/styled/view"
+import BottomToolbar from "../../components/BottomToolbar"
 
 const { scale } = Dimensions
 const { useRealm } = RealmContext
@@ -249,7 +248,7 @@ export default function BarCodeScannerScreen({
         <ContainerView height={height}>
           <BarCodeScanner
             onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-            style={{ ...StyleSheet.absoluteFillObject, ...borderStyle }}
+            style={StyleSheet.absoluteFillObject}
           />
           {scanned ? (
             <ScanAgainButton

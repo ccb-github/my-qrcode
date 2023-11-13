@@ -3,10 +3,11 @@ import { type LinkObjectFieldProps } from "../../type/props"
 import { FieldStyles } from "../../style/components/field.style"
 import fonts from "../../style/fonts"
 
-export default function LinkObjectField<Value extends Exclude<object, null>>(
-  props: LinkObjectFieldProps<Value>,
-) {
-  const { name, value, onPressAction, type } = props
+export default function LinkObjectField<
+  Value,
+  ValueAccessor extends keyof Value,
+>(props: LinkObjectFieldProps<Value, ValueAccessor>) {
+  const { name, valueAccessor, value, onPressAction, type } = props
   return (
     <View style={FieldStyles.container}>
       <View style={FieldStyles.nameFieldView}>
@@ -21,7 +22,9 @@ export default function LinkObjectField<Value extends Exclude<object, null>>(
           }}
         >
           <Text style={[{ fontSize: fonts.valueText }, { color: "blue" }]}>
-            {value?.name}
+            {typeof value[valueAccessor] === "string"
+              ? (value[valueAccessor] as string)
+              : typeof value[valueAccessor]}
           </Text>
         </TouchableOpacity>
       </View>
