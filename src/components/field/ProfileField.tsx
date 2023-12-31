@@ -1,5 +1,3 @@
-import React from "react"
-import { View, StyleSheet } from "react-native"
 import { Checkbox, List } from "react-native-paper"
 
 export default function ProfileField() {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { StyleSheet, Pressable, useWindowDimensions } from "react-native"
+import { useWindowDimensions } from "react-native"
 
 import StringField from "./StringField"
 import { type ObjectFieldProps } from "../../type/props"
@@ -8,6 +8,37 @@ import { StyledFlexRowView } from "../styled/view"
 import { StyledTextByAbsoluteSize } from "../styled/text"
 
 const getFontSize = (n: number) => n
+const FirstRowView = styled(StyledFlexRowView)`
+  width: 100%;
+  border-bottom: 1px;
+`
+const NameFieldView = styled(StyledFlexRowView)<{ scale: number }>`
+  margin-left: ${({ scale }) => 10 * scale};
+  height: ${({ scale }) => 10 * scale};
+`
+const NameFieldText = styled(StyledTextByAbsoluteSize)<{ size: number }>``
+const NameFieldExpandIcon = styled(StyledTextByAbsoluteSize)<{
+  size: number
+}>`
+  color: white;
+  text-align: center;
+  font-weight: bold;
+`
+const ValueFieldRowView = styled(StyledFlexRowView)<{ scale: number }>`
+  margin-left: ${({ scale }) => 10 * scale};
+  height: ${({ scale }) => 10 * scale};
+`
+// Use style objects
+const StyledView = styled.View((props) => ({
+  borderWidth: "1px",
+  borderColor: "black",
+  borderRadius: "5px",
+}))
+const NameFieldExpandArea = styled.Pressable`
+  justify-content: center;
+  background-color: purple;
+  aspect-ratio: 1;
+`
 /**
  * @todo display empty field
  * @example &lt;caption>Example usage of ObjectField component.&lt;/caption> 
@@ -35,31 +66,7 @@ const ObjectField = (props: ObjectFieldProps) => {
   const { name, value, style } = props
   const [expanded, setExpanded] = useState(false)
   const { scale } = useWindowDimensions()
-  const FirstRowView = styled(StyledFlexRowView)`
-    width: 100%;
-    border-bottom: 1px;
-  `
-  const NameFieldView = styled(StyledFlexRowView)<{ scale: number }>`
-    margin-left: ${({ scale }) => 10 * scale};
-    height: ${({ scale }) => 10 * scale};
-  `
-  const NameFieldText = styled(StyledTextByAbsoluteSize)<{ size: number }>``
-  const NameFieldExpandIcon = styled(StyledTextByAbsoluteSize)<{
-    size: number
-  }>`
-    color: white;
-    text-align: center;
-    font-weight: bold;
-  `
-  const ValueFieldRowView = styled(StyledFlexRowView)<{ scale: number }>`
-    margin-left: ${({ scale }) => 10 * scale};
-    height: ${({ scale }) => 10 * scale};
-  `
-  const StyledView = styled.View((props) => ({
-    borderWidth: "1px",
-    borderColor: "black",
-    borderRadius: "5px",
-  }))
+
   useEffect(() => {
     console.group()
     console.log("******Start for in loop ObjectField******")
@@ -69,23 +76,20 @@ const ObjectField = (props: ObjectFieldProps) => {
     console.log("****************End**********************")
   }, [])
   return (
-    <StyledView
-      style={style}
-    >
+    <StyledView style={style}>
       <FirstRowView key={"field"}>
         <NameFieldView scale={scale}>
           <NameFieldText size={20 * scale}>{name}</NameFieldText>
         </NameFieldView>
-        <Pressable
+        <NameFieldExpandArea
           onPress={() => {
             setExpanded(!expanded)
           }}
-          style={ObjectFieldStyles.status}
         >
           <NameFieldExpandIcon size={getFontSize(20)}>
             {expanded ? "v" : ">"}
           </NameFieldExpandIcon>
-        </Pressable>
+        </NameFieldExpandArea>
       </FirstRowView>
       <ValueFieldRowView scale={scale} key={"value"}>
         {expanded
@@ -111,13 +115,5 @@ const ObjectField = (props: ObjectFieldProps) => {
     </StyledView>
   )
 }
-
-const ObjectFieldStyles = StyleSheet.create({
-  status: {
-    justifyContent: "center",
-    backgroundColor: "purple",
-    aspectRatio: 1,
-  },
-})
 
 export default ObjectField

@@ -25,8 +25,8 @@ const NavigationAreaContainer = styled(StyledFlexColumnView)<{
   flex: 1;
   border: red solid 1px;
   ${({ width, height }) => css`
-    width: ${width};
-    height: ${height};
+    width: ${width}px;
+    height: ${height}px;
   `}
 `
 
@@ -76,6 +76,7 @@ export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
       ) : null}
       <Text
         style={{
+          
           color: isDarkTheme ? "#FFF" : "#000",
         }}
       >

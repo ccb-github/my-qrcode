@@ -1,4 +1,4 @@
-import { BSON } from "realm"
+import type { BSON } from "realm"
 
 export type UserProfile = {
   _id: BSON.ObjectId
@@ -10,6 +10,4 @@ export type UserProfile = {
   emailVerified: boolean
 }
 
-export interface IExtendable {
-  foo: number
-}
+export type EditableUserProfile = Pick<UserProfile, "email" | "name">

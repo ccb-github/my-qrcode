@@ -21,3 +21,5 @@ web-build/
 #Local Test file
 src/__test__/*.tsx
 *.apk
+src/__test__/__snapshots/
+

@@ -1,25 +1,20 @@
 import { useEffect } from "react"
-import { Text, View, Alert, useWindowDimensions } from "react-native"
+import { Text, View, useWindowDimensions } from "react-native"
 import { type BaseFieldProps } from "../../type/props"
 
-import Dimension from "../../style/Dimensions"
 import {
   FieldStyles,
   FieldTextStyles,
 } from "../../style/components/field.style"
-
-// TODO empty field
-const { scale } = Dimension
+import { StyledFlexColumnView } from "../styled/view"
 
 const StringField = (props: BaseFieldProps) => {
   const { name, value, style } = props
-  const { scale: scaleHook } = useWindowDimensions()
-  if (scale !== scaleHook) {
-    Alert.alert(`The scale ${scale} and scaleHook ${scaleHook} in urlfield`)
-  }
+  const { scale } = useWindowDimensions()
+
   useEffect(() => {})
   return (
-    <View style={{ ...FieldStyles.container, ...style }}>
+    <StyledFlexColumnView style={style}>
       <View style={[FieldStyles.nameFieldView, { height: 20 * scale }]}>
         <View
           style={{
@@ -34,7 +29,7 @@ const StringField = (props: BaseFieldProps) => {
       <View>
         <Text style={FieldTextStyles.valueFieldText}>{value}</Text>
       </View>
-    </View>
+    </StyledFlexColumnView>
   )
 }
 export default StringField

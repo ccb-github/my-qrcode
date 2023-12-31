@@ -1,5 +1,7 @@
 import { StyleSheet } from "react-native"
-
+/**
+ * @deprecated migrate to styled components
+ */
 const FieldStyles = StyleSheet.create({
   container: {
     flexDirection: "column",
@@ -36,7 +38,7 @@ const ObjectFieldStyles = StyleSheet.create({
     fontWeight: "bold",
   },
 
-  /*This style is for object field */
+  /* This style is for object field */
   firstRow: {
     flex: 1,
     width: "100%",

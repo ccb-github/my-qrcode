@@ -1,8 +1,7 @@
 import styled from "styled-components/native"
 
-export const FlexItemView = styled.View`
+export const StyledFlexItemView = styled.View<{ flex?: number }>`
   flex: 1;
-  align-items: center;
 `
 export const StyledSafeAreaView = styled.SafeAreaView<{
   backgroundColor?: string

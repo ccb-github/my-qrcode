@@ -32,13 +32,6 @@ const InputView = styled.View<{ scale: number }>`
   margin-bottom: 8px;
   align-items: center;
 `
-const TitleView = styled.View<{ scale: number }>`
-  background-color: #ffc0cb;
-  border-radius: ${({ scale }) => 18 * scale}px;
-  width: 70%;
-  margin-bottom: ${({ scale }) => 8 * scale}px;
-  align-items: center;
-`
 
 const ForgetPasswordText = styled(StyledTextByAbsoluteSize)<{
   scale: number
@@ -50,8 +43,11 @@ const ForgetPasswordText = styled(StyledTextByAbsoluteSize)<{
 `
 
 const TitleText = styled(StyledTextByAbsoluteSize)<ScaleStyledProps>`
-  flex: 1;
   padding: ${({ scale }) => 4 * scale}px;
+  margin-top: ${({ scale }) => 15 * scale}px;
+  margin-bottom: ${({ scale }) => 15 * scale}px;
+  background-color: red;
+  border-radius: 40px;
   margin-left: ${({ scale }) => 8 * scale}px;
   margin-right: ${({ scale }) => 8 * scale}px;
 `
@@ -75,7 +71,6 @@ const ActionButton = styled.TouchableOpacity<ScaleStyledProps>`
   margin-top: ${({ scale }) => scale * 16}px;
   background-color: #ff1493;
 `
-const scale = 2.625
 
 export default function LoginScreen({
   navigation,
@@ -83,10 +78,9 @@ export default function LoginScreen({
   const email = useRef("")
   const password = useRef("")
   const [loginLoading, setLoginLoading] = useState(false)
-  const { scale: scaleHook } = useWindowDimensions()
+  const { scale } = useWindowDimensions()
   const { t } = useTranslation("login")
   useEffect(() => {
-    alert(`${scaleHook}+${scale}`)
     console.log(i18n.language)
   })
 
@@ -126,11 +120,11 @@ export default function LoginScreen({
   return (
     <ScreenContainer>
       <StatusBar style="auto" />
-      <TitleView scale={scale}>
-        <TitleText size={fonts.large} scale={scale}>{`XX${t(
-          "Traceability system",
-        )}`}</TitleText>
-      </TitleView>
+
+      <TitleText size={fonts.large} scale={scale}>{`XX${t(
+        "Traceability system",
+      )}`}</TitleText>
+
       <IconImage
         source={require("../../../assets/favicon.png")}
         scale={scale}
@@ -174,15 +168,6 @@ export default function LoginScreen({
         <Text>{t("Login")}</Text>
         {loginLoading ? <ActivityIndicator size={"small"} /> : null}
       </ActionButton>
-      {/*
-      <TouchableOpacity
-        style={styles.actionBtn}
-        onPress={() => {
-          navigation.navigate("Reset", { email: email.current })
-        }}
-      >
-        <Text>{t("Sign up")}</Text>
-      </TouchableOpacity> */}
     </ScreenContainer>
   )
 }

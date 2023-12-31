@@ -1,23 +1,28 @@
-import { Text, View, Alert, useWindowDimensions } from "react-native"
+import { Text, View, useWindowDimensions } from "react-native"
 
-import Dimension from "../../style/Dimensions"
+import { FieldTextStyles } from "../../style/components/field.style"
 import {
-  FieldStyles,
-  FieldTextStyles,
-} from "../../style/components/field.style"
+  StyledFlexItemView,
+  StyledFlexColumnView,
+  StyledFlexRowView,
+} from "../styled/view"
+import styled from "styled-components/native"
 
-// TODO empty field
-const { scale } = Dimension
+const NameFieldView = styled(StyledFlexRowView)<{ scale: number }>`
+  margin-left: ${({ scale }) => 10 * scale};
+  height: ${({ scale }) => 10 * scale};
+`
+const ValueFieldView = styled(StyledFlexItemView)``
 
-const DateField = (props: { name: string; value: string | undefined }) => {
+export default function DateField(props: {
+  name: string
+  value: string | undefined
+}) {
   const { name, value } = props
-  const { scale: scaleHook } = useWindowDimensions()
-  if (scale === scaleHook) {
-    Alert.alert(`The scale ${scale} and scaleHook ${scaleHook} in urlfield`)
-  }
+  const { scale } = useWindowDimensions()
   return (
-    <View style={FieldStyles.container}>
-      <View style={FieldStyles.nameFieldView}>
+    <StyledFlexColumnView>
+      <NameFieldView scale={scale}>
         <View
           style={{
             backgroundColor: "blue",
@@ -27,12 +32,12 @@ const DateField = (props: { name: string; value: string | undefined }) => {
           }}
         />
         <Text style={FieldTextStyles.nameFieldText}>{name}</Text>
-      </View>
-      <View style={FieldStyles.valueFieldView}>
+      </NameFieldView>
+      <ValueFieldView>
         <Text style={FieldTextStyles.valueFieldText}>{value}</Text>
-      </View>
-    </View>
+      </ValueFieldView>
+    </StyledFlexColumnView>
   )
 }
 
-export default DateField
+

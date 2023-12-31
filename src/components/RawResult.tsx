@@ -1,13 +1,13 @@
 import { memo } from "react"
 import { Text, Pressable, Platform, StyleSheet } from "react-native"
-import { BSON } from "realm"
+import { type BSON } from "realm"
 
 import colors from "../style/colors"
 import Dimensions from "../style/Dimensions"
 
 const { scale } = Dimensions
 
-export interface RecordDataItem {
+export type RecordDataItem = {
   _id: BSON.ObjectId
   description: string
   isVerified: boolean
@@ -15,7 +15,7 @@ export interface RecordDataItem {
   location: Location
   url: string
 }
-interface RecordItemProps {
+type RecordItemProps = {
   dataItem: unknown
   description: string
   isVerified: boolean
@@ -31,7 +31,7 @@ function RecordItem({
   navigateToDetail,
   onDelete,
 }: RecordItemProps) {
-  console.log(`Data in recordItem`, JSON.stringify(dataItem))
+  console.log("Data in recordItem", JSON.stringify(dataItem))
   return (
     <Pressable style={[styles.item, { height: 25 * scale }]}>
       <Pressable style={[styles.status, isVerified && styles.completed]}>
@@ -40,8 +40,8 @@ function RecordItem({
       <Pressable
         style={styles.descriptionContainer}
         onPress={() => {
-          console.log("Dataitem in recorditem", dataItem)
-          navigateToDetail(JSON.stringify(dataItem))
+          console.log("DataItem in recordItem", dataItem)
+          navigateToDetail?.(JSON.stringify(dataItem))
         }}
       >
         <Text numberOfLines={1} style={styles.description}>

@@ -19,16 +19,17 @@ import {
 import { screenStyleByTheme } from "../../style/common"
 import { useTranslation } from "react-i18next"
 import Button from "../../components/Button"
-import { type UserProfile } from "../../type/user"
+import { type EditableUserProfile } from "../../type/user"
 import { type RootTabProfileScreenProps } from "../../type/props"
 import styled from "styled-components/native"
 import {
-  FlexItemView,
+  StyledFlexItemView,
   StyledFlexRowTouchableOpacity,
   StyledFlexRowView,
 } from "../../components/styled/view"
 import { StyledTextByAbsoluteSize } from "../../components/styled/text"
 import { RouteNameMain } from "../../navigation/const"
+import { ImageField } from "../../components/field"
 
 const { useRealm } = RealmContext
 const ProfileFieldView = styled.View`
@@ -36,9 +37,9 @@ const ProfileFieldView = styled.View`
   align-items: center;
 `
 /**
- * @param scale {number} The pr
+ * @param scale {number} The number this view scale to
  */
-const ProfileFieldValueTextInput = styled.TextInput<{
+const ProfileFieldValueInput = styled.TextInput<{
   scale: number
   editable: boolean
 }>`
@@ -71,7 +72,7 @@ export default function ProfileScreen({
   const { t } = useTranslation("profile")
   const user = useUser()
   const realm = useRealm()
-  const userData: Partial<Record<keyof UserProfile, string>> = {}
+  const userData: Partial<Record<keyof EditableUserProfile, string>> = {}
 
   const { scale } = useWindowDimensions()
   useEffect(() => {
@@ -86,25 +87,26 @@ export default function ProfileScreen({
     })
   }, [user])
   const fetchUserData = useCallback(async () => {
-    return (await user?.refreshCustomData()) as UserProfile
+    return (await user?.refreshCustomData()) as EditableUserProfile
   }, [user])
   function UserProfileData({
     displayProfileKeyList: profileKeyList,
     userData: userDataProp,
     fetchUserData,
   }: {
-    displayProfileKeyList: Array<keyof UserProfile>
-    userData: Partial<UserProfile>
+    displayProfileKeyList: Array<keyof EditableUserProfile>
+    userData: Partial<EditableUserProfile>
     dataSubmitAction: (dataObj: any) => Promise<void>
-    fetchUserData: () => Promise<Partial<UserProfile>>
+    fetchUserData: () => Promise<Partial<EditableUserProfile>>
   }) {
-    const [userData, setUserData] =
-      useState<Partial<Record<keyof UserProfile, string> | null>>(null)
+    const [userData, setUserData] = useState<
+      Partial<Record<keyof EditableUserProfile, string>>
+    >({})
     const [editable, toggleEditable] = useState(false)
     useEffect(() => {
-      ;(async () => {
+      (async () => {
         console.log("What")
-        setUserData((await user?.refreshCustomData()) ?? null)
+        setUserData((await user?.refreshCustomData()) ?? {})
       })().catch((error) => {
         throw error
       })
@@ -128,12 +130,12 @@ export default function ProfileScreen({
               <ProfileFieldView key={profileKey}>
                 <EmailFieldText size={5 * scale}>{profileKey}</EmailFieldText>
                 {/* {editable ? ( */}
-                <ProfileFieldValueTextInput
+                <ProfileFieldValueInput
                   scale={scale}
-                  placeholder={t(userData[profileKey] ?? "")}
+                  placeholder={t(userData?.[profileKey] ?? "")}
                   editable={editable}
                   placeholderTextColor="#003f5c"
-                  onChangeText={(value) => (userData[profileKey] = value)}
+                  onChangeText={(value) => (userData[profileKey] ??= value)}
                 />
               </ProfileFieldView>
               <Divider />
@@ -144,7 +146,7 @@ export default function ProfileScreen({
         )}
 
         <StyledFlexRowView>
-          <FlexItemView>
+          <StyledFlexItemView>
             <Tooltip title="Activate edit">
               <Switch
                 value={editable}
@@ -154,12 +156,12 @@ export default function ProfileScreen({
                 }}
               />
             </Tooltip>
-          </FlexItemView>
-          <FlexItemView>
+          </StyledFlexItemView>
+          <StyledFlexItemView>
             <Button
               style={{ backgroundColor: "#4b7bec" }}
               onPress={() => {
-                submitUserCustomData(userData!)
+                submitUserCustomData(userData)
                   .then(() => {
                     toggleEditable(false)
                   })
@@ -170,7 +172,7 @@ export default function ProfileScreen({
             >
               {t("Submit")}
             </Button>
-          </FlexItemView>
+          </StyledFlexItemView>
         </StyledFlexRowView>
       </List.Section>
     )
@@ -179,7 +181,7 @@ export default function ProfileScreen({
   /**
    * Use mongodb client service to edit custom user data
    */
-  async function submitUserCustomData(userData: Partial<UserProfile> = {}) {
+  async function submitUserCustomData(userData: Partial<EditableUserProfile> = {}) {
     // TODO should I check every time?
     if (user === null)
       throw new Error("You must login first to see this screen")
@@ -227,6 +229,8 @@ export default function ProfileScreen({
             </StyledFlexRowTouchableOpacity>
           </View>
         </ProfileContainerView>
+        <ImageField name={t("brand")} value={"https://picsum.photos/200/300?random=97;" ?? "Empty"} />
+
         <List.Section title="Subscription">
           <List.Item
             title={"Expo version"}

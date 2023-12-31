@@ -1,18 +1,16 @@
-import { Text, View, Alert, useWindowDimensions } from "react-native"
+import { Text, View, useWindowDimensions } from "react-native"
 import { type BaseFieldProps } from "../../type/props"
 
 import Dimension from "../../style/Dimensions"
 import { FieldStyles } from "../../style/components/field.style"
 
 // TODO empty field
-const { getFontSize, scale } = Dimension
+const { getFontSize } = Dimension
 
 const UrlField = (props: BaseFieldProps) => {
   const { name, value } = props
-  const { scale: scaleHook } = useWindowDimensions()
-  if (scale === scaleHook) {
-    Alert.alert(`The scale ${scale} and scaleHook ${scaleHook} in urlfield`)
-  }
+  const { scale } = useWindowDimensions()
+
   return (
     <View style={[FieldStyles.container, { height: 10 * scale }]}>
       <View style={FieldStyles.nameFieldView}>

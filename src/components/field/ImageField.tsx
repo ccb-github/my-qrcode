@@ -1,43 +1,45 @@
-import { StyleSheet, Text, View } from "react-native"
+import { useWindowDimensions } from "react-native"
 import { Card } from "react-native-paper"
 import { type BaseFieldProps } from "../../type/props"
 
-import Dimension from "../../style/Dimensions"
+import styled from "styled-components/native"
+import {
+  StyledFlexColumnView,
+  StyledFlexItemView,
+  StyledFlexRowView,
+} from "../styled/view"
+import type { ScaleStyledProps } from "../../style/common"
+import { StyledTextByAbsoluteSize } from "../styled/text"
+import { useTranslation } from "react-i18next"
 
-// TODO empty field
-const { getFontSize, getHeight, scale } = Dimension
-const ImageField = (props: BaseFieldProps) => {
+const ImageFieldContainer = styled(StyledFlexColumnView)<ScaleStyledProps>`
+  width: 100%;
+  margin: ${({ scale }) => 10 * scale}px;
+`
+const NameFieldView = styled(StyledFlexRowView)<{ scale: number }>`
+  margin-left: ${({ scale }) => 10 * scale};
+  height: ${({ scale }) => 10 * scale};
+`
+const ValueFieldView = styled(StyledFlexItemView)`
+  background-color: red;
+`
+
+export default function ImageField(props: BaseFieldProps) {
   const { name, value } = props
+  const { scale } = useWindowDimensions()
+  const { t } = useTranslation()
   return (
-    <View style={{ width: "100%", ...FieldStyles.container }}>
-      <View style={FieldStyles.nameFieldView}>
-        <Text style={FieldStyles.nameFieldText}>{name}</Text>
-      </View>
-      <View style={FieldStyles.valueFieldView}>
+    <ImageFieldContainer scale={scale}>
+      <NameFieldView scale={scale}>
+        <StyledTextByAbsoluteSize size={20 * scale}>
+          {t(name)}
+        </StyledTextByAbsoluteSize>
+      </NameFieldView>
+      <ValueFieldView>
         <Card>
           <Card.Cover style={{ aspectRatio: 1 }} source={{ uri: value }} />
         </Card>
-      </View>
-    </View>
+      </ValueFieldView>
+    </ImageFieldContainer>
   )
 }
-
-export default ImageField
-
-const FieldStyles = StyleSheet.create({
-  container: {
-    flexDirection: "column",
-    margin: 5 * scale,
-  },
-
-  nameFieldView: {
-    flex: 2,
-    fontWeight: "bold",
-  },
-  valueFieldView: {
-    minHeight: getHeight(15),
-  },
-  nameFieldText: {
-    fontSize: getFontSize(20),
-  },
-})
