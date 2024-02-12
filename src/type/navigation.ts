@@ -15,8 +15,7 @@ declare global {
   }
 }
 
-export type RootStackScreenProps<Screen extends keyof MainStackParamList> =
-  StackScreenProps<MainStackParamList, Screen>
+
 
 export const TabScreenNameList = ["TabOne", "TabTwo", "TabThree"] as const
 export type RootTabParamList = {

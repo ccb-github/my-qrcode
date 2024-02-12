@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar"
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import {
   Text,
   View,
@@ -13,7 +13,6 @@ import realmApp from "../../realm/app"
 import { useTranslation } from "react-i18next"
 import LanguagePicker from "../../components/LanguagePicker"
 import { type LoginStackLoginScreenProps } from "../../type/navigation"
-import i18n from "../../lib/i18-next"
 import styled from "styled-components/native"
 import { StyledTextByAbsoluteSize } from "../../components/styled/text"
 import { StyledFlexColumnView } from "../../components/styled/view"
@@ -80,12 +79,9 @@ export default function LoginScreen({
   const [loginLoading, setLoginLoading] = useState(false)
   const { scale } = useWindowDimensions()
   const { t } = useTranslation("login")
-  useEffect(() => {
-    console.log(i18n.language)
-  })
 
   const loginWithEmailAndPassword = () => {
-    ;(async () => {
+    (async () => {
       if (email.current === "" || password.current === "") {
         console.log("loginEmpty")
         alert("Please fill all the field")
@@ -104,7 +100,7 @@ export default function LoginScreen({
         const { message } = error
         Alert.alert(
           t("Error"),
-          typeof message === "string" ? message : "No specific message",
+          typeof message === "string" ? message : t("No specific message"),
           [{ text: t("Ok") }],
         )
         console.error("Login error", error)
@@ -120,7 +116,6 @@ export default function LoginScreen({
   return (
     <ScreenContainer>
       <StatusBar style="auto" />
-
       <TitleText size={fonts.large} scale={scale}>{`XX${t(
         "Traceability system",
       )}`}</TitleText>
