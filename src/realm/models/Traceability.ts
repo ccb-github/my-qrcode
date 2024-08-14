@@ -1,4 +1,4 @@
-import { BSON } from "realm"
+import { type BSON } from "realm"
 import realmApp from "../app"
 export class Traceability extends Realm.Object {
   _id!: BSON.ObjectId
@@ -16,6 +16,7 @@ export class Traceability extends Realm.Object {
       operator: "Checker?",
     },
   }
+
   static generate(description?: string) {
     const seed = new Realm.BSON.ObjectId()
     return {
@@ -24,7 +25,7 @@ export class Traceability extends Realm.Object {
       creditCode: "fakeCode",
       email: `${Math.random().toFixed(3)}@domain.com`,
       createdAt: new Date(),
-      ownerId: realmApp.currentUser?.id || "system",
+      ownerId: realmApp.currentUser?.id ?? "system",
     }
   }
 }

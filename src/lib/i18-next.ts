@@ -3,7 +3,7 @@ import { initReactI18next } from "react-i18next"
 // This patch from https://github.com/i18next/react-i18next/issues/1587
 declare module "i18next" {
   /**
-   * @description This interface need to be used because of the declare merge
+   * @comment This interface need to be used because of the declare merge
    */
   // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
   interface CustomTypeOptions {

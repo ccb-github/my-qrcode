@@ -1,5 +1,5 @@
 import realmApp from "../app"
-import { BSON } from "realm"
+import { type BSON } from "realm"
 
 const RecordMainSchema = {
   name: "Record",
@@ -49,10 +49,11 @@ class Record extends Realm.Object {
       ownerId: "string",
     },
   }
+
   generate(description: string) {
     return {
       _id: new Realm.BSON.ObjectId(),
-      description: description,
+      description,
       location: {
         longitude: 50,
         latitude: 50,

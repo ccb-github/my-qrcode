@@ -8,6 +8,7 @@ export class EnterpriseMain extends Realm.Object {
   createdAt: Date
   tradeMark?: string
   ownerId: string
+
   static schema = {
     name: "Enterprise",
     primaryKey: "_id",

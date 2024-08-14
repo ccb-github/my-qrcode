@@ -4,7 +4,6 @@ import { ScrollView, Text, useWindowDimensions } from "react-native"
 import { Chip } from "react-native-paper"
 import i18n from "../../lib/i18-next"
 import { useTranslation } from "react-i18next"
-import { type RootStackDetailScreenProps } from "../../type/RootStackDetailScreenProps"
 import { CheckerDetail } from "../../components/detail/CheckerDetail"
 import styled from "styled-components/native"
 import { StyledFlexRowView } from "../../components/styled/view"
@@ -12,6 +11,14 @@ import { type Checker } from "../../realm/models/Regulatory/Checker"
 import { EnterpriseDetail } from "../../components/detail/EnterpriseDetail"
 import { ProductDetail } from "../../components/detail/ProductDetail"
 import { StyledTextByAbsoluteSize } from "../../components/styled/text"
+import type { StackScreenProps } from "@react-navigation/stack"
+import type { RouteNameMain } from "../../navigation/const"
+import type { MainStackParamList } from "../../type/navigation"
+
+export type RootStackDetailScreenProps = StackScreenProps<
+  MainStackParamList,
+  RouteNameMain.modalDetail
+>
 
 export default function DetailScreen({ route }: RootStackDetailScreenProps) {
   const { t } = useTranslation(i18n.language)

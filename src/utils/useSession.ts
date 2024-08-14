@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react"
-import realmApp from "../realm/app"
-import { ConnectionState } from "realm"
+
+import { type ConnectionState } from "realm"
 
 export default function useSession(realm: Realm) {
-  const [syncSessionConnected, setSyncSessionConnected] =
-    useState<ConnectionState>(realm.syncSession.connectionState)
+  const [syncSessionConnected, setSyncSessionConnected] = useState<
+    ConnectionState | undefined
+  >(realm.syncSession?.connectionState)
   useEffect(() => {
-    realm.syncSession.addConnectionNotification((newState) => {
-      setSyncSessionConnected(newState)
-    })
-    return () => {
-      realm.syncSession.removeConnectionNotification((newState) => {
-        console.log(`Session end with state ${newState}`)
+    if (realm.syncSession?.connectionState !== undefined) {
+      realm.syncSession.addConnectionNotification((newState) => {
+        setSyncSessionConnected(newState)
       })
+      return () => {
+        realm.syncSession?.removeConnectionNotification((newState) => {
+          console.log(`Session end with state ${newState}`)
+        })
+      }
     }
-  }, [])
+  }, [realm.syncSession?.connectionState])
   return syncSessionConnected
 }

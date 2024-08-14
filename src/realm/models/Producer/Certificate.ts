@@ -1,6 +1,6 @@
 function Certificate() {}
 
-Certificate.schema = {
+Certificate.prototype.schema = {
   name: "Certificate",
   primaryKey: "_id",
   properties: {

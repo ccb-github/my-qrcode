@@ -24,13 +24,14 @@ const NavigationAreaContainer = styled(StyledFlexColumnView)<{
 }>`
   flex: 1;
   border: red solid 1px;
-  ${({ width, height }) => css`
-    width: ${width}px;
-    height: ${height}px;
-  `}
+ 
 `
 
-// const StyledView = styled.View((props) => ({
+// ${({ width, height }) => css`
+// width: ${width}px;
+// height: ${height}px;
+// `} 
+//const StyledView = styled.View((props) => ({
 //   borderWidth: "3px",
 //   borderColor: "black",
 //   borderRadius: "10px",

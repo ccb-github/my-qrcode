@@ -1,5 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack"
+import { useEffect } from "react"
 import { Pressable, Text } from "react-native"
+
 import BottomTabNavigator from "./BottomTabNavigator"
 import RegisterScreen from "../screens/login/RegisterScreen"
 import LoginScreen from "../screens/login/LoginScreen"
@@ -8,46 +10,47 @@ import BarCodeScannerScreen from "../screens/modal/BarCodeScannerScreen"
 import ResetPasswordScreen from "../screens/login/ResetPasswordScreen"
 import RecordScreen from "../screens/modal/RecordScreen"
 import ResultScreen from "../screens/modal/ResultScreen"
-import { useEffect } from "react"
+import FigmaSampleScreen from "../screens/FigmaSampleScreen"
+import AsyncStorageInspect from "../screens/__test__/AsyncStorageInspect"
+
 import {
   imageHistory as imageHistoryKey,
   scanHistory as scanRecordKey,
 } from "../utils/localStorageConfig.json"
 import { useAsyncStorage } from "@react-native-async-storage/async-storage"
 import { RouteNameLogin, RouteNameMain } from "./const"
-import RealmContext from "../realm/RealmContext"
-import FigmaSampleScreen from "../screens/FigmaSampleScreen"
-import AsyncStorageInspect from "../screens/__test__/AsyncStorageInspect"
-import { useTranslation } from "react-i18next"
-import { useUser } from "@realm/react"
-const { useRealm } = RealmContext
 
-/**
- * A root stack navigator is often used for displaying modals on top of all other content.
- * https://reactnavigation.org/docs/modal  options={{headerShown: false}}
- */
+import { useTranslation } from "react-i18next"
+import type { LoginStackParamList } from "../type/navigation"
+import { useUser } from "@realm/react"
+
 type LoginNavigationProps = {
   initialRouteName?: string
 }
-const Stack = createStackNavigator()
-export function LoginNavigation(
+const MainStack = createStackNavigator()
+const LoginStack = createStackNavigator<LoginStackParamList>()
+
+export function LoginStackNavigation(
   props: LoginNavigationProps = { initialRouteName: "Login" },
 ) {
   const { initialRouteName } = props
   console.log("LoginNavigation body")
   return (
-    <Stack.Navigator initialRouteName={initialRouteName}>
-      <Stack.Screen name={RouteNameLogin.login} component={LoginScreen} />
-      <Stack.Screen name={RouteNameLogin.register} component={RegisterScreen} />
-      <Stack.Screen
+    <LoginStack.Navigator initialRouteName={initialRouteName}>
+      <LoginStack.Screen name={RouteNameLogin.login} component={LoginScreen} />
+      <LoginStack.Screen
+        name={RouteNameLogin.register}
+        component={RegisterScreen}
+      />
+      <LoginStack.Screen
         name={RouteNameLogin.resetPassword}
         component={ResetPasswordScreen}
       />
-    </Stack.Navigator>
+    </LoginStack.Navigator>
   )
 }
 
-export function MainNavigation() {
+export function MainStackNavigation() {
   console.log("MainNavigation body")
   const user = useUser()
   const imageHistoryStorage = useAsyncStorage(
@@ -57,18 +60,24 @@ export function MainNavigation() {
     `${scanRecordKey}-${user?.id ?? "NULL-id"}`,
   )
   const { t } = useTranslation("title")
-  const realm = useRealm()
+
   useEffect(() => {
-    console.log(realm.path)
     ;(async () => {
-      const imageHistory = await imageHistoryStorage.getItem()
-      const recordHistory = await recordHistoryStorage.getItem()
-      console.log("Index navigation", { imageHistory }, { recordHistory })
-      // 初始化记录方便使用 Initialize the storage content if haven't
-      if (imageHistory === null) {
+      const imageHistorys = await imageHistoryStorage.getItem()
+      const recordHistorys = await recordHistoryStorage.getItem()
+      console.log(imageHistorys, recordHistorys)
+      /**
+       * @description Initialize the storage in app Navigation initialize
+       * for avoid dealing with empty record later
+       */
+      if (imageHistorys === null) {
         await imageHistoryStorage.setItem("[]")
       }
-      if (recordHistory === null) {
+      /**
+       * @description Initialize the storage in app Navigation initialize
+       * for avoid dealing with empty record later
+       */
+      if (recordHistorys === null) {
         await recordHistoryStorage.setItem("[]")
       }
     })().catch((error) => {
@@ -76,36 +85,39 @@ export function MainNavigation() {
     })
   }, [])
   return (
-    <Stack.Navigator initialRouteName={"Tab"}>
-      <Stack.Screen
+    <MainStack.Navigator initialRouteName={"Tab"}>
+      <MainStack.Screen
         name={RouteNameMain.tab}
         component={BottomTabNavigator}
         options={{
           headerShown: false,
         }}
       />
-      <Stack.Screen
+      <MainStack.Screen
         options={{
           title: t("Records"),
         }}
         name={"Record"}
         component={RecordScreen}
       />
-      <Stack.Group screenOptions={{ presentation: "transparentModal" }}>
-        <Stack.Screen name={"FigmaTest"} component={FigmaSampleScreen} />
-        <Stack.Screen
+      <MainStack.Group screenOptions={{ presentation: "transparentModal" }}>
+        <MainStack.Screen name={"FigmaTest"} component={FigmaSampleScreen} />
+        <MainStack.Screen
           name={RouteNameMain.storageInspect}
           component={AsyncStorageInspect}
         />
-      </Stack.Group>
-
-      <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen
+      </MainStack.Group>
+      {/**
+       * A modal stack screen is often used for displaying modals on top of all other content.
+       * https://reactnavigation.org/docs/modal  options={{headerShown: false}}
+       */}
+      <MainStack.Group screenOptions={{ presentation: "modal" }}>
+        <MainStack.Screen
           name={RouteNameMain.modalDetail}
           component={DetailScreen}
         />
 
-        <Stack.Screen
+        <MainStack.Screen
           name={RouteNameMain.modalScanner}
           component={BarCodeScannerScreen}
           options={({ navigation }) => ({
@@ -126,7 +138,7 @@ export function MainNavigation() {
             headerTransparent: true,
           })}
         />
-        <Stack.Screen
+        <MainStack.Screen
           name={RouteNameMain.modalResult}
           component={ResultScreen}
           options={({ navigation }) => ({
@@ -147,7 +159,7 @@ export function MainNavigation() {
             headerTransparent: true,
           })}
         />
-      </Stack.Group>
-    </Stack.Navigator>
+      </MainStack.Group>
+    </MainStack.Navigator>
   )
 }

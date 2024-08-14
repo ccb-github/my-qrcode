@@ -6,7 +6,7 @@ Seller.schema = {
     _id: "objectId",
     description: "string",
     records: "Record[]",
-    location: `{}`,
+    location: "{}",
     embedLocation: "Location",
     ownerId: "string",
   },

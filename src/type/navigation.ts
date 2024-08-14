@@ -15,8 +15,6 @@ declare global {
   }
 }
 
-
-
 export const TabScreenNameList = ["TabOne", "TabTwo", "TabThree"] as const
 export type RootTabParamList = {
   TabOne: undefined | Record<string, unknown>

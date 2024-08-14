@@ -1,6 +1,6 @@
 import Realm from "realm"
 export default function Account() {}
-//Todo owerid
+// Todo owerid
 Account.schema = {
   name: "Account",
   primaryKey: "_id",

@@ -18,6 +18,12 @@
             "jsx": true
         }
     },
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    }
+    ,
     "plugins": [
         "prettier",
         "react",
@@ -25,10 +31,12 @@
     ],
     "rules": {
       "prettier/prettier": "warn",
+      "linebreak-style": ["warn", "unix"],
       "@typescript-eslint/quotes": "off",
       "quotes": ["warn", "double"],
       "no-unreachable": "warn",
       "@typescript-eslint/space-before-function-paren": "off",
+      "@typescript-eslint/consistent-type-imports" : "warn",
       "no-unused-expressions": [
         "warn",
         {

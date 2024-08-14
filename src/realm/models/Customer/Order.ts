@@ -27,7 +27,7 @@ class OrderMain extends Realm.Object {
   generate = (description: string) => {
     return {
       _id: new UUID(),
-      customerId: realmApp.currentUser?.id || "system",
+      customerId: realmApp.currentUser?.id ?? "system",
       orderTime: new Date(),
     }
   }

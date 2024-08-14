@@ -1,8 +1,7 @@
-import realmApp from "../../app"
 import { Realm } from "@realm/react"
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { BSON } from "realm"
 
-//TODO the type of css color
 class MobileDetailAppearance extends Realm.Object {
   _id: BSON.ObjectId
   dataType: string
@@ -13,7 +12,7 @@ class MobileDetailAppearance extends Realm.Object {
     primaryKey: "_id",
     properties: {
       _id: "objectId",
-      //This is the type of schemaKey
+      // This is the type of schemaKey
       dataType: "string",
       titleColor: "string",
       subTitleColor: "string",

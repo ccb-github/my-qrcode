@@ -7,7 +7,7 @@ import type Category from "../Seller/Category"
 class Product extends Realm.Object {
   _id: BSON.ObjectId
   name: string
-  category: Category
+  category?: Category
   produceDay: Date
   status: string
   shelfLife: number
@@ -18,6 +18,7 @@ class Product extends Realm.Object {
   checker?: Checker
   checkRecord: CheckRecord
   ownerId: string
+
   static schema = {
     name: "Product",
     primaryKey: "_id",
@@ -27,7 +28,7 @@ class Product extends Realm.Object {
         default: new Realm.BSON.ObjectID(),
       },
       name: "string",
-      category: "string",
+      category: "Category?",
       produceDay: "date",
       status: "string",
       shelfLife: "int",
