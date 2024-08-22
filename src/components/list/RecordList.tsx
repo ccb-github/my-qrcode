@@ -4,9 +4,12 @@ import { type ScanRecord } from "../../type/data"
 
 type RecordListProps = {
   records: readonly ScanRecord[]
-  onToggleRecordStatus: (record: ScanRecord) => void
-  onDeleteRecord: (key: string) => void
-  detailNavigate: (detailInfo: { data: any; type: string }) => void
+  onToggleRecordStatus: (record: ScanRecord) => Promise<void>
+  onDeleteRecord: (key: string) => Promise<void>
+  detailNavigate: (detailInfo: {
+    data: any
+    type: string
+  }) => void | Promise<void>
 }
 
 function RecordList({
@@ -26,9 +29,22 @@ function RecordList({
             <RecordItem
               dataItem={item}
               description={item.content}
-              onToggleRecordStatus={() => onToggleRecordStatus(item)}
-              onDelete={() => onDeleteRecord(item.id)}
-              navigateToDetail={detailNavigate}
+              onToggleRecordStatus={async () => {
+                onToggleRecordStatus(item).catch((error) => {
+                  throw error
+                })
+              }}
+              onDelete={async () => {
+                onDeleteRecord(item.id).catch((error) => {
+                  throw error
+                })
+              }}
+              navigateToDetail={() => {
+                void detailNavigate({
+                  data: item,
+                  type: item.type,
+                })
+              }}
             />
           )
         }}

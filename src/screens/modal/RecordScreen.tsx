@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Alert, Text, View } from "react-native"
 import { useTranslation } from "react-i18next"
-
+import { useUser } from "@realm/react"
 import { type StackScreenProps } from "@react-navigation/stack"
+
 import { RecordList } from "../../components/list/RecordList"
 import { RouteNameMain } from "../../navigation/const"
 import type { MainStackParamList } from "../../type/navigation"
@@ -12,25 +13,15 @@ import {
   imageHistory as imageHistoryKey,
   scanHistory as scanRecordKey,
 } from "../../utils/localStorageConfig.json"
-
 import Photos from "../../components/list/item/Photos"
 import { type ScanRecord } from "../../type/data"
-import { useUser } from "@realm/react"
+
 import { useAsyncMapStorage } from "../../utils/localStorage"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import styled from "styled-components/native"
 
 const { scale } = Dimensions
-
-// interface EmptyIndicationProps {
-//   pressAction: () => void
-// }
 const { useRealm } = RealmContext
-
-/* interface PageSelectorProps {
-  numberOfPages: number
-  setPagenumber: (num: number) => void
-} */
 
 type RecordScreenStackProps = StackScreenProps<
   MainStackParamList,
@@ -80,7 +71,10 @@ export default function RecordScreen({ navigation }: RecordScreenStackProps) {
     padding-right: 0px;
   `
   useEffect(() => {
-    ;(async () => {
+    /**  #Disable this rule manually so the immediate invoke function expression does not get semicolon prefixed 
+    since we know the problem it prevent is not the case here */
+    // eslint-disable-next-line prettier/prettier
+    (async () => {
       try {
         await AsyncStorage.clear()
         // imageHistory.current = await imageHistoryStorage.getMapItem()
@@ -89,6 +83,10 @@ export default function RecordScreen({ navigation }: RecordScreenStackProps) {
         ).map((item) => JSON.parse(item ?? "{}"))
         setLoading(false)
       } catch (error) {
+        if (error instanceof SyntaxError) {
+          Alert.alert(`Syntax error ${error.name}`)
+        }
+        // else if(error instanceof eRR) {}
         console.error(error)
       }
     })().catch((error) => {
@@ -98,7 +96,7 @@ export default function RecordScreen({ navigation }: RecordScreenStackProps) {
   }, [loading])
 
   const handleToggleRecordStatus = useCallback(
-    (record: ScanRecord): void => {
+    async (record: ScanRecord): Promise<void> => {
       console.log("Record")
     },
     [realm],

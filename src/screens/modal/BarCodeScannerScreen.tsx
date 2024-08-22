@@ -14,7 +14,7 @@ import {
 import { clgWrapper } from "../../__test__/helper"
 
 import { queryParamsRegex } from "../../lib/infoFetch"
-import { type RootStackBarCodeScreenProps } from "../../type/navigation"
+import type { MainStackScreenPropsBase } from "../../type/navigation"
 import { useAsyncMapStorage } from "../../utils/localStorage"
 import RealmContext from "../../realm/RealmContext"
 import { useUser } from "@realm/react"
@@ -48,7 +48,7 @@ const HintText = styled(StyledTextByAbsoluteSize)`
 export default function BarCodeScannerScreen({
   navigation,
   route,
-}: RootStackBarCodeScreenProps) {
+}: MainStackScreenPropsBase<RouteNameMain.modalScanner>) {
   const [hasPermission, setHasPermission] = useState<CameraPermission>(null)
   const [scanned, setIsScanned] = useState(false)
   const [isFocused, setIsFocused] = useState(false)

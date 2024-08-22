@@ -4,7 +4,7 @@ import { Divider, List, TextInput } from "react-native-paper"
 import * as WebBrowser from "expo-web-browser"
 import { AntDesignIconWrapper } from "../../components/Icon"
 import { SafeAreaView } from "react-native-safe-area-context"
-import type { RootStackResultScreenProps } from "../../type/navigation"
+import type { MainStackScreenPropsBase } from "../../type/navigation"
 import { RouteNameMain } from "../../navigation/const"
 import { useContext } from "react"
 import DataContext from "../../context/DataContext"
@@ -12,7 +12,7 @@ import DataContext from "../../context/DataContext"
 export default function ResultScreen({
   navigation,
   route,
-}: RootStackResultScreenProps) {
+}: MainStackScreenPropsBase<RouteNameMain.modalResult>) {
   const { t } = useTranslation("result")
   const theme = useColorScheme()
   const { data, type } = route.params

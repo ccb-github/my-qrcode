@@ -7,6 +7,7 @@ class MobileDetailAppearance extends Realm.Object {
   dataType: string
   titleColor: string
   subTitleColor: string
+
   static schema = {
     name: "MobileDetailAppearance",
     primaryKey: "_id",

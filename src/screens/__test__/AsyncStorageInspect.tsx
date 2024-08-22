@@ -10,7 +10,6 @@ import {
   useWindowDimensions,
 } from "react-native"
 import { Divider, List } from "react-native-paper"
-import { useAsyncMapStorage } from "../../utils/localStorage"
 import { SafeAreaView } from "react-native-safe-area-context"
 
 export default function AsyncStorageInspect() {
@@ -21,18 +20,26 @@ export default function AsyncStorageInspect() {
   const allItem = useRef<readonly any[]>([])
 
   useEffect(() => {
-    ;(async () => {
+    // eslint-disable-next-line prettier/prettier
+    (async () => {
       const allKeys = await AsyncStorage.getAllKeys()
       console.log("Allkeys in storage", allKeys)
-      //await testHook.addItem(new Date().getTime().toString(), "file:///data/user/0/com.bioexpo.startwithmanaged/cache/ImagePicker/edfb4033-f6ab-4f28-8dc9-58f7e779310f.jpg");
+      // await testHook.addItem(new Date().getTime().toString(), "file:///data/user/0/com.bioexpo.startwithmanaged/cache/ImagePicker/edfb4033-f6ab-4f28-8dc9-58f7e779310f.jpg");
 
       const allKeyValue = await AsyncStorage.multiGet(allKeys)
 
       allItem.current = allKeyValue
-    })()
-    recordStorage.getItem().then((res) => {
-      res !== null || (records.current = JSON.parse(res))
+    })().catch((error) => {
+      console.error(error)
     })
+    recordStorage
+      .getItem()
+      .then((res) => {
+        res !== null && (records.current = JSON.parse(res))
+      })
+      .catch((error) => {
+        console.error(error)
+      })
   })
   return (
     <SafeAreaView>

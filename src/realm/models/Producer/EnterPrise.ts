@@ -1,5 +1,5 @@
 export class EnterpriseMain extends Realm.Object {
-  _id: string
+  _id: Realm.BSON.ObjectId
   description: string
   creditCode: string
   email: string

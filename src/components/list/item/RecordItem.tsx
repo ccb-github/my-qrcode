@@ -1,68 +1,53 @@
 import { memo } from "react"
-import { Text, Pressable, Platform, StyleSheet } from "react-native"
-import { BSON } from "realm"
+import { Text, Pressable, Alert } from "react-native"
 import { AntDesignIconWrapper } from "../../Icon"
 
-import colors from "../../../style/colors"
 import Dimensions from "../../../style/Dimensions"
-import { ScanRecord } from "../../../type/data"
+import type { ScanRecord } from "../../../type/data"
 import styles from "../../../style/components/recordItem.style"
 
 const { scale } = Dimensions
 console.log(`The scale ${scale}`)
 
-// export interface RecordDataItem {
-//   _id: BSON.ObjectId
-//   description: string,
-//   isVerified: boolean;
-//   createdAt: Date,
-//   location: Location,
-//   url: string,
-// }
-interface RecordItemProps {
+type RecordItemProps = {
   dataItem: ScanRecord
   description: string
   isVerified?: boolean
-  navigateToDetail?: (detailInfo: any) => void
-  onToggleRecordStatus: () => void
-  onDelete?: () => void
-}
-
-function clgWrapper(message: string) {
-  console.log("********Starter of the block*********")
-  console.log(message)
-  console.log("*********Ender of the block**********")
+  navigateToDetail?: (detailInfo: unknown) => Promise<void> | void
+  onToggleRecordStatus: () => Promise<void>
+  onDelete?: () => Promise<void>
 }
 
 function RecordItem({
   dataItem,
-  description,
   isVerified,
   navigateToDetail,
   onDelete,
 }: RecordItemProps) {
-  console.log(`Data in recordItem`, JSON.stringify(dataItem))
   const naviAction =
-    navigateToDetail || (() => alert("No action bind for item click"))
+    navigateToDetail ??
+    (() => {
+      Alert.alert("No action bind for item click")
+    })
   return (
     <Pressable style={[styles.item, { height: 25 * scale }]}>
       <Pressable
         style={[
           styles.status,
-          isVerified && styles.completed,
+          (isVerified ?? false) && styles.completed,
           {
             alignItems: "center",
           },
         ]}
       >
-        {/* <Text style={styles.icon}>{isVerified ? "✓" : "○"}</Text> */}
         <AntDesignIconWrapper name="checkcircle" />
       </Pressable>
       <Pressable
         style={styles.contentContainer}
         onPress={() => {
           console.log("Dataitem in record item", dataItem)
-          naviAction(dataItem.content)
+          // TODO need better handling the async function
+          void naviAction(dataItem.content)
         }}
       >
         <Text numberOfLines={1} style={styles.description}>

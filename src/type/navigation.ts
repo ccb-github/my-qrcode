@@ -40,10 +40,11 @@ export type LoginStackParamList = {
   Reset: { email: string } | undefined
 } & ParamListBase
 
-export type RootStackBarCodeScreenProps = StackScreenProps<
-  MainStackParamList,
-  RouteNameMain.modalScanner
->
+/**
+ * @description Type base for prop of screen in MainStack **Navigator**
+ */
+export type MainStackScreenPropsBase<Screen extends RouteNameMain> =
+  StackScreenProps<MainStackParamList, Screen>
 
 export type RootStackResultScreenProps = StackScreenProps<
   MainStackParamList,
