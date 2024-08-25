@@ -30,7 +30,7 @@ export default {
       projectId: "e843ee88-0ffa-40b6-a7bb-fe4697837606",
     },
   },
-  sdkVersion: "48.0.0",
+  sdkVersion: "50.0.0",
   runtimeVersion: {
     policy: "sdkVersion",
   },
