@@ -1,3 +1,4 @@
+import Realm from "realm"
 class Producer extends Realm.Object {
   static schema = {
     name: "Producer",

@@ -1,3 +1,4 @@
+import Realm from "realm"
 export default class Regulatory extends Realm.Object {
   static schema = {
     name: "Regulatory",
@@ -10,16 +11,18 @@ export default class Regulatory extends Realm.Object {
       address: "string?",
       ownerId: "string",
     },
-    generate: (description?: string) => {
-      const seed = new Realm.BSON.ObjectId()
-      return {
-        _id: seed,
-        description: `Regulatory ${seed.toHexString()}`,
-        creditCode: "fakeCode",
-        email: `${Math.random().toFixed(3)}@domain.com`,
-        createdAt: new Date(),
-        ownerId: "string",
-      }
-    },
+    
+  }
+
+  static generate = (description?: string) => {
+    const seed = new Realm.BSON.ObjectId()
+    return {
+      _id: seed,
+      description: `Regulatory ${seed.toHexString()}`,
+      creditCode: "fakeCode",
+      email: `${Math.random().toFixed(3)}@domain.com`,
+      createdAt: new Date(),
+      ownerId: "string",
+    }
   }
 }

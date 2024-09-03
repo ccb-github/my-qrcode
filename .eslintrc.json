@@ -33,7 +33,7 @@
     "rules": {
       "prettier/prettier": "warn",
       "linebreak-style": ["warn", "unix"],
-      "@typescript-eslint/quotes": "off",
+      "@typescript-eslint/quotes": ["warn", "double"],
       "quotes": ["warn", "double"],
       "no-unreachable": "warn",
       "@typescript-eslint/space-before-function-paren": "off",

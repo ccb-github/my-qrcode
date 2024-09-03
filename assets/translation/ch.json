@@ -1,8 +1,9 @@
 {
 	"Email": "邮箱",
+	"Login": "登錄",
 	"Password": "密码",
 	"forgot-password": "忘记密码?",
-  "Pausing": "暂停",
+    "Pausing": "暂停",
 	"Detail screen": "详细",
 	"Tap to scan again": "点击重新扫描!",
 	"signUp-button-text": "注册",
