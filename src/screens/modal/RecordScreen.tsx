@@ -4,19 +4,19 @@ import { useTranslation } from "react-i18next"
 import { useUser } from "@realm/react"
 import { type StackScreenProps } from "@react-navigation/stack"
 
-import { RecordList } from "../../components/list/RecordList"
-import { RouteNameMain } from "../../navigation/const"
-import type { MainStackParamList } from "../../type/navigation"
-import RealmContext from "../../realm/RealmContext"
-import Dimensions from "../../style/Dimensions"
+import { RecordList } from "#/components/list/RecordList"
+import { RouteNameMain } from "#/navigation/const"
+import type { MainStackParamList } from "#/type/navigation"
+import RealmContext from "#/atlas-app-services/RealmContext"
+import Dimensions from "#/style/Dimensions"
 import {
   imageHistory as imageHistoryKey,
   scanHistory as scanRecordKey,
-} from "../../utils/localStorageConfig.json"
-import Photos from "../../components/list/item/Photos"
-import { type ScanRecord } from "../../type/data"
+} from "#/utils/localStorage.config.json"
+import Photos from "#/components/list/item/Photos"
+import { type ScanRecord } from "#/type/data"
 
-import { useAsyncMapStorage } from "../../utils/localStorage"
+import { useAsyncMapStorage } from "#/utils/localStorage"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import styled from "styled-components/native"
 
@@ -36,10 +36,13 @@ const TopTabBarButton = styled.TouchableOpacity<TopTabBarButtonProps>`
   flex: 1;
   align-items: center;
   border-bottom-color: #000;
-  padding-top: ${(props) => 10 * props.scale};
-  padding-bottom: ${(props) => 10 * props.scale};
-  border-bottom-width: ${(props) =>
-    props.contentView === props.currentView ? 2 : 0};
+  padding-top: ${(props) => 10 * props.scale}px;
+  padding-bottom: ${(props) => 10 * props.scale}px;
+  border-bottom-width: 
+    ${
+      (props) =>
+        props.contentView === props.currentView ? 2 : 0
+    }px;
 `
 const ButtonText = styled.Text<{ $scale: number }>`
   font-family: "SSRegular";
@@ -71,10 +74,7 @@ export default function RecordScreen({ navigation }: RecordScreenStackProps) {
     padding-right: 0px;
   `
   useEffect(() => {
-    /**  #Disable this rule manually so the immediate invoke function expression does not get semicolon prefixed 
-    since we know the problem it prevent is not the case here */
-    // eslint-disable-next-line prettier/prettier
-    (async () => {
+    ;(async () => {
       try {
         await AsyncStorage.clear()
         // imageHistory.current = await imageHistoryStorage.getMapItem()

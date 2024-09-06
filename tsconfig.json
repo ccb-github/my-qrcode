@@ -2,14 +2,13 @@
   "compilerOptions": {
     "jsx": "react-native",
     "strictNullChecks": true,
+    "strict": true,
     "paths": {
       "#/*": [
-        "./src/type/*"
-      ],
-      "&/*": [
         "./src/*"
-      ]
+      ],
     }
   },
-  "extends": "expo/tsconfig.base"
+  "extends": "expo/tsconfig.base",
+  "exclude": ["./dist/*"]
 }

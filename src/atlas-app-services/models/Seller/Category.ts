@@ -12,7 +12,6 @@ export class Category extends Realm.Object {
       _id: "objectId",
       description: "string",
       name: "string",
-
       createdAt: "date",
     },
   }

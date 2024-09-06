@@ -2,13 +2,13 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { Pressable, useWindowDimensions } from "react-native"
 import { AntDesign } from "@expo/vector-icons"
 import { useTranslation } from "react-i18next"
-import { type RootTabParamList } from "../type/navigation"
+import { type RootTabParamList } from "#/type/navigation"
 import { Avatar } from "react-native-paper"
-import { FontAwesomeIconWrapper } from "../components/Icon"
-import SettingScreen from "../screens/tab/SettingScreen"
-import ProfileScreen from "../screens/tab/ProfileScreen"
+import { FontAwesomeIconWrapper } from "#/components/Icon"
+import SettingScreen from "#/screens/tab/SettingScreen"
+import ProfileScreen from "#/screens/tab/ProfileScreen"
 import { IconSetting, RouteNameMain, TabNavigationScreenOptions } from "./const"
-import HomeScreen from "../screens/tab/HomeScreen"
+import HomeScreen from "#/screens/tab/HomeScreen"
 
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to
@@ -19,8 +19,9 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>()
 export default function BottomTabNavigator() {
   const { t } = useTranslation("title")
   const { scale } = useWindowDimensions()
-  const initialRouteName = "TabOne"
+  const initialRouteName: keyof RootTabParamList = "TabOne"
   const getWidth = (base: number) => base * scale
+  
   return (
     <BottomTab.Navigator
       initialRouteName={initialRouteName}
@@ -34,7 +35,7 @@ export default function BottomTabNavigator() {
           tabBarIcon: ({ color }: { color: string }) => (
             <FontAwesomeIconWrapper
               name={IconSetting.TabOne.TabBarIcon}
-              size={getWidth(10)}
+              iconSize={getWidth(10)}
               style={{ color }}
             />
           ),
@@ -47,7 +48,7 @@ export default function BottomTabNavigator() {
                 opacity: pressed ? 0.5 : 1,
               })}
             >
-              <FontAwesomeIconWrapper name="camera-retro" size={getWidth(10)} />
+              <FontAwesomeIconWrapper name="camera-retro" iconSize={getWidth(10)} />
             </Pressable>
           ),
         })}
@@ -73,7 +74,7 @@ export default function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="TabThree"
+        name={"TabThree"}
         component={SettingScreen}
         options={{
           title: t("Setting"),

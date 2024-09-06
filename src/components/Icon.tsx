@@ -4,24 +4,29 @@ import { type TextStyle } from "react-native"
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
-export function FontAwesomeIconWrapper(props: {
-  size: number
+const FontAwesomeIconWrapper: React.FC<{
+  iconSize: number
   name: React.ComponentProps<typeof FontAwesome>["name"]
   style?: TextStyle
-}) {
-  const { style, size, name, ...otherProps } = props
+}> = (props) => {
+  const { style, iconSize, name, ...otherProps } = props
   return (
     <FontAwesome
       name={name}
-      size={size}
+      size={iconSize}
       style={{ ...props.style }}
       {...otherProps}
     />
   )
 }
 
-export function AntDesignIconWrapper(props: {
+
+const AntDesignIconWrapper: React.FC = (props: {
   name: React.ComponentProps<typeof AntDesign>["name"]
-}) {
-  return <AntDesign size={30} {...props} />
+  iconSize: number
+  style?: TextStyle
+}) => {
+  return <AntDesign size={props.iconSize} style={{ ...props.style }}{...props} />
 }
+
+export { FontAwesomeIconWrapper, AntDesignIconWrapper}

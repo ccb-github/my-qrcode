@@ -1,6 +1,6 @@
 import { View, FlatList, StyleSheet } from "react-native"
-import RecordItem from "./item/RecordItem"
-import { type ScanRecord } from "../../type/data"
+import RecordItem from "#/components/list/item/RecordItem"
+import { type ScanRecord } from "#/type/data"
 
 type RecordListProps = {
   records: readonly ScanRecord[]

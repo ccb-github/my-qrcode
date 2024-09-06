@@ -1,12 +1,12 @@
 import { useEffect } from "react"
 import { Text, View, useWindowDimensions } from "react-native"
-import { type BaseFieldProps } from "../../type/props"
+import { type BaseFieldProps } from "#/type/props"
 
 import {
   FieldStyles,
   FieldTextStyles,
-} from "../../style/components/field.style"
-import { StyledFlexColumnView } from "../styled/view"
+} from "#/style/components/field.style"
+import { StyledFlexColumnView } from "#/components/styled/view"
 
 const StringField = (props: BaseFieldProps) => {
   const { name, value, style } = props

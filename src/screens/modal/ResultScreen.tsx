@@ -2,12 +2,12 @@ import { useTranslation } from "react-i18next"
 import { Pressable, useColorScheme, Text } from "react-native"
 import { Divider, List, TextInput } from "react-native-paper"
 import * as WebBrowser from "expo-web-browser"
-import { AntDesignIconWrapper } from "../../components/Icon"
+import { AntDesignIconWrapper } from "#/components/Icon"
 import { SafeAreaView } from "react-native-safe-area-context"
-import type { MainStackScreenPropsBase } from "../../type/navigation"
-import { RouteNameMain } from "../../navigation/const"
+import type { MainStackScreenPropsBase } from "#/type/navigation"
+import { RouteNameMain } from "#/navigation/const"
 import { useContext } from "react"
-import DataContext from "../../context/DataContext"
+import DataContext from "#/context/DataContext"
 
 export default function ResultScreen({
   navigation,

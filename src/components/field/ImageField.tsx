@@ -1,15 +1,15 @@
 import { useWindowDimensions } from "react-native"
 import { Card } from "react-native-paper"
-import { type BaseFieldProps } from "../../type/props"
+import { type BaseFieldProps } from "#/type/props"
 
 import styled from "styled-components/native"
 import {
   StyledFlexColumnView,
   StyledFlexItemView,
   StyledFlexRowView,
-} from "../styled/view"
-import type { ScaleStyledProps } from "../../style/common"
-import { StyledTextByAbsoluteSize } from "../styled/text"
+} from "#/components/styled/view"
+import type { ScaleStyledProps } from "#/style/common"
+import { StyledTextByAbsoluteSize } from "#/components/styled/text"
 import { useTranslation } from "react-i18next"
 
 const ImageFieldContainer = styled(StyledFlexColumnView)<ScaleStyledProps>`
@@ -17,11 +17,11 @@ const ImageFieldContainer = styled(StyledFlexColumnView)<ScaleStyledProps>`
   margin: ${({ scale }) => 10 * scale}px;
 `
 const NameFieldView = styled(StyledFlexRowView)<{ scale: number }>`
-  margin-left: ${({ scale }) => 10 * scale};
-  height: ${({ scale }) => 10 * scale};
+  margin-left: ${({ scale }) => 10 * scale}px;
+  height: ${({ scale }) => 10 * scale}px;
 `
 const ValueFieldView = styled(StyledFlexItemView)`
-  background-color: red;
+  background-color: #f00;
 `
 
 export default function ImageField(props: BaseFieldProps) {

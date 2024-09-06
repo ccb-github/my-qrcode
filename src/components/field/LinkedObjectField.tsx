@@ -1,7 +1,7 @@
 import { View, TouchableOpacity, Text } from "react-native"
-import { type LinkObjectFieldProps } from "../../type/props"
-import { FieldStyles } from "../../style/components/field.style"
-import fonts from "../../style/fonts"
+import { type LinkObjectFieldProps } from "#/type/props"
+import { FieldStyles } from "#/style/components/field.style"
+import fonts from "#/style/fonts"
 
 export default function LinkObjectField<
   Value,

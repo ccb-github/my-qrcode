@@ -1,8 +1,8 @@
-import { MainNavigation } from "./navigation"
+import { type MainStackNavigation } from "#/navigation"
 import Constants, { ExecutionEnvironment } from "expo-constants"
 import { Provider as PaperProvider } from "react-native-paper"
-import "./lib/i18-next"
-import { RealmProvider } from "./realm/PerSudoRealmContext"
+import "#/lib/i18-next"
+import { RealmProvider } from "#/atlas-app-services/PerSudoRealmContext"
 
 // Detect if the run time is expo go, etc does not support some native module.
 const isExpoGo =

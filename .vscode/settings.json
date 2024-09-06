@@ -4,6 +4,7 @@
         "BSON",
         "Pressable",
         "qrcode",
-        "schemaname"
+        "schemaname",
+        "Unsynced"
     ]
 }

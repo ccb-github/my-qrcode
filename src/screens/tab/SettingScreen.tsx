@@ -9,19 +9,20 @@ import {
   Switch,
   ActivityIndicator,
 } from "react-native"
-import RealmContext from "../../realm/RealmContext"
+import RealmContext from "#/atlas-app-services/RealmContext"
 import Constants from "expo-constants"
 import { Divider, List } from "react-native-paper"
-import Dimensions from "../../style/Dimensions"
+import Dimensions from "#/style/Dimensions"
 import { useTranslation } from "react-i18next"
-import LanguagePicker from "../../components/LanguagePicker"
-import realmApp from "../../realm/app"
-import { FontAwesomeIconWrapper } from "../../components/Icon"
-import colors from "../../style/colors"
-import { Product } from "../../realm/models/Producer/Product"
-import { type RootTabScreenProps } from "../../type/props"
-import Button from "../../components/Button"
+import LanguagePicker from "#/components/LanguagePicker"
+import realmApp from "#/atlas-app-services/app"
+import { FontAwesomeIconWrapper } from "#/components/Icon"
+import colors from "#/style/colors"
+import { Product } from "#/atlas-app-services/models/Producer/Product"
+import { type RootTabHomeScreenProps } from "#/type/props"
+import Button from "#/components/Button"
 import styled from "styled-components"
+import { ConnectionState } from "realm"
 
 const { scale } = Dimensions
 const { useRealm } = RealmContext
@@ -53,7 +54,7 @@ const AccountList = () => {
             <List.Item
               key={entry[1].profile.email}
               title={entry[1].profile.email}
-              right={(color) => {
+              right={() => {
                 return entry[1].isLoggedIn ? (
                   <Button mode="contained" onPress={handleLogout}>
                     {t("Log out")}
@@ -104,23 +105,7 @@ function SubscriptionList() {
               key={subscription}
               title={subscription}
               right={({ color, style }) => (
-                // <Pressable
-                //   style={[{ backgroundColor: "red" }, style]}
-                //   onPress={() => {
-                //     realm.subscriptions.update(
-                //       (mutableSubs) => {
-                //         mutableSubs.removeByName(subscription)
-                //       }
-                //     ).catch(
-                //       error => {
-                //         throw error
-                //       }
-                //     )
-                //   }}
-                //   onLongPress={() => {
-                //     console.log(realm.objects("Product").length)
-                //   }}
-                // >
+        
                 <Switch
                   value={subscriptionsState[index]}
                   style={style}
@@ -155,22 +140,23 @@ function SubscriptionList() {
   )
 }
 
-function SettingScreen(props: RootTabScreenProps) {
+function SettingScreen(props: RootTabHomeScreenProps) {
   const realm = useRealm()
 
   const { t } = useTranslation("settings")
-  const connectState = useRef(realm.syncSession?.isConnected())
+  
+  const sessionConnected = useRef(realm.syncSession?.isConnected())
+
   const [isSessionConnected, setIsSessionConnected] = useState(
-    realm.syncSession?.isConnected(),
+    realm.syncSession?.isConnected() ?? false,
   )
   useEffect(() => {
-    realm.syncSession?.addConnectionNotification((newConnectionState) => {
+    const connectionStateChangeNotification = (newConnectionState: ConnectionState) => {
       setIsSessionConnected(newConnectionState === "connected")
-    })
-
-    console.log(realm.schema)
+    }
+    realm.syncSession?.addConnectionNotification(connectionStateChangeNotification)
     return () => {
-      realm.syncSession?.removeConnectionNotification(() => {})
+      realm.syncSession?.removeConnectionNotification(connectionStateChangeNotification)
     }
   }, [realm.syncSession])
   return (
@@ -184,10 +170,10 @@ function SettingScreen(props: RootTabScreenProps) {
           title={t("Connection state")}
           right={({ color }) => (
             <>
-              {connectState.current ?? false ? (
-                <Text style={{ color }}>Connected</Text>
+              {ConnectionState ? (
+                <Text style={{ color }}>{t("Connected")}</Text>
               ) : (
-                <Text style={{ color }}>Disconnect</Text>
+                <Text style={{ color }}>{t("Disconnected")}</Text>
               )}
             </>
           )}
@@ -207,7 +193,7 @@ function SettingScreen(props: RootTabScreenProps) {
           title={`${t("Pausing")} ${t("sync")}`}
           right={() => (
             <TouchableOpacity>
-              <FontAwesomeIconWrapper name="play" size={10 * scale} />
+              <FontAwesomeIconWrapper name="play" iconSize={10 * scale} />
             </TouchableOpacity>
           )}
         />
@@ -218,15 +204,15 @@ function SettingScreen(props: RootTabScreenProps) {
       <List.Section title="Runtime info" titleStyle={{ fontWeight: "bold" }}>
         <List.Item
           title={"Expo version"}
-          right={({ color }) => <Text>{Constants.expoRuntimeVersion}</Text>}
+          right={({ color }) => <Text style={{color}}>{Constants.expoRuntimeVersion ?? "Empty"}</Text>}
         />
         <List.Item
           title={"Expo Go version"}
-          right={({ color }) => <Text>{Constants.expoVersion}</Text>}
+          right={({ color }) => <Text style={{color}}>{Constants.expoVersion}</Text>}
         />
         <List.Item
           title={"Device name"}
-          right={({ color }) => <Text>{Constants.deviceName}</Text>}
+          right={({ color }) => <Text style={{color}}>{Constants.deviceName}</Text>}
         />
         <List.Item
           title={"Debug mode"}

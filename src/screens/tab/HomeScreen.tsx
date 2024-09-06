@@ -7,15 +7,15 @@ import {
 } from "react-native"
 import { Searchbar } from "react-native-paper"
 import { type FontAwesome } from "@expo/vector-icons"
-import { FontAwesomeIconWrapper } from "../../components/Icon"
-import { RouteNameMain } from "../../navigation/const"
+import { FontAwesomeIconWrapper } from "#/components/Icon"
+import { RouteNameMain } from "#/navigation/const"
 import { useTranslation } from "react-i18next"
-import { type RootTabHomeScreenProps } from "../../type/props"
+import { type RootTabHomeScreenProps } from "#/type/props"
 import {
   StyledFlexColumnView,
   StyledFlexRowView,
   StyledSafeAreaView,
-} from "../../components/styled/view"
+} from "#/components/styled/view"
 import styled, { css } from "styled-components/native"
 
 const NavigationAreaContainer = styled(StyledFlexColumnView)<{
@@ -71,7 +71,7 @@ export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
       {iconName !== undefined ? (
         <FontAwesomeIconWrapper
           name={iconName}
-          size={15 * scale}
+          iconSize={15 * scale}
           style={{ marginRight: 5 }}
         />
       ) : null}

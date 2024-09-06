@@ -8,6 +8,8 @@ import {
   Pressable,
   ScrollView,
   useWindowDimensions,
+  TouchableHighlight,
+  TouchableOpacity,
 } from "react-native"
 import { Divider, List } from "react-native-paper"
 import { SafeAreaView } from "react-native-safe-area-context"
@@ -23,7 +25,7 @@ export default function AsyncStorageInspect() {
     // eslint-disable-next-line prettier/prettier
     (async () => {
       const allKeys = await AsyncStorage.getAllKeys()
-      console.log("Allkeys in storage", allKeys)
+      console.log("All keys in storage", allKeys)
       // await testHook.addItem(new Date().getTime().toString(), "file:///data/user/0/com.bioexpo.startwithmanaged/cache/ImagePicker/edfb4033-f6ab-4f28-8dc9-58f7e779310f.jpg");
 
       const allKeyValue = await AsyncStorage.multiGet(allKeys)
@@ -49,28 +51,26 @@ export default function AsyncStorageInspect() {
             alignItems: "center",
             padding: 10 * scale,
             width: "100%",
-            backgroundColor: "blue",
           }}
         >
-          <Pressable
-            style={{ backgroundColor: "blue" }}
+          <TouchableHighlight
+            style={{ backgroundColor: "blue", borderRadius: 5, padding: 10 }}
             onPress={() => {
               setRefreshTime(refreshTime + 1)
             }}
           >
             <Text>Refresh</Text>
-          </Pressable>
+          </TouchableHighlight>
         </View>
         <View
           style={{
             alignItems: "center",
-            backgroundColor: "red",
             padding: 10 * scale,
-            height: 40,
             width: "100%",
           }}
         >
-          <Pressable
+          <TouchableOpacity
+            style={{ backgroundColor: "blue", borderRadius: 5, padding: 10 }}
             onPress={() => {
               AsyncStorage.clear()
                 .then((res) => {
@@ -82,7 +82,7 @@ export default function AsyncStorageInspect() {
             }}
           >
             <Text>Clear</Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
         <List.Section title={"All item in storage"}>
           {allItem.current?.map((item) => (

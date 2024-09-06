@@ -2,32 +2,36 @@ import { createStackNavigator } from "@react-navigation/stack"
 import { useEffect } from "react"
 import { Pressable, Text } from "react-native"
 
-import BottomTabNavigator from "./BottomTabNavigator"
-import RegisterScreen from "../screens/login/RegisterScreen"
-import LoginScreen from "../screens/login/LoginScreen"
-import DetailScreen from "../screens/modal/DetailScreen"
-import BarCodeScannerScreen from "../screens/modal/BarCodeScannerScreen"
-import ResetPasswordScreen from "../screens/login/ResetPasswordScreen"
-import RecordScreen from "../screens/modal/RecordScreen"
-import ResultScreen from "../screens/modal/ResultScreen"
-import FigmaSampleScreen from "../screens/FigmaSampleScreen"
-import AsyncStorageInspect from "../screens/__test__/AsyncStorageInspect"
+import BottomTabNavigator from "#/navigation/BottomTabNavigator"
+import RegisterScreen from "#/screens/login/RegisterScreen"
+import LoginScreen from "#/screens/login/LoginScreen"
+import DetailScreen from "#/screens/modal/DetailScreen"
+import BarCodeScannerScreen from "#/screens/modal/BarCodeScannerScreen"
+import ResetPasswordScreen from "#/screens/login/ResetPasswordScreen"
+import RecordScreen from "#/screens/modal/RecordScreen"
+import ResultScreen from "#/screens/modal/ResultScreen"
+import FigmaSampleScreen from "#/screens/FigmaSampleScreen"
+import AsyncStorageInspect from "#/screens/__test__/AsyncStorageInspect"
 
 import {
   imageHistory as imageHistoryKey,
   scanHistory as scanRecordKey,
-} from "../utils/localStorageConfig.json"
+} from "#/utils/localStorage.config.json"
 import { useAsyncStorage } from "@react-native-async-storage/async-storage"
-import { RouteNameLogin, RouteNameMain } from "./const"
+import { RouteNameLogin, RouteNameMain } from "#/navigation/const"
 
 import { useTranslation } from "react-i18next"
-import type { LoginStackParamList } from "../type/navigation"
+import type { LoginStackParamList, MainStackParamList } from "#/type/navigation"
 import { useUser } from "@realm/react"
+import RealmContext from "#/realm/RealmContext"
+import realmApp from "#/realm/app"
 
 type LoginNavigationProps = {
   initialRouteName?: string
 }
-const MainStack = createStackNavigator()
+
+
+const MainStack = createStackNavigator<MainStackParamList>()
 const LoginStack = createStackNavigator<LoginStackParamList>()
 
 export function LoginStackNavigation(
@@ -63,6 +67,7 @@ export function MainStackNavigation() {
 
   useEffect(() => {
     ;(async () => {
+    
       const imageHistorys = await imageHistoryStorage.getItem()
       const recordHistorys = await recordHistoryStorage.getItem()
       console.log(imageHistorys, recordHistorys)
@@ -97,13 +102,16 @@ export function MainStackNavigation() {
         options={{
           title: t("Records"),
         }}
-        name={"Record"}
+        name={RouteNameMain.record}
         component={RecordScreen}
       />
-      <MainStack.Group screenOptions={{ presentation: "transparentModal" }}>
+      <MainStack.Group screenOptions={{ presentation: "modal" }}>
         <MainStack.Screen name={"FigmaTest"} component={FigmaSampleScreen} />
         <MainStack.Screen
           name={RouteNameMain.storageInspect}
+          options={{
+            title: t("Storage"),
+          }}
           component={AsyncStorageInspect}
         />
       </MainStack.Group>

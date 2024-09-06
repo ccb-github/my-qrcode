@@ -1,10 +1,10 @@
 import { memo } from "react"
 import { Text, Pressable, Alert } from "react-native"
-import { AntDesignIconWrapper } from "../../Icon"
+import { AntDesignIconWrapper } from "#/components/Icon"
 
-import Dimensions from "../../../style/Dimensions"
-import type { ScanRecord } from "../../../type/data"
-import styles from "../../../style/components/recordItem.style"
+import Dimensions from "#/style/Dimensions"
+import type { ScanRecord } from "#/type/data"
+import styles from "#/style/components/recordItem.style"
 
 const { scale } = Dimensions
 console.log(`The scale ${scale}`)

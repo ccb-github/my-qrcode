@@ -2,18 +2,18 @@ import { StatusBar } from "expo-status-bar"
 import { useEffect, useRef, useState } from "react"
 import { ScrollView, Text, useWindowDimensions } from "react-native"
 import { Chip } from "react-native-paper"
-import i18n from "../../lib/i18-next"
+import i18n from "#/lib/i18-next"
 import { useTranslation } from "react-i18next"
-import { CheckerDetail } from "../../components/detail/CheckerDetail"
+import { CheckerDetail } from "#/components/detail/CheckerDetail"
 import styled from "styled-components/native"
-import { StyledFlexRowView } from "../../components/styled/view"
-import { type Checker } from "../../realm/models/Regulatory/Checker"
-import { EnterpriseDetail } from "../../components/detail/EnterpriseDetail"
-import { ProductDetail } from "../../components/detail/ProductDetail"
-import { StyledTextByAbsoluteSize } from "../../components/styled/text"
+import { StyledFlexRowView } from "#/components/styled/view"
+import { type Checker } from "#/atlas-app-services/models/Regulatory/Checker"
+import { EnterpriseDetail } from "#/components/detail/EnterpriseDetail"
+import { ProductDetail } from "#/components/detail/ProductDetail"
+import { StyledTextByAbsoluteSize } from "#/components/styled/text"
 import type { StackScreenProps } from "@react-navigation/stack"
-import type { RouteNameMain } from "../../navigation/const"
-import type { MainStackParamList } from "../../type/navigation"
+import type { RouteNameMain } from "#/navigation/const"
+import type { MainStackParamList } from "#/type/navigation"
 
 export type RootStackDetailScreenProps = StackScreenProps<
   MainStackParamList,
@@ -25,7 +25,7 @@ export default function DetailScreen({ route }: RootStackDetailScreenProps) {
   const { scale } = useWindowDimensions()
 
   const contentTabStackRef = useRef<Set<string>>(new Set())
-  const cacheDataRef = useRef({})
+  const cacheDataRef = useRef<Record<string, unknown>>({})
   const [type, setType] = useState<string | null>(null)
   const FullScreenContainer = styled.SafeAreaView`
     flex-direction: column;
@@ -40,14 +40,16 @@ export default function DetailScreen({ route }: RootStackDetailScreenProps) {
   useEffect(() => {
     console.log("DetailScreen mounted")
 
-    refreshData(route.params)
+    refreshData(route.params as {
+      type: string;
+      data: Record<string, unknown>;
+    } )
   }, [])
 
   /**
-   *refresh the data in screen
-   *
+   *refresh the rendering data in screen(Mainly for switch to linked data)
    */
-  const refreshData = (newData: { type: string; data: unknown }) => {
+  const refreshData = (newData: { type: string; data: Record<string, unknown> }) => {
     console.log("Refresh function", JSON.stringify(newData))
     console.log("This is the data now", newData.data)
     cacheDataRef.current[newData.type] = newData.data

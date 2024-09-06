@@ -6,11 +6,11 @@ import {
   type GestureResponderEvent,
 } from "react-native"
 
-import Dimensions from "../style/Dimensions"
+import Dimensions from "#/style/Dimensions"
 import { type FontAwesome } from "@expo/vector-icons"
 import * as ImagePicker from "expo-image-picker"
-import { type FloatToolbarProps } from "../type/props"
-import { FontAwesomeIconWrapper } from "./Icon"
+import { type FloatToolbarProps } from "#/type/props"
+import { FontAwesomeIconWrapper } from "#/components/Icon"
 import { useTranslation } from "react-i18next"
 import { type PropsWithChildren, useEffect } from "react"
 import styled from "styled-components/native"
@@ -18,12 +18,12 @@ import styled from "styled-components/native"
 const { scale } = Dimensions
 
 const BottomToolbarView = styled.View`
-  background-color: "white";
   position: absolute;
   padding: ${5 * scale}px;
   width: 100%;
-  bottom: 0;
-  flex-direction: "row";
+  bottom: 0px;
+  align-items: center;
+  flex-direction: row;
 `
 const ToolbarIconView = styled.Pressable`
   flex: 1;
@@ -44,7 +44,7 @@ const ToolbarIcon = ({
     style={{ flex: 1, alignItems: "center", ...style }}
     onPress={onPress}
   >
-    <FontAwesomeIconWrapper name={iconName} size={20 * scale} />
+    <FontAwesomeIconWrapper name={iconName} iconSize={20 * scale} />
   </ToolbarIconView>
 )
 
@@ -90,7 +90,7 @@ export default function BottomToolbar({
     console.log("This view rendered")
   }, [])
   return (
-    <BottomToolbarView>
+    <BottomToolbarView style={style}>
       <ToolbarIcon scale={scale} iconName="xing" />
       <ToolbarIcon scale={scale} iconName={"youtube-play"} />
       <ToolbarIcon scale={scale} iconName={"image"} onPress={pickImage} />

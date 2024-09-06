@@ -1,7 +1,7 @@
 import type { ViewStyle, TextStyle } from "react-native"
-import colors from "./colors"
+import colors from "#/style/colors"
 type StyleFunction = (
-  option: Record<string, string | boolean | number | undefined | null>,
+  option: Record<string, string>
 ) => ViewStyle | TextStyle
 
 const screenStyleByTheme: StyleFunction = ({

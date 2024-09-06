@@ -1,8 +1,8 @@
 import { Text, View, useWindowDimensions } from "react-native"
-import { type BaseFieldProps } from "../../type/props"
+import { type BaseFieldProps } from "#/type/props"
 
-import Dimension from "../../style/Dimensions"
-import { FieldStyles } from "../../style/components/field.style"
+import Dimension from "#/style/Dimensions"
+import { FieldStyles } from "#/style/components/field.style"
 
 // TODO empty field
 const { getFontSize } = Dimension

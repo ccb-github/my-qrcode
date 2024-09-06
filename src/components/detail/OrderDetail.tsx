@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next"
 import { List } from "react-native-paper"
-import type { OrderMain } from "../../realm/models/Customer/Order"
-import { StringField, DateField } from "../field"
+import type { OrderMain } from "#/atlas-app-services/models/Customer/Order"
+import { StringField, DateField } from "#/components/field"
 
 const OrderDetail = ({ data }: { data: OrderMain }) => {
   console.log(`Data inside OrderDetail ${JSON.stringify(data)}`)

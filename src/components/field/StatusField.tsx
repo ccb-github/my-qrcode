@@ -1,6 +1,6 @@
-import { type BaseFieldProps } from "../../type/props"
+import { type BaseFieldProps } from "#/type/props"
 
-import StringField from "./StringField"
+import StringField from "#/components/field/StringField"
 
 /**
  * @description StatusField is used to display a typical status field, etc (In progress, finished)

@@ -1,7 +1,7 @@
-import { StringField, DateField, ImageField } from "../field"
+import { StringField, DateField, ImageField } from "#/components/field"
 import { useTranslation } from "react-i18next"
-import { type EnterpriseMain } from "../../realm/models/Producer/EnterPrise"
-import { type DetailViewProps } from "../../type/props"
+import { type EnterpriseMain } from "#/atlas-app-services/models/Producer/EnterPrise"
+import { type DetailViewProps } from "#/type/props"
 
 /**
  * Description

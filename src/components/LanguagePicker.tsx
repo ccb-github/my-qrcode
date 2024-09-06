@@ -1,6 +1,27 @@
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
-import { Modal, View, Text, Pressable, StyleSheet } from "react-native"
+import { Modal, View, Text, Pressable, StyleSheet, Alert } from "react-native"
+import styled from "styled-components/native"
+import { StyledTextByAbsoluteSize } from "./styled/text"
+import { StyledFlexRowView } from "./styled/view"
+
+const CenteredText = styled(StyledTextByAbsoluteSize)`
+  text-align: center
+`
+
+const ModalView = styled(View)`
+  background-color: white;
+  border-radius: 10px;
+  padding: 80px;
+  justify-content: center;
+  align-items: center;
+  shadow-color: black;
+  /* Shadow offset*/
+  shadow-opacity: 0.25;
+  shadow-radius: 4px;
+  //elevation: 5;
+
+`
 
 function LanguagePicker() {
   const [modalVisible, setModalVisible] = useState(false)
@@ -28,11 +49,13 @@ function LanguagePicker() {
     <Pressable
       style={styles.button}
       onPress={() => {
-        i18n.changeLanguage(name).catch((error) => {
+        i18n.changeLanguage(name).then( () => {
+          Alert.alert(i18n.language)
+        }).catch((error) => {
           console.error(error)
           throw error
         }) // changes the app language
-
+      
         setModalVisible(!modalVisible)
       }}
     >
@@ -51,11 +74,11 @@ function LanguagePicker() {
         }}
       >
         <View style={styles.centeredView}>
-          <View style={styles.modalView}>
+          <ModalView>
             {languages.map((lang) => (
               <LanguageItem {...lang} key={lang.name} />
             ))}
-          </View>
+          </ModalView>
         </View>
       </Modal>
       <Pressable
@@ -65,7 +88,7 @@ function LanguagePicker() {
         }}
       >
         {/* displays the current app language */}
-        <Text style={styles.textStyle}>{languageDict[i18n.language]}</Text>
+        <CenteredText size={ 15}>{languageDict[i18n.language]}</CenteredText>
       </Pressable>
     </View>
   )

@@ -1,5 +1,5 @@
 import styled from "styled-components/native"
-import { type ScaleStyledProps } from "../../style/common"
+import { type ScaleStyledProps } from "#/style/common"
 
 export const StyledBigTextWithScale = styled.Text<{ scale: number }>`
   font-size: ${({ scale }) => scale * 20}px;

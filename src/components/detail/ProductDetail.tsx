@@ -1,12 +1,12 @@
 import { Text } from "react-native"
 import { Divider } from "react-native-paper"
-import { StringField, DateField, LinkObjectField } from "../field"
+import { StringField, DateField, LinkObjectField } from "#/components/field"
 import { useTranslation } from "react-i18next"
-import { type EnterpriseMain } from "../../realm/models/Producer/EnterPrise"
-import type { Product } from "../../realm/models/Producer/Product"
-import type { DetailViewProps } from "../../type/props"
+import { type EnterpriseMain } from "#/atlas-app-services/models/Producer/EnterPrise"
+import type { Product } from "#/atlas-app-services/models/Producer/Product"
+import type { DetailViewProps } from "#/type/props"
 import { ObjectId } from "bson"
-import { HintText } from "../styled/text"
+import { HintText } from "#/components/styled/text"
 import styled from "styled-components/native"
 
 const WhiteBackgroundView = styled.View`

@@ -4,7 +4,7 @@
  */
 import type { StackScreenProps } from "@react-navigation/stack"
 import type { ParamListBase } from "@react-navigation/routers"
-import { type RouteNameLogin, type RouteNameMain } from "../navigation/const"
+import { type RouteNameLogin, type RouteNameMain } from "#/navigation/const"
 import { type NavigatorScreenParams } from "@react-navigation/native"
 
 declare global {
@@ -23,7 +23,6 @@ export type RootTabParamList = {
 } & ParamListBase &
   Record<(typeof TabScreenNameList)[number], unknown>
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export type MainStackParamList = {
   Home: undefined
   Detail: { data: unknown; type: string }

@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react"
 import { useWindowDimensions } from "react-native"
 
-import StringField from "./StringField"
-import { type ObjectFieldProps } from "../../type/props"
+import StringField from "#/components/field/StringField"
+import { type ObjectFieldProps } from "#/type/props"
 import styled from "styled-components/native"
-import { StyledFlexRowView } from "../styled/view"
-import { StyledTextByAbsoluteSize } from "../styled/text"
+import { StyledFlexRowView } from "#/components/styled/view"
+import { StyledTextByAbsoluteSize } from "#/components/styled/text"
 
 const getFontSize = (n: number) => n
 const FirstRowView = styled(StyledFlexRowView)`
@@ -67,11 +67,14 @@ const ObjectField = (props: ObjectFieldProps) => {
   const [expanded, setExpanded] = useState(false)
   const { scale } = useWindowDimensions()
 
+  /**
+   * Develop purpose
+   */
   useEffect(() => {
     console.group()
     console.log("******Start for in loop ObjectField******")
     for (const prop in value) {
-      console.log(value[prop])
+      console.log(value[prop as keyof typeof value])
     }
     console.log("****************End**********************")
   }, [])
@@ -93,21 +96,21 @@ const ObjectField = (props: ObjectFieldProps) => {
       </FirstRowView>
       <ValueFieldRowView scale={scale} key={"value"}>
         {expanded
-          ? Object.keys(value).map((key) => {
-              switch (typeof value[key]) {
+          ? Object.entries(value).map(([key, val]) => {
+              switch (typeof val) {
                 case "string":
-                  return <StringField key={key} name={key} value={value[key]} />
+                  return <StringField key={key} name={key} value={val} />
                 case "object":
                   return (
                     <ObjectField
                       name={key}
                       key={key}
-                      value={value[key]}
+                      value={val ? val : {}}
                       style={{ width: "100%" }}
                     />
                   )
                 default:
-                  return <StringField name={key} value={value[key]} />
+                  return <StringField name={key} value={val} />
               }
             })
           : null}

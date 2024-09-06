@@ -2,13 +2,14 @@ import { type BottomTabScreenProps } from "@react-navigation/bottom-tabs"
 import { type CompositeScreenProps } from "@react-navigation/native"
 import { type StackScreenProps } from "@react-navigation/stack"
 import { type TextStyle, type ViewStyle } from "react-native/types"
-import { type RootTabParamList, type MainStackParamList } from "./navigation"
+
 import { type FontAwesome, type AntDesign } from "@expo/vector-icons"
-import { type RouteNameMain } from "../navigation/const"
+import { type RouteNameMain } from "#/navigation/const"
+import { MainStackParamList, RootTabParamList, } from "#/type/navigation"
 
 // TODO move all props type to this file
-export type RootTabScreenProps = CompositeScreenProps<
-  BottomTabScreenProps<RootTabParamList, RouteNameMain.tab>,
+export type RootTabSettingScreenProps = CompositeScreenProps<
+  BottomTabScreenProps<RootTabParamList, "TabThree">,
   StackScreenProps<MainStackParamList>
 >
 export type RootTabHomeScreenProps = CompositeScreenProps<
@@ -67,7 +68,7 @@ export type TextAreaFieldProps = {
 
 export type ObjectFieldProps = {
   name: string
-  value: object
+  value: Record<string, unknown>
   style: ViewStyle
 }
 export type LinkObjectFieldProps<

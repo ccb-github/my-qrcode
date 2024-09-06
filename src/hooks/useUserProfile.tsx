@@ -1,6 +1,6 @@
 import { useUser } from "@realm/react"
 import { useEffect, useState } from "react"
-import { type UserProfile } from "../type/user"
+import { type UserProfile } from "#/type/user"
 
 export default function useUserProfile() {
   const user = useUser()

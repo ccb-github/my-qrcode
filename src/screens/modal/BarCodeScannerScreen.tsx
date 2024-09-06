@@ -6,24 +6,24 @@ import {
 } from "expo-barcode-scanner"
 import { useTranslation } from "react-i18next"
 
-import Dimensions from "../../style/Dimensions"
+import Dimensions from "#/style/Dimensions"
 import {
   scanHistory,
   fetchUrlPrefix,
-} from "../../utils/localStorageConfig.json"
-import { clgWrapper } from "../../__test__/helper"
+} from "#/utils/localStorage.config.json"
+import { clgWrapper } from "#/__test__/helper"
 
-import { queryParamsRegex } from "../../lib/infoFetch"
-import type { MainStackScreenPropsBase } from "../../type/navigation"
-import { useAsyncMapStorage } from "../../utils/localStorage"
-import RealmContext from "../../realm/RealmContext"
+import { queryParamsRegex } from "#/lib/infoFetch"
+import type { MainStackScreenPropsBase } from "#/type/navigation"
+import { useAsyncMapStorage } from "#/utils/localStorage"
+import RealmContext from "#/atlas-app-services/RealmContext"
 import { useUser } from "@realm/react"
-import DataContext from "../../context/DataContext"
-import { RouteNameMain } from "../../navigation/const"
+import DataContext from "#/context/DataContext"
+import { RouteNameMain } from "#/navigation/const"
 import styled from "styled-components/native"
-import { StyledTextByAbsoluteSize } from "../../components/styled/text"
-import { StyledFlexRowView } from "../../components/styled/view"
-import BottomToolbar from "../../components/BottomToolbar"
+import { StyledTextByAbsoluteSize } from "#/components/styled/text"
+import { StyledFlexRowView } from "#/components/styled/view"
+import BottomToolbar from "#/components/BottomToolbar"
 
 const { scale } = Dimensions
 const { useRealm } = RealmContext
@@ -34,8 +34,6 @@ type CameraPermission = null | boolean
 const ScanAgainButton = styled.TouchableOpacity``
 const UnFocusedText = styled(StyledTextByAbsoluteSize)``
 const ContainerView = styled(StyledFlexRowView)<{ height: number }>`
-  border-color: red;
-  border-width: 4px;
   height: ${(props) => props.height - 20}px;
   margin-top: 0px;
 `
@@ -62,7 +60,6 @@ export default function BarCodeScannerScreen({
   const scanHistoryStorage = useAsyncMapStorage(`${scanHistory}-${user?.id}`)
   const { t } = useTranslation("barcode")
   const { height } = useWindowDimensions()
-  // const tabHeight = getTabBarHeight()
 
   useEffect(() => {
     navigation.setOptions({
@@ -166,6 +163,7 @@ export default function BarCodeScannerScreen({
         })
       }
     } catch (error) {
+      
       switch (error?.code) {
         case "ERR_IMAGE_RETRIEVAL":
           Alert.alert("This image can not be retrieve")
@@ -174,6 +172,7 @@ export default function BarCodeScannerScreen({
           Alert.alert("Unknown or no error.code")
       }
       throw new Error(error)
+      
     }
   }
   const getQueryParams = (url: Url) => {
@@ -269,7 +268,7 @@ export default function BarCodeScannerScreen({
           <BottomToolbar
             afterPickCallBack={scanFromImageURLAsync}
             style={{
-              height: 50 * scale,
+              height: 50 * scale
             }}
           />
         </ContainerView>

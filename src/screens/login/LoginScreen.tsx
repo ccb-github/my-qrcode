@@ -9,16 +9,17 @@ import {
   Alert,
   useWindowDimensions,
 } from "react-native"
-import realmApp from "../../realm/app"
+import realmApp from "#/atlas-app-services/app"
+import { Realm } from "@realm/react"
 import { useTranslation } from "react-i18next"
-import LanguagePicker from "../../components/LanguagePicker"
-import { type LoginStackLoginScreenProps } from "../../type/navigation"
+import LanguagePicker from "#/components/LanguagePicker"
+import { type LoginStackLoginScreenProps } from "#/type/navigation"
 import styled from "styled-components/native"
-import { StyledTextByAbsoluteSize } from "../../components/styled/text"
-import { StyledFlexColumnView } from "../../components/styled/view"
+import { StyledTextByAbsoluteSize } from "#/components/styled/text"
+import { StyledFlexColumnView } from "#/components/styled/view"
 
-import fonts from "../../style/fonts"
-import { type ScaleStyledProps } from "../../style/common"
+import fonts from "#/style/fonts"
+import { type ScaleStyledProps } from "#/style/common"
 
 const ScreenContainer = styled(StyledFlexColumnView)`
   flex-direction: column;

@@ -1,9 +1,9 @@
 import { Text, View, TextInput } from "react-native"
-import { type TextAreaFieldProps } from "../../type/props"
+import { type TextAreaFieldProps } from "#/type/props"
 
-import Dimension from "../../style/Dimensions"
-import { FieldStyles } from "../../style/components/field.style"
-import { StyledFlexColumnView } from "../styled/view"
+import Dimension from "#/style/Dimensions"
+import { FieldStyles } from "#/style/components/field.style"
+import { StyledFlexColumnView } from "#/components/styled/view"
 
 // TODO empty field
 const { getFontSize } = Dimension

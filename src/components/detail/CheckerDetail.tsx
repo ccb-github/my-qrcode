@@ -1,7 +1,7 @@
-import { StringField } from "../field"
+import { StringField } from "#/components/field"
 import { useTranslation } from "react-i18next"
-import { type Checker } from "../../realm/models/Regulatory/Checker"
-import { type DetailViewProps } from "../../type/props"
+import { type Checker } from "#/atlas-app-services/models/Regulatory/Checker"
+import { type DetailViewProps } from "#/type/props"
 
 export const CheckerDetail = ({ data }: DetailViewProps<Checker>) => {
   console.log(`Data inside CheckerDetail ${JSON.stringify(data)}`)

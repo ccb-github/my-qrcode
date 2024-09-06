@@ -18,7 +18,6 @@ export const realmFileBehavior: OpenRealmBehaviorConfiguration = {
 }
 
 export const config = {
-  deleteRealmIfMigrationNeeded: true,
   schema: [
     Category,
     ...CheckerSchemaList,

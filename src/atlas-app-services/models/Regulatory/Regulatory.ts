@@ -7,7 +7,7 @@ export default class Regulatory extends Realm.Object {
       _id: "objectId",
       description: "string",
       creditCode: "string",
-      name: "string?",
+      name: "string",
       address: "string?",
       ownerId: "string",
     },
@@ -18,6 +18,7 @@ export default class Regulatory extends Realm.Object {
     const seed = new Realm.BSON.ObjectId()
     return {
       _id: seed,
+      name: `${seed.toHexString()} Name`,
       description: `Regulatory ${seed.toHexString()}`,
       creditCode: "fakeCode",
       email: `${Math.random().toFixed(3)}@domain.com`,

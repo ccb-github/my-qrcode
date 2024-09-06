@@ -2,8 +2,8 @@ import { memo } from "react"
 import { Text, Pressable, Platform, StyleSheet } from "react-native"
 import { type BSON } from "realm"
 
-import colors from "../style/colors"
-import Dimensions from "../style/Dimensions"
+import colors from "#/style/colors"
+import Dimensions from "#/style/Dimensions"
 
 const { scale } = Dimensions
 

@@ -1,11 +1,11 @@
 import { Text, View, useWindowDimensions } from "react-native"
 
-import { FieldTextStyles } from "../../style/components/field.style"
+import { FieldTextStyles } from "#/style/components/field.style"
 import {
   StyledFlexItemView,
   StyledFlexColumnView,
   StyledFlexRowView,
-} from "../styled/view"
+} from "#/components/styled/view"
 import styled from "styled-components/native"
 
 const NameFieldView = styled(StyledFlexRowView)<{ scale: number }>`

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-import { type ConnectionState } from "realm"
+import Realm, { type ConnectionState } from "realm"
 
 export default function useSession(realm: Realm) {
   const [syncSessionConnected, setSyncSessionConnected] = useState<

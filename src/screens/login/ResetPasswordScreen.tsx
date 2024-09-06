@@ -9,10 +9,11 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native"
-import Dimensions from "../../style/Dimensions"
-import { RouteNameLogin } from "../../navigation/const"
-import { type LoginStackResetPasswordScreenProps } from "../../type/navigation"
+import Dimensions from "#/style/Dimensions"
+import { RouteNameLogin } from "#/navigation/const"
+import { type LoginStackResetPasswordScreenProps } from "#/type/navigation"
 
 const { scale } = Dimensions
 
@@ -34,8 +35,9 @@ export default function ResetPasswordScreen({
       await realmApp.emailPasswordAuth.sendResetPasswordEmail({ email })
       alert("password-reset-email-sended")
     } catch (error) {
-      alert(error?.message)
-      console.log("Reset password error")
+      if(hasMessageProp(error)){
+        Alert.alert(error.message)
+      }
       console.error("Maybe", error)
     }
   }
