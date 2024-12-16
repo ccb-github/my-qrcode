@@ -4,7 +4,7 @@
   "description": "This project start from expo managed flow to development build",
   "scripts": {
     "start": "npx expo start --dev-client",
-    "android": "expo start --android",
+    "android": "npx expo start --android",
     "test": "jest",
     "ios": "expo start --ios",
     "web": "expo start --web",

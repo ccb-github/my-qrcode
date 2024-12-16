@@ -24,7 +24,7 @@ import { optionalStylePropToCssStyle } from "#/components/styled/utilFunction"
 import { useApp } from "@realm/react"
 import RealmContext from "#/atlas-app-services/RealmContext"
 import realmApp from "#/atlas-app-services/app"
-import React, { useEffect } from "react"
+import { useEffect } from "react"
 import useUserProfile from "#/hooks/useUserProfile"
 
 
@@ -37,7 +37,6 @@ const NavigationAreaContainer = styled(StyledFlexColumnView)<{
   background-color: #f00;
   ${(props) => optionalStylePropToCssStyle("height", props.height + "px")};
 `
-
 const NavigationButtonView = styled.TouchableOpacity`
   aspect-ratio: 3 / 2;
   border-radius: 7px;
@@ -59,21 +58,21 @@ export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
   useEffect(() => {
     Alert.alert(JSON.stringify(result))
   }, [loaded])
+  
   /*
    *  TODO unused code
    *  const coolMusic = "http://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3"
    *  const [play, pause, stop, data] = useSound(coolMusic);
-   */
-
-  const NavigationButton = ({
-    iconName,
-    text,
-    onPress,
-  }: {
+   */ 
+  const NavigationButton: React.FC<{
     iconName?: React.ComponentProps<typeof FontAwesome>["name"]
     text: string
     onPress: (event: GestureResponderEvent) => void
-  })  => (
+  }> = ({
+    iconName,
+    text,
+    onPress,
+  }) => (
     <NavigationButtonView onPress={onPress}>
       {iconName !== undefined ? (
         <FontAwesomeIconWrapper

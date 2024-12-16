@@ -11,4 +11,4 @@
   },
   "extends": "expo/tsconfig.base",
   "exclude": ["./dist/*"]
-}
+}     

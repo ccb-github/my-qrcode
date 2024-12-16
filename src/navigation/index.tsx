@@ -24,7 +24,6 @@ import { useTranslation } from "react-i18next"
 import type { LoginStackParamList, MainStackParamList } from "#/type/navigation"
 import { useUser } from "@realm/react"
 
-
 type LoginNavigationProps = {
   initialRouteName?: string
 }

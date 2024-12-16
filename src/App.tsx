@@ -4,9 +4,8 @@ import { Provider as PaperProvider } from "react-native-paper"
 
 import { NavigationContainer } from "@react-navigation/native"
 import { AppProvider, UserProvider } from "@realm/react"
-import "./lib/i18-next"
-
-import { customerRealmSub } from "#/atlas-app-services/subscription"
+import "#/lib/i18-next"
+import { customerRealmSub } from "./atlas-app-services/subscription"
 import Realm, { ClientResetMode, type App, type SyncError } from "realm"
 import { LoginStackNavigation, MainStackNavigation } from "#/navigation"
 import { Alert } from "react-native"
