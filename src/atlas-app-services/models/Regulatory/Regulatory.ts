@@ -1,4 +1,4 @@
-import Realm from "realm"
+import { Realm } from "@realm/react"
 export default class Regulatory extends Realm.Object {
   static schema = {
     name: "Regulatory",

@@ -14,9 +14,14 @@ import { Button } from "react-native-paper"
 import app from "#/atlas-app-services/app"
 import { type LoginStackRegisterScreenProps } from "#/type/navigation"
 
+import Dimensions from "#/style/Dimensions"
+
+const { statusBarHeight } = Dimensions
+
 export default function RegisterScreen({
   navigation,
 }: LoginStackRegisterScreenProps) {
+  
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [repeatPassword, setRepeatPassword] = useState("")

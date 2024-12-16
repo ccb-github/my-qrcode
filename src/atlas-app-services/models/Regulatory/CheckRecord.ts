@@ -2,12 +2,12 @@ import type { Checker } from "./Checker"
 import type { Product } from "../Producer/Product"
 
 export default class CheckRecord extends Realm.Object {
-  _id: Realm.BSON.ObjectId
-  device: string
+  _id!: Realm.BSON.ObjectId
+  device!: string
   method?: string
-  name: string
+  name!: string
   operator?: Checker
-  result: string
+  result!: string
   target?: Product
 
   static schema = {

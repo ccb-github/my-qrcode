@@ -1,25 +1,23 @@
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
-import { Modal, View, Text, Pressable, StyleSheet, Alert } from "react-native"
+  import { Modal, View, Text, Pressable, StyleSheet, Alert, ViewStyle } from "react-native"
 import styled from "styled-components/native"
 import { StyledTextByAbsoluteSize } from "./styled/text"
-import { StyledFlexRowView } from "./styled/view"
 
 const CenteredText = styled(StyledTextByAbsoluteSize)`
   text-align: center
 `
 
-const ModalView = styled(View)`
+const ModalView = styled(View)<{$style: ViewStyle}>`
   background-color: white;
   border-radius: 10px;
   padding: 80px;
   justify-content: center;
   align-items: center;
-  shadow-color: black;
-  /* Shadow offset*/
+  shadow-color: brown;
   shadow-opacity: 0.25;
   shadow-radius: 4px;
-  //elevation: 5;
+  elevation: 5;
 
 `
 
@@ -27,17 +25,7 @@ function LanguagePicker() {
   const [modalVisible, setModalVisible] = useState(false)
   const { i18n } = useTranslation() // i18n instance
 
-  // Array with all supported languages
-  const languages = [
-    { name: "de", label: "Deutsch" },
-    { name: "en", label: "English" },
-    { name: "fr", label: "Français" },
-    { name: "be", label: "Беларуская" },
-    { name: "es", label: "Español" },
-    { name: "ch", label: "中文" },
-  ]
-
-  enum languageDict {
+  enum LanguageText {
     "de" = "Deutsch",
     "en" = "English",
     "fr" = "Français",
@@ -45,6 +33,24 @@ function LanguagePicker() {
     "es" = "Español",
     "ch" = "中文",
   }
+  // Array with all supported languages
+  const languages: 
+    Array<{
+    
+        name: keyof typeof LanguageText
+        label: LanguageText
+      
+    }>
+   = [
+    { name: "de", label: LanguageText["de"] },
+    { name: "en", label: LanguageText["en"] },
+    { name: "fr", label: LanguageText["fr"] },
+    { name: "be", label: LanguageText["be"] },
+    { name: "es", label: LanguageText["es"] },
+    { name: "ch", label: LanguageText["ch"] },
+  ]
+
+
   const LanguageItem = ({ name, label }: { name: string; label: string }) => (
     <Pressable
       style={styles.button}
@@ -74,7 +80,12 @@ function LanguagePicker() {
         }}
       >
         <View style={styles.centeredView}>
-          <ModalView>
+          <ModalView $style={{
+            shadowOffset: {
+      width: 5,
+      height: 20,
+    },
+          }}>
             {languages.map((lang) => (
               <LanguageItem {...lang} key={lang.name} />
             ))}
@@ -88,7 +99,7 @@ function LanguagePicker() {
         }}
       >
         {/* displays the current app language */}
-        <CenteredText size={ 15}>{languageDict[i18n.language]}</CenteredText>
+        <CenteredText size={ 15}>{LanguageText[i18n.language as keyof typeof LanguageText]}</CenteredText>
       </Pressable>
     </View>
   )

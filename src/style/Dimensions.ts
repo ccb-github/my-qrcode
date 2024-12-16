@@ -1,9 +1,18 @@
-import { Dimensions, StatusBar, Platform } from "react-native"
+import { useState } from "react"
+import { Dimensions, StatusBar, Platform, useWindowDimensions } from "react-native"
 
 const { width, scale, height, fontScale } = Dimensions.get("window")
 
 const isIOS = Platform.OS === "ios"
-const statusBarHeight = isIOS ? 20 : StatusBar.currentHeight
+// The StatusBarHeight constant work only on Android platform, so in false condition the @{link StatusBar.currentHeight} will be a value
+const statusBarHeight = isIOS ? 20 : StatusBar.currentHeight!
+
+export function useScaledSize (size: number) {
+  const { scale } = useWindowDimensions()
+  const [absoluteSize] = useState<number>(scale * size)
+
+  return absoluteSize
+}
 
 export default {
   get: Dimensions.get,
@@ -15,8 +24,6 @@ export default {
   scale,
   fontScale,
   statusBarHeight,
-
-  contentHeight: height - statusBarHeight,
   getFontSize: function (size: number) {
     return size * fontScale // 4 6 8 12 16 24 32 48 64
   },

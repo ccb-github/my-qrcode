@@ -24,6 +24,7 @@ import styled from "styled-components/native"
 import { StyledTextByAbsoluteSize } from "#/components/styled/text"
 import { StyledFlexRowView } from "#/components/styled/view"
 import BottomToolbar from "#/components/BottomToolbar"
+import { CameraView } from "expo-camera"
 
 const { scale } = Dimensions
 const { useRealm } = RealmContext
@@ -163,15 +164,16 @@ export default function BarCodeScannerScreen({
         })
       }
     } catch (error) {
-      
-      switch (error?.code) {
-        case "ERR_IMAGE_RETRIEVAL":
-          Alert.alert("This image can not be retrieve")
-          break
-        default:
-          Alert.alert("Unknown or no error.code")
+      if (hasCertainProp<{ code: unknown }>(error, "code")) {
+        switch (error?.code) {
+          case "ERR_IMAGE_RETRIEVAL":
+            Alert.alert("This image can not be retrieve")
+            break
+          default:
+            Alert.alert("Unknown or no error.code")
+        }
       }
-      throw new Error(error)
+      
       
     }
   }
@@ -184,7 +186,7 @@ export default function BarCodeScannerScreen({
     return params
   }
 
-  const handleBarCodeScanned: BarCodeScannedCallback = ({
+  const handleBarcodeScanned: BarCodeScannedCallback = ({
     type: qrcodeType,
     data,
   }) => {
@@ -245,10 +247,18 @@ export default function BarCodeScannerScreen({
     default:
       return isFocused ? (
         <ContainerView height={height}>
-          <BarCodeScanner
-            onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+          {/*<BarCodeScanner
+            onBarCodeScanned={scanned ? undefined : handleBarcodeScanned}
             style={StyleSheet.absoluteFillObject}
-          />
+             />*/
+            }
+          <CameraView
+            onBarcodeScanned={scanned ? undefined : handleBarcodeScanned}
+            barcodeScannerSettings={{
+              barcodeTypes: ["qr", "pdf417"],
+            }}
+            style={StyleSheet.absoluteFillObject}
+          /> 
           {scanned ? (
             <ScanAgainButton
               onPress={() => {
@@ -268,7 +278,7 @@ export default function BarCodeScannerScreen({
           <BottomToolbar
             afterPickCallBack={scanFromImageURLAsync}
             style={{
-              height: 50 * scale
+              height: 50 * scale,
             }}
           />
         </ContainerView>

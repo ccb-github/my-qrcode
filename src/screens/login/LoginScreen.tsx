@@ -20,13 +20,14 @@ import { StyledFlexColumnView } from "#/components/styled/view"
 
 import fonts from "#/style/fonts"
 import { type ScaleStyledProps } from "#/style/common"
+import { Banner } from "react-native-paper"
 
 const ScreenContainer = styled(StyledFlexColumnView)`
   flex-direction: column;
 `
 const InputView = styled.View<{ scale: number }>`
   background-color: #ffc0cb;
-  border-radius: ${({ scale }) => "18"}px;
+  border-radius: ${({ scale }) => 18 * scale}px;
   width: 70%;
   height: ${({ scale }) => 18 * scale}px;
   margin-bottom: 8px;
@@ -38,7 +39,6 @@ const ForgetPasswordText = styled(StyledTextByAbsoluteSize)<{
   size: number
 }>`
   text-decoration-line: underline;
-  /* height: 12 * scale; */
   margin-bottom: ${(props) => 12 * props.scale}px;
 `
 
@@ -79,6 +79,8 @@ export default function LoginScreen({
   const password = useRef("")
   const [loginLoading, setLoginLoading] = useState(false)
   const { scale } = useWindowDimensions()
+
+  const [bannerVisible, setBannerVisible] = useState(false)
   const { t } = useTranslation("login")
 
   const loginWithEmailAndPassword = () => {
@@ -90,6 +92,7 @@ export default function LoginScreen({
       }
       try {
         setLoginLoading(true)
+        setBannerVisible(true)
         console.log("Cred create start")
         const emailPasswordCred = Realm.Credentials.emailPassword(
           email.current,
@@ -98,12 +101,15 @@ export default function LoginScreen({
         const loginUser = await realmApp.logIn(emailPasswordCred)
         console.log(`Login with user ${loginUser.id}`)
       } catch (error) {
-        const { message } = error
-        Alert.alert(
-          t("Error"),
-          typeof message === "string" ? message : t("No specific message"),
-          [{ text: t("Ok") }],
-        )
+        setBannerVisible(true)
+        if(hasMessageProp(error)) {
+          const { message } = error
+          Alert.alert(
+            t("Error"),
+            typeof message === "string" ? message : t("No specific message"),
+            [{ text: t("Ok") }],
+          )
+        }
         console.error("Login error", error)
         return
       } finally {
@@ -120,12 +126,37 @@ export default function LoginScreen({
       <TitleText size={fonts.large} scale={scale}>{`XX${t(
         "Traceability system",
       )}`}</TitleText>
+      <Banner
+      visible={bannerVisible}
 
+      actions={[
+        {
+          label: 'Fix it',
+          onPress: () => setBannerVisible(false),
+        },
+        {
+          label: 'Learn more',
+          onPress: () => setBannerVisible(false),
+        },
+      ]}
+      icon={({size}) => (
+        <Image
+          source={{
+            uri: 'https://avatars3.githubusercontent.com/u/17571969?s=400&v=4',
+          }}
+          style={{
+            width: size,
+            height: size,
+          }}
+        />
+      )}>
+      There was a problem processing a transaction on your credit card.
+    </Banner>
       <IconImage
         source={require("../../../assets/favicon.png")}
         scale={scale}
       />
-
+      
       <InputView scale={scale}>
         <InputField
           scale={scale}
