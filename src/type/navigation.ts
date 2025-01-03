@@ -45,32 +45,32 @@ export type LoginStackParamList = {
 export type MainStackScreenPropsBase<Screen extends RouteNameMain> =
   StackScreenProps<MainStackParamList, Screen>
 
-export type RootStackResultScreenProps = StackScreenProps<
+export type BarCodeScreenProps = StackScreenProps<
+  MainStackParamList,
+  RouteNameMain.modalScanner
+>
+
+export type ResultScreenProps = StackScreenProps<
   MainStackParamList,
   RouteNameMain.modalResult
 >
 
-export type LoginStackLoginScreenProps = StackScreenProps<
+export type LoginScreenProps = StackScreenProps<
   LoginStackParamList,
   RouteNameLogin.login
 >
 
-export type MainStackResultProps = StackScreenProps<
-  MainStackParamList,
-  RouteNameMain.modalResult
->
-
-export type MainStackTabNavigatorProps = StackScreenProps<
+export type TabNavigatorProps = StackScreenProps<
   MainStackParamList,
   RouteNameMain.tab
 >
 
-export type LoginStackRegisterScreenProps = StackScreenProps<
+export type RegisterScreenProps = StackScreenProps<
   LoginStackParamList,
   RouteNameLogin.register
 >
 
-export type LoginStackResetPasswordScreenProps = StackScreenProps<
+export type ResetPasswordScreenProps = StackScreenProps<
   LoginStackParamList,
   RouteNameLogin.resetPassword
 >

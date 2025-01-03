@@ -46,7 +46,7 @@
     "react-native-use-sound": "^1.2.2",
     "realm": "^12.13.1",
     "styled-components": "^6.1.13",
-    "expo-camera": "~15.0.14",
+    "expo-camera": "~15.0.16",
     "expo-file-system": "~17.0.1"
   },
   "devDependencies": {

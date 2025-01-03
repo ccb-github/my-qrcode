@@ -4,7 +4,9 @@ import {
   useColorScheme,
   type GestureResponderEvent,
   useWindowDimensions,
+
   View,
+  Alert,
 } from "react-native"
 import { Searchbar } from "react-native-paper"
 import { type FontAwesome } from "@expo/vector-icons"
@@ -22,9 +24,9 @@ import { optionalStylePropToCssStyle } from "#/components/styled/utilFunction"
 import { useApp } from "@realm/react"
 import RealmContext from "#/atlas-app-services/RealmContext"
 import realmApp from "#/atlas-app-services/app"
-import React from "react"
+import React, { useEffect } from "react"
+import useUserProfile from "#/hooks/useUserProfile"
 
-const { useRealm } = RealmContext
 
 const NavigationAreaContainer = styled(StyledFlexColumnView)<{
   height?: number
@@ -35,17 +37,7 @@ const NavigationAreaContainer = styled(StyledFlexColumnView)<{
   background-color: #f00;
   ${(props) => optionalStylePropToCssStyle("height", props.height + "px")};
 `
-// height: 
-// ${({ width, height }) => css`
-// width: ${width}px;
-// height: ${height}px;
-// `} 
-//const StyledView = styled.View((props) => ({
-//   borderWidth: "3px",
-//   borderColor: "black",
-//   borderRadius: "10px",
-//   height: "60px",
-// }))
+
 const NavigationButtonView = styled.TouchableOpacity`
   aspect-ratio: 3 / 2;
   border-radius: 7px;
@@ -61,22 +53,27 @@ export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
   const theme = useColorScheme()
   const isDarkTheme = theme === "dark"
   const { t } = useTranslation("home")
+  const { result, loaded } = useUserProfile()
   console.log(`The theme ${theme}`)
-  /** TODO unused code
-    // const coolMusic = "http://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3"
-    // const [play, pause, stop, data] = useSound(coolMusic);
-  */
- 
- 
-  const NavigationButton: React.FC<{
-    iconName?: React.ComponentProps<typeof FontAwesome>["name"]
-    text: string
-    onPress: (event: GestureResponderEvent) => void
-  }> = ({
+
+  useEffect(() => {
+    Alert.alert(JSON.stringify(result))
+  }, [loaded])
+  /*
+   *  TODO unused code
+   *  const coolMusic = "http://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3"
+   *  const [play, pause, stop, data] = useSound(coolMusic);
+   */
+
+  const NavigationButton = ({
     iconName,
     text,
     onPress,
-  }) => (
+  }: {
+    iconName?: React.ComponentProps<typeof FontAwesome>["name"]
+    text: string
+    onPress: (event: GestureResponderEvent) => void
+  })  => (
     <NavigationButtonView onPress={onPress}>
       {iconName !== undefined ? (
         <FontAwesomeIconWrapper
@@ -87,7 +84,6 @@ export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
       ) : null}
       <Text
         style={{
-          
           color: isDarkTheme ? "#FFF" : "#000",
         }}
       >

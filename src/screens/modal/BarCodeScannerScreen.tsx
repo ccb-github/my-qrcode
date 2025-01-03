@@ -1,8 +1,8 @@
-import { useState, useEffect, useContext } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import { Text, StyleSheet, Alert, useWindowDimensions } from "react-native"
 import {
   type BarCodeScannedCallback,
-  BarCodeScanner,
+
 } from "expo-barcode-scanner"
 import { useTranslation } from "react-i18next"
 
@@ -14,7 +14,6 @@ import {
 import { clgWrapper } from "#/__test__/helper"
 
 import { queryParamsRegex } from "#/lib/infoFetch"
-import type { MainStackScreenPropsBase } from "#/type/navigation"
 import { useAsyncMapStorage } from "#/utils/localStorage"
 import RealmContext from "#/atlas-app-services/RealmContext"
 import { useUser } from "@realm/react"
@@ -24,7 +23,8 @@ import styled from "styled-components/native"
 import { StyledTextByAbsoluteSize } from "#/components/styled/text"
 import { StyledFlexRowView } from "#/components/styled/view"
 import BottomToolbar from "#/components/BottomToolbar"
-import { CameraView } from "expo-camera"
+import { CameraView, Camera, useCameraPermissions } from "expo-camera";
+import { MainStackScreenPropsBase } from "#/type/navigation"
 
 const { scale } = Dimensions
 const { useRealm } = RealmContext
@@ -48,10 +48,10 @@ export default function BarCodeScannerScreen({
   navigation,
   route,
 }: MainStackScreenPropsBase<RouteNameMain.modalScanner>) {
-  const [hasPermission, setHasPermission] = useState<CameraPermission>(null)
+  const [permission, requestPermission] = useCameraPermissions()
   const [scanned, setIsScanned] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
-
+  
   const realm = useRealm()
   const user = useUser()
   let scanData = useContext(DataContext)
@@ -62,6 +62,8 @@ export default function BarCodeScannerScreen({
   const { t } = useTranslation("barcode")
   const { height } = useWindowDimensions()
 
+  
+
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -69,7 +71,7 @@ export default function BarCodeScannerScreen({
     })
     ;(async () => {
       // Ask permission
-      await askPermissionAsync()
+      requestPermission
       if (route.params !== undefined) {
         await scanFromImageURLAsync(route.params.uri)
       }
@@ -92,15 +94,12 @@ export default function BarCodeScannerScreen({
     }
   }, [])
 
-  const askPermissionAsync = async () => {
-    const { status } = await BarCodeScanner.requestPermissionsAsync()
-    setHasPermission(status === "granted")
-  }
+
 
   const scanFromImageURLAsync = async (url: string) => {
     try {
       console.log("url provide by image" + url)
-      const scanResult = await BarCodeScanner.scanFromURLAsync(url)
+      const scanResult = await Camera.scanFromURLAsync(url)
       if (scanResult.length === 0) {
         Alert.alert("QRCode doesn't contain valid data", "Message", [
           {
@@ -233,7 +232,7 @@ export default function BarCodeScannerScreen({
     // navigation.navigate(RouteNameMain["modalResult"], { data: dataResult, type })
   }
 
-  switch (hasPermission) {
+  switch (permission) {
     case null:
       return (
         <Text style={{ fontSize: 6 * scale }}>

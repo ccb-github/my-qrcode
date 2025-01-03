@@ -12,8 +12,8 @@ import {
 import realmApp from "#/atlas-app-services/app"
 import { Realm } from "@realm/react"
 import { useTranslation } from "react-i18next"
-import LanguagePicker from "#/components/LanguagePicker"
-import { type LoginStackLoginScreenProps } from "#/type/navigation"
+import LanguagePicker from "../../components/LanguagePicker"
+import { type LoginScreenProps } from "../../type/navigation"
 import styled from "styled-components/native"
 import { StyledTextByAbsoluteSize } from "#/components/styled/text"
 import { StyledFlexColumnView } from "#/components/styled/view"
@@ -74,7 +74,7 @@ const ActionButton = styled.TouchableOpacity<ScaleStyledProps>`
 
 export default function LoginScreen({
   navigation,
-}: LoginStackLoginScreenProps) {
+}: LoginScreenProps) {
   const email = useRef("")
   const password = useRef("")
   const [loginLoading, setLoginLoading] = useState(false)
