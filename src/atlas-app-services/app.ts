@@ -1,10 +1,10 @@
 import { Realm } from "@realm/react"
-const appId = "application-qrcode-ukplu" // replace this with your App ID
+import { APPLICATION_ID } from "../../mongo-setting.json"
 
 // Returns the shared instance of the Realm app.
 export function getRealmApp() {
   const appConfig = {
-    id: appId,
+    id: APPLICATION_ID,
     timeout: 10000,
   }
   return new Realm.App(appConfig)
