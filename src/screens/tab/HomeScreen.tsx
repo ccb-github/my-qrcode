@@ -4,6 +4,9 @@ import {
   useColorScheme,
   type GestureResponderEvent,
   useWindowDimensions,
+
+  View,
+  Alert,
 } from "react-native"
 import { Searchbar } from "react-native-paper"
 import { type FontAwesome } from "@expo/vector-icons"
@@ -17,26 +20,24 @@ import {
   StyledSafeAreaView,
 } from "#/components/styled/view"
 import styled, { css } from "styled-components/native"
+import { optionalStylePropToCssStyle } from "#/components/styled/utilFunction"
+import { useApp } from "@realm/react"
+import RealmContext from "#/atlas-app-services/RealmContext"
+import realmApp from "#/atlas-app-services/app"
+import React, { useEffect } from "react"
+import useUserProfile from "#/hooks/useUserProfile"
+
 
 const NavigationAreaContainer = styled(StyledFlexColumnView)<{
   height?: number
   width?: number
 }>`
   flex: 1;
-  border: red solid 1px;
- 
+  border: #fff solid 1px;
+  background-color: #f00;
+  ${(props) => optionalStylePropToCssStyle("height", props.height + "px")};
 `
 
-// ${({ width, height }) => css`
-// width: ${width}px;
-// height: ${height}px;
-// `} 
-//const StyledView = styled.View((props) => ({
-//   borderWidth: "3px",
-//   borderColor: "black",
-//   borderRadius: "10px",
-//   height: "60px",
-// }))
 const NavigationButtonView = styled.TouchableOpacity`
   aspect-ratio: 3 / 2;
   border-radius: 7px;
@@ -52,11 +53,17 @@ export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
   const theme = useColorScheme()
   const isDarkTheme = theme === "dark"
   const { t } = useTranslation("home")
+  const { result, loaded } = useUserProfile()
   console.log(`The theme ${theme}`)
-  /** TODO unused code
-    // const coolMusic = "http://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3"
-    // const [play, pause, stop, data] = useSound(coolMusic);
-  */
+
+  useEffect(() => {
+    Alert.alert(JSON.stringify(result))
+  }, [loaded])
+  /*
+   *  TODO unused code
+   *  const coolMusic = "http://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3"
+   *  const [play, pause, stop, data] = useSound(coolMusic);
+   */
 
   const NavigationButton = ({
     iconName,
@@ -66,7 +73,7 @@ export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
     iconName?: React.ComponentProps<typeof FontAwesome>["name"]
     text: string
     onPress: (event: GestureResponderEvent) => void
-  }) => (
+  })  => (
     <NavigationButtonView onPress={onPress}>
       {iconName !== undefined ? (
         <FontAwesomeIconWrapper
@@ -77,7 +84,6 @@ export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
       ) : null}
       <Text
         style={{
-          
           color: isDarkTheme ? "#FFF" : "#000",
         }}
       >
@@ -90,12 +96,11 @@ export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
     <StyledSafeAreaView height={height - 150}>
       <Searchbar
         placeholder="Search"
-        onChange={(value) => {}}
         value={"Holder"}
       />
       {/* Navigate to another screen */}
-      <StyledFlexColumnView style={{ flexGrow: 1 }}>
-        <StyledFlexRowView flex={1} style={{ flex: 1, width: "100%" }}>
+      <View style={{ flexGrow: 1, maxHeight: 300 }}>
+        <StyledFlexRowView flex={1} style={{ width: "100%" }}>
           <NavigationAreaContainer>
             <NavigationButton
               iconName={"qrcode"}
@@ -116,7 +121,7 @@ export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
           </NavigationAreaContainer>
         </StyledFlexRowView>
         <StyledFlexRowView flex={1} style={{ width: "100%" }}>
-          <NavigationAreaContainer width={100}>
+          <NavigationAreaContainer width={50}>
             <NavigationButton
               iconName={"history"}
               onPress={() => {
@@ -125,8 +130,9 @@ export default function HomeScreen({ navigation }: RootTabHomeScreenProps) {
               text="history"
             />
           </NavigationAreaContainer>
+          <NavigationAreaContainer width={50}></NavigationAreaContainer>
         </StyledFlexRowView>
-      </StyledFlexColumnView>
+      </View>
     </StyledSafeAreaView>
   )
 }

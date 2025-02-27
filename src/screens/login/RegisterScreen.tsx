@@ -11,12 +11,12 @@ import {
   useWindowDimensions,
 } from "react-native"
 import { Button } from "react-native-paper"
-import app from "#/atlas-app-services/app"
-import { type LoginStackRegisterScreenProps } from "#/type/navigation"
+import app from "../../atlas-app-services/app"
+import { type ResetPasswordScreenProps } from "../../type/navigation"
 
 export default function RegisterScreen({
   navigation,
-}: LoginStackRegisterScreenProps) {
+}: ResetPasswordScreenProps) {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [repeatPassword, setRepeatPassword] = useState("")

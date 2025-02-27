@@ -1,13 +1,14 @@
 import { type BSON } from "realm"
 import type Regulatory from "./Regulatory"
+import { Realm } from "@realm/react"
 
-export class Checker extends Realm.Object {
-  _id: BSON.ObjectId
-  email: string
+export class Checker extends Realm.Object<Checker> {
+  _id!: BSON.ObjectId
+  email!: string
   name?: string
   address?: string
   belong?: Regulatory
-  ownerId: string
+  ownerId!: string
   major?: string
   static schema = {
     name: "Checker",

@@ -33,7 +33,7 @@ export type DetailScreenProps<DetailDataType> = {
 
 export type FloatToolbarProps = {
   style?: ViewStyle
-  afterPickCallBack?: (imageUri: string) => any
+  afterPickCallBack?: (imageUri: string) => void
 }
 export type DetailViewProps<DataType> = {
   data: DataType

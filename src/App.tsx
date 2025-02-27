@@ -5,15 +5,15 @@ import { Provider as PaperProvider } from "react-native-paper"
 import { NavigationContainer } from "@react-navigation/native"
 import { AppProvider, UserProvider } from "@realm/react"
 import "./lib/i18-next"
-import RealmContext, { realmFileBehavior } from "#/atlas-app-services/RealmContext"
-import { customerRealmSub } from "./atlas-app-services/subscription"
+
+import { customerRealmSub } from "#/atlas-app-services/subscription"
 import Realm, { ClientResetMode, type App, type SyncError } from "realm"
 import { LoginStackNavigation, MainStackNavigation } from "#/navigation"
 import { Alert } from "react-native"
-import realmApp from "./atlas-app-services/app"
+import realmApp from "#/atlas-app-services/app"
 import { useCallback, useEffect, useRef } from "react"
-
-
+import FileSystem from "expo-file-system"
+import RealmContext, { realmFileBehavior } from "#/atlas-app-services/RealmContext"
 const { RealmProvider } = RealmContext
 
 /**
@@ -23,7 +23,7 @@ const { RealmProvider } = RealmContext
 /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 function handlePreClientReset(localRealm: Realm): void {
   Alert.alert(`${localRealm.isClosed}`)
-  console.log('Initiating client reset...');
+  console.log("Initiating client reset...")
 }
 
 /**
@@ -31,45 +31,53 @@ function handlePreClientReset(localRealm: Realm): void {
  */
 /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 function handlePostClientReset(localRealm: Realm, remoteRealm: Realm): void {
-  console.log('Client has been reset.');
+  console.log("Client has been reset.")
 }
 
 function AppWrapper() {
   console.log("App wrapper function body")
-  
+
   const realmRef = useRef<Realm | null>(null)
 
-  const errorSync = useCallback((session: App.Sync.Session, error: SyncError) => {
-    Alert.alert("Error sync is calling")
-  
-    console.error(error)
-    console.log({
-      name: error.name,
-      message: error.message
-    })
-  
-    if (realmRef.current !== null) {
-      if (error.name === "ClientReset") {
-  
-        const realmPath = realmRef.current.path
-        realmRef.current.close();
-  
-        console.log(`Error ${error.message}, need to reset ${realmPath}…`);
-        Realm.App.Sync.initiateClientReset(realmApp, realmPath); // pass your realm app instance, and realm path to initiateClientReset()
-        console.log(`Creating backup from ${error.config.path}…`);
-        // Move backup file to a known location for a restore
-        fs.renameSync(error.config.path, realmPath + "~");
-        // Discard the reference to the realm instance
-        realm = null;
-      } else {
-        console.log(`Received error ${error.message}`);
+  const errorSync = useCallback(
+    (session: App.Sync.Session, error: SyncError) => {
+      Alert.alert("Error sync is calling")
+
+      console.error(error)
+      console.log({
+        name: error.name,
+        message: error.message,
+      })
+
+      if (realmRef.current !== null) {
+        if (error.name === "ClientReset") {
+          const realmPath = realmRef.current.path
+          realmRef.current.close()
+
+          console.log(`Error ${error.message}, need to reset ${realmPath}…`)
+          Realm.App.Sync.initiateClientReset(realmApp, realmPath) // pass your realm app instance, and realm path to initiateClientReset()
+          console.log(`Creating backup from ${realmPath}…`)
+          // Move backup file to a known location for a restore
+          FileSystem.moveAsync({
+            from: realmPath,
+            to: realmPath + "~",
+          })
+          // Discard the reference to the realm instance
+          realmRef.current = null
+        } else {
+          console.log(`Received error ${error.message}`)
+        }
       }
-    }
-  }, [])
+    },
+    [],
+  )
 
   useEffect(() => {
-    if(realmRef.current !== null) 
-      console.log("Is realm in migrate AppWrapper",realmRef.current.isInMigration)
+    if (realmRef.current !== null)
+      console.log(
+        "Is realm in migrate AppWrapper",
+        realmRef.current.isInMigration,
+      )
   }, [realmRef])
 
   return (
@@ -87,7 +95,6 @@ function AppWrapper() {
                 },
                 onError: errorSync,
                 flexible: true,
-                
                 existingRealmFileBehavior: realmFileBehavior,
                 newRealmFileBehavior: realmFileBehavior,
                 initialSubscriptions: {
@@ -104,17 +111,6 @@ function AppWrapper() {
       </PaperProvider>
     </NavigationContainer>
   )
-}
-
-if (__DEV__) {
-  console.log("It's in dev environment")
-  // connectToDevTools({
-  //   host: "localhost",
-  //   port: 8083,
-  // });
-  // Dev only
-  // RNAsyncStorageFlipper(AsyncStorage);
-  // End dev only
 }
 
 export default AppWrapper

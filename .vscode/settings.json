@@ -1,10 +1,13 @@
 {
     "typescript.tsdk": "node_modules/typescript/lib",
     "cSpell.words": [
+        "arrowright",
         "BSON",
         "Pressable",
         "qrcode",
         "schemaname",
+        "Searchbar",
+        "ukplu",
         "Unsynced"
     ]
 }

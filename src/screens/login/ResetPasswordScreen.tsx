@@ -11,16 +11,16 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native"
-import Dimensions from "#/style/Dimensions"
-import { RouteNameLogin } from "#/navigation/const"
-import { type LoginStackResetPasswordScreenProps } from "#/type/navigation"
+import Dimensions from "../../style/Dimensions"
+import { RouteNameLogin } from "../../navigation/const"
+import { type ResetPasswordScreenProps } from "../../type/navigation"
 
 const { scale } = Dimensions
 
 export default function ResetPasswordScreen({
   navigation,
   route,
-}: LoginStackResetPasswordScreenProps) {
+}: ResetPasswordScreenProps) {
   const [email, setEmail] = useState("")
   const realmApp = useApp()
 

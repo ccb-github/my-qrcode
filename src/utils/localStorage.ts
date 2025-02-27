@@ -4,18 +4,28 @@ import AsyncStorageStatic, {
 } from "@react-native-async-storage/async-storage"
 import { useCallback, useEffect } from "react"
 
+
+/**
+ * 
+ * @param key 
+ * @returns 
+ * @description directKey => [key1, key2, key3]  
+ *                             |     |      |   
+ *                v     v      v  
+ * value1 value2 value3       
+*/       
 const useAsyncMapStorage = (key: string) => {
-  const storageHook = useAsyncStorage(key)
-  let storageMapKeys: string[]
+  const middleKeyStorage = useAsyncStorage(key)
+  let middleKeys: string[] = []
 
   // const getItem = storage.getItem
-  const getMapKeys = useCallback(async () => {
+  const getMapKeys = useCallback<() => Promise<string[]>>(async () => {
     try {
-      const result = await storageHook.getItem()
+      const result = await middleKeyStorage.getItem()
       if (result === null) {
-        throw new Error("Unexpected error mapkey null")
+        throw new Error("Unexpected error map key null")
       }
-      return JSON.parse(result)
+      return JSON.parse(result) 
     } catch (error) {
       throw error
     }
@@ -24,13 +34,13 @@ const useAsyncMapStorage = (key: string) => {
     try {
       await AsyncStorageStatic.setItem(key, value)
       let beforeKey
-      if (storageMapKeys === undefined) {
+      if (middleKeys === undefined) {
         beforeKey = await getMapKeys()
       } else {
-        beforeKey = storageMapKeys
+        beforeKey = middleKeys
       }
-      storageMapKeys = [...beforeKey, key]
-      await storageHook.setItem(JSON.stringify(storageMapKeys))
+      middleKeys = [...beforeKey, key]
+      await middleKeyStorage.setItem(JSON.stringify(middleKeys))
     } catch (error) {
       throw error
     }
@@ -38,10 +48,10 @@ const useAsyncMapStorage = (key: string) => {
   const getMapItem = async (valueType: "string" | "object" = "string") => {
     // TODO determine array
     try {
-      storageMapKeys = storageMapKeys ?? (await getMapKeys())
-      console.log(`getMapitem for key ${JSON.stringify(storageMapKeys)}`)
+      middleKeys = middleKeys ?? (await getMapKeys())
+      console.log(`getMapItem for key ${JSON.stringify(middleKeys)}`)
       const storageMapKeyValuePair =
-        await AsyncStorageStatic.multiGet(storageMapKeys)
+        await AsyncStorageStatic.multiGet(middleKeys)
       return storageMapKeyValuePair.map((keyValue) => keyValue[1])
     } catch (error) {
       throw error
@@ -56,10 +66,10 @@ const useAsyncMapStorage = (key: string) => {
       await AsyncStorageStatic.removeItem(key)
       // TODO Critical remove the related key storageItem
       let beforeKeyList: string[]
-      if (storageMapKeys === undefined) beforeKeyList = await getMapKeys()
-      else beforeKeyList = storageMapKeys
-      storageMapKeys = beforeKeyList.filter((beforeKey) => key !== beforeKey)
-      await storageHook.setItem(JSON.stringify(storageMapKeys))
+      if (middleKeys === undefined) beforeKeyList = await getMapKeys()
+      else beforeKeyList = middleKeys
+      middleKeys = beforeKeyList.filter((beforeKey) => key !== beforeKey)
+      await middleKeyStorage.setItem(JSON.stringify(middleKeys))
     } catch (error) {
       throw error
     }
@@ -67,30 +77,25 @@ const useAsyncMapStorage = (key: string) => {
   useEffect(() => {
     try {
       ;(async () => {
-        const currentItem = await storageHook.getItem()
-        // TODO critical determine json parseable
+        const currentItem = await middleKeyStorage.getItem()
+        // TODO critical determine json parsable
         if (currentItem === null) {
-          storageMapKeys = []
-          await storageHook.setItem("[]")
+          await middleKeyStorage.setItem("[]")
         } else {
-          storageMapKeys = JSON.parse(currentItem)
+          middleKeys = JSON.parse(currentItem)
         }
-
-        // else if(typeof storageItem.length === 'number')
-        //   {
-        //   console.log('This is executed', storageItem)
-        //   storageItem = JSON.parse(storageItem)}
       })().catch((error) => {
         // TODO catch json parse error
         throw new Error(error)
       })
     } catch (error) {
-      throw new Error(error)
+      if(hasMessageProp(error)) {
+        throw new Error(error.message)
+      }
     }
   }, [])
   return {
-    storageMapKeys,
-    getMapKey: getMapKeys,
+    getMapKeys,
     addItem,
     removeOneItem,
     getMapItem,

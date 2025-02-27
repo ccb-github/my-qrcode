@@ -23,8 +23,7 @@ import { RouteNameLogin, RouteNameMain } from "#/navigation/const"
 import { useTranslation } from "react-i18next"
 import type { LoginStackParamList, MainStackParamList } from "#/type/navigation"
 import { useUser } from "@realm/react"
-import RealmContext from "#/realm/RealmContext"
-import realmApp from "#/realm/app"
+
 
 type LoginNavigationProps = {
   initialRouteName?: string
@@ -68,21 +67,21 @@ export function MainStackNavigation() {
   useEffect(() => {
     ;(async () => {
     
-      const imageHistorys = await imageHistoryStorage.getItem()
-      const recordHistorys = await recordHistoryStorage.getItem()
-      console.log(imageHistorys, recordHistorys)
+      const imageHistoryRecords = await imageHistoryStorage.getItem()
+      const recordHistoryRecords = await recordHistoryStorage.getItem()
+      console.log(imageHistoryRecords, recordHistoryRecords)
       /**
        * @description Initialize the storage in app Navigation initialize
        * for avoid dealing with empty record later
        */
-      if (imageHistorys === null) {
+      if (imageHistoryRecords === null) {
         await imageHistoryStorage.setItem("[]")
       }
       /**
        * @description Initialize the storage in app Navigation initialize
        * for avoid dealing with empty record later
        */
-      if (recordHistorys === null) {
+      if (recordHistoryRecords === null) {
         await recordHistoryStorage.setItem("[]")
       }
     })().catch((error) => {

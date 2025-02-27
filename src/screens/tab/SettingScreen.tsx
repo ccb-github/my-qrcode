@@ -19,7 +19,7 @@ import realmApp from "#/atlas-app-services/app"
 import { FontAwesomeIconWrapper } from "#/components/Icon"
 import colors from "#/style/colors"
 import { Product } from "#/atlas-app-services/models/Producer/Product"
-import { type RootTabHomeScreenProps } from "#/type/props"
+import { RootTabSettingScreenProps, type RootTabHomeScreenProps } from "#/type/props"
 import Button from "#/components/Button"
 import styled from "styled-components"
 import { ConnectionState } from "realm"
@@ -140,7 +140,7 @@ function SubscriptionList() {
   )
 }
 
-function SettingScreen(props: RootTabHomeScreenProps) {
+function SettingScreen(props: RootTabSettingScreenProps) {
   const realm = useRealm()
 
   const { t } = useTranslation("settings")
